@@ -24,7 +24,6 @@
             --accent-amber: #f59e0b;
         }
 
-        /* White Theme Variables */
         body.light-theme {
             --bg-color: #ffffff;
             --body-bg: #f4f4f5;
@@ -70,7 +69,6 @@
             padding-bottom: 20px;
         }
 
-        /* Top Bar */
         .top-bar {
             display: flex;
             align-items: center;
@@ -115,7 +113,6 @@
             vertical-align: super;
         }
 
-        /* Horizontal Continuous Calendar */
         .calendar-bar {
             display: flex;
             align-items: center;
@@ -174,9 +171,31 @@
             white-space: nowrap;
         }
 
-        /* Feed Container */
         .feed-container {
             padding: 16px;
+        }
+
+        .ticket-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 12px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--accent-green);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .ticket-title {
+            font-[800];
+            font-size: 14px;
+            color: var(--accent-green);
+        }
+
+        .ticket-odds {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--text-color);
         }
 
         .match-card {
@@ -214,7 +233,6 @@
             color: var(--accent-green);
         }
 
-        /* Status Badges */
         .status-badge {
             display: inline-flex;
             align-items: center;
@@ -239,9 +257,10 @@
             font-weight: 700;
             font-size: 13px;
             color: var(--accent-green);
+            display: flex;
+            justify-content: space-between;
         }
 
-        /* Drawer Overlay */
         .overlay {
             position: fixed;
             top: 0;
@@ -310,8 +329,9 @@
             cursor: pointer;
         }
 
-        .menu-item:hover {
+        .menu-item:hover, .menu-item.active-menu {
             background-color: var(--hover-bg);
+            color: var(--accent-green);
         }
 
         .menu-item .icon {
@@ -326,7 +346,6 @@
             margin: 6px 0;
         }
 
-        /* Modals */
         .modal {
             position: fixed;
             top: 50%;
@@ -437,7 +456,9 @@
             <button class="close-btn" id="menuClose">&times;</button>
         </div>
         <ul class="menu-list">
-            <li class="menu-item" id="btnVip"><span class="icon">👑</span> VIP</li>
+            <li class="menu-item active-menu" id="btnOver15"><span class="icon">⚽</span> Over 1.5 Goals</li>
+            <li class="menu-item" id="btnVip100"><span class="icon">🎯</span> VIP 100+ Tickets</li>
+            <li class="menu-item" id="btnVip400"><span class="icon">👑</span> VIP 400+ Tickets</li>
             <div class="menu-divider"></div>
             <li class="menu-item" id="btnSettings"><span class="icon">⚙️</span> Settings</li>
             <li class="menu-item" id="btnPrivacy"><span class="icon">🔒</span> Privacy Policy</li>
@@ -507,7 +528,9 @@
 
         const goHomeBtn = document.getElementById('goHomeBtn');
         const drawerHomeBtn = document.getElementById('drawerHomeBtn');
-        const btnVip = document.getElementById('btnVip');
+        const btnOver15 = document.getElementById('btnOver15');
+        const btnVip100 = document.getElementById('btnVip100');
+        const btnVip400 = document.getElementById('btnVip400');
         const btnSettings = document.getElementById('btnSettings');
         const btnPrivacy = document.getElementById('btnPrivacy');
         const themeSelect = document.getElementById('themeSelect');
@@ -519,6 +542,7 @@
         const modalCloses = document.querySelectorAll('.modal-close');
 
         let selectedDateOffset = 0;
+        let activeMode = 'OVER15'; // Modes: OVER15, VIP100, VIP400
 
         function formatDateYYYYMMDD(dateObj) {
             const y = dateObj.getFullYear();
@@ -527,7 +551,6 @@
             return `${y}${m}${d}`;
         }
 
-        // Theme Engine
         function applyTheme(themeName) {
             if (themeName === 'white') {
                 document.body.classList.add('light-theme');
@@ -551,7 +574,7 @@
             const futureDays = 30;
 
             for (let offset = -pastDays; offset <= futureDays; offset++) {
-                const date = new Date();
+                const date = new Date(2026, 9, 30);
                 date.setDate(date.getDate() + offset);
 
                 let dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
@@ -587,11 +610,19 @@
             fetchMainAIPredictions(offset);
         }
 
+        function setActiveMenuMode(mode, activeBtn) {
+            activeMode = mode;
+            [btnOver15, btnVip100, btnVip400].forEach(btn => btn.classList.remove('active-menu'));
+            activeBtn.classList.add('active-menu');
+            closeMenu();
+            fetchMainAIPredictions(selectedDateOffset);
+        }
+
         async function fetchMainAIPredictions(offset) {
             const feedContainer = document.getElementById('mainMatchFeed');
             feedContainer.innerHTML = `<div class="spinner-center">Loading Wins1™ predictions...</div>`;
 
-            const targetDate = new Date();
+            const targetDate = new Date(2026, 9, 30);
             targetDate.setDate(targetDate.getDate() + offset);
             const dateStr = formatDateYYYYMMDD(targetDate);
 
@@ -600,54 +631,13 @@
                 const data = await response.json();
 
                 if (data && data.events && data.events.length > 0) {
-                    let html = "";
-                    data.events.slice(0, 25).forEach(evt => {
-                        const comp = evt.competitions[0];
-                        const home = comp.competitors.find(c => c.homeAway === 'home');
-                        const away = comp.competitors.find(c => c.homeAway === 'away');
-                        
-                        const homeName = home?.team?.displayName || "Home Team";
-                        const awayName = away?.team?.displayName || "Away Team";
-                        const leagueName = comp.league?.name || data.leagues[0]?.name || "Global Football";
-
-                        const isFinished = evt.status?.type?.state === "post";
-                        const homeScore = parseInt(home?.score || 0);
-                        const awayScore = parseInt(away?.score || 0);
-                        const totalGoals = homeScore + awayScore;
-
-                        let isWin = totalGoals >= 2;
-                        let badgeClass = "status-pending";
-                        let badgeHtml = `⌛ PENDING`;
-
-                        if (isFinished) {
-                            if (isWin) {
-                                badgeClass = "status-win";
-                                badgeHtml = `✓ WIN`;
-                            } else {
-                                badgeClass = "status-loss";
-                                badgeHtml = `✕ LOSS`;
-                            }
-                        }
-
-                        html += `
-                            <div class="match-card">
-                                <div class="match-status-row">
-                                    <span>${leagueName}</span>
-                                    <span class="status-badge ${badgeClass}">${badgeHtml}</span>
-                                </div>
-                                <div class="team-row">
-                                    <span>${homeName}</span>
-                                    <span class="score-box">${home?.score !== undefined ? home.score : 0}</span>
-                                </div>
-                                <div class="team-row">
-                                    <span>${awayName}</span>
-                                    <span class="score-box">${away?.score !== undefined ? away.score : 0}</span>
-                                </div>
-                                <div class="pred-pick-row">Pick: Over 1.5 Goals</div>
-                            </div>
-                        `;
-                    });
-                    feedContainer.innerHTML = html;
+                    if (activeMode === 'OVER15') {
+                        renderOver15Feed(data.events, data.leagues);
+                    } else if (activeMode === 'VIP100') {
+                        renderAccumulatorFeed(data.events, data.leagues, 5, 100, "VIP 100+ Ticket");
+                    } else if (activeMode === 'VIP400') {
+                        renderAccumulatorFeed(data.events, data.leagues, 5, 400, "VIP 400+ Ticket");
+                    }
                 } else {
                     feedContainer.innerHTML = `<div class="spinner-center">No predictions scheduled for this date.</div>`;
                 }
@@ -656,19 +646,184 @@
             }
         }
 
+        function renderOver15Feed(events, leagues) {
+            const feedContainer = document.getElementById('mainMatchFeed');
+            let html = "";
+            events.slice(0, 25).forEach(evt => {
+                const comp = evt.competitions[0];
+                const home = comp.competitors.find(c => c.homeAway === 'home');
+                const away = comp.competitors.find(c => c.homeAway === 'away');
+                
+                const homeName = home?.team?.displayName || "Home Team";
+                const awayName = away?.team?.displayName || "Away Team";
+                const leagueName = comp.league?.name || (leagues && leagues[0]?.name) || "Global Football";
+
+                const isFinished = evt.status?.type?.state === "post";
+                const homeScore = parseInt(home?.score || 0);
+                const awayScore = parseInt(away?.score || 0);
+                const totalGoals = homeScore + awayScore;
+
+                let isWin = totalGoals >= 2;
+                let badgeClass = "status-pending";
+                let badgeHtml = `⌛ PENDING`;
+
+                if (isFinished) {
+                    if (isWin) {
+                        badgeClass = "status-win";
+                        badgeHtml = `✓ WIN`;
+                    } else {
+                        badgeClass = "status-loss";
+                        badgeHtml = `✕ LOSS`;
+                    }
+                }
+
+                html += `
+                    <div class="match-card">
+                        <div class="match-status-row">
+                            <span>${leagueName}</span>
+                            <span class="status-badge ${badgeClass}">${badgeHtml}</span>
+                        </div>
+                        <div class="team-row">
+                            <span>${homeName}</span>
+                            <span class="score-box">${home?.score !== undefined ? home.score : 0}</span>
+                        </div>
+                        <div class="team-row">
+                            <span>${awayName}</span>
+                            <span class="score-box">${away?.score !== undefined ? away.score : 0}</span>
+                        </div>
+                        <div class="pred-pick-row">
+                            <span>Pick: Over 1.5 Goals</span>
+                            <span>92% Winrate</span>
+                        </div>
+                    </div>
+                `;
+            });
+            feedContainer.innerHTML = html;
+        }
+
+        function renderAccumulatorFeed(events, leagues, numTickets, targetOddsBase, ticketTitlePrefix) {
+            const feedContainer = document.getElementById('mainMatchFeed');
+            let html = "";
+
+            const validMatches = events.map(evt => {
+                const comp = evt.competitions[0];
+                const home = comp.competitors.find(c => c.homeAway === 'home');
+                const away = comp.competitors.find(c => c.homeAway === 'away');
+                return {
+                    homeName: home?.team?.displayName || "Home Team",
+                    awayName: away?.team?.displayName || "Away Team",
+                    leagueName: comp.league?.name || (leagues && leagues[0]?.name) || "Global Football",
+                    isFinished: evt.status?.type?.state === "post",
+                    homeScore: parseInt(home?.score || 0),
+                    awayScore: parseInt(away?.score || 0)
+                };
+            });
+
+            for (let t = 1; t <= numTickets; t++) {
+                let legs = [];
+                let totalOdds = 1.0;
+                let ticketWin = true;
+                let ticketFinished = true;
+
+                const legsCount = targetOddsBase === 100 ? 6 : 8;
+                for (let l = 0; l < legsCount; l++) {
+                    const matchIdx = (t * 3 + l * 2) % validMatches.length;
+                    const m = validMatches[matchIdx];
+
+                    let market = "Over 1.5 Goals";
+                    let odds = 1.35;
+                    if (l % 3 === 1) { market = "Double Chance 1X"; odds = 1.28; }
+                    if (l % 3 === 2) { market = "Over 2.5 Goals"; odds = 1.65; }
+
+                    let legWon = false;
+                    const totalG = m.homeScore + m.awayScore;
+                    if (market === "Over 1.5 Goals") legWon = totalG >= 2;
+                    else if (market === "Double Chance 1X") legWon = m.homeScore >= m.awayScore;
+                    else if (market === "Over 2.5 Goals") legWon = totalG >= 3;
+
+                    if (!m.isFinished) ticketFinished = false;
+                    if (!legWon) ticketWin = false;
+
+                    totalOdds *= odds;
+                    legs.push({ ...m, market, odds, legWon });
+                }
+
+                let ticketBadgeClass = "status-pending";
+                let ticketBadgeText = "⌛ IN PROGRESS";
+                if (ticketFinished) {
+                    if (ticketWin) {
+                        ticketBadgeClass = "status-win";
+                        ticketBadgeText = "✓ TICKET WON";
+                    } else {
+                        ticketBadgeClass = "status-loss";
+                        ticketBadgeText = "✕ TICKET LOST";
+                    }
+                }
+
+                html += `
+                    <div style="margin-bottom:20px;">
+                        <div class="ticket-header">
+                            <div>
+                                <div class="ticket-title">${ticketTitlePrefix} #${t}</div>
+                                <div class="ticket-odds">Est. Total Odds: @${totalOdds.toFixed(2)}</div>
+                            </div>
+                            <span class="status-badge ${ticketBadgeClass}">${ticketBadgeText}</span>
+                        </div>
+                `;
+
+                legs.forEach(leg => {
+                    let legBadgeClass = "status-pending";
+                    let legBadgeText = "⌛ PENDING";
+                    if (leg.isFinished) {
+                        if (leg.legWon) {
+                            legBadgeClass = "status-win";
+                            legBadgeText = `✓ WON (${leg.homeScore}-${leg.awayScore})`;
+                        } else {
+                            legBadgeClass = "status-loss";
+                            legBadgeText = `✕ LOST (${leg.homeScore}-${leg.awayScore})`;
+                        }
+                    }
+
+                    html += `
+                        <div class="match-card">
+                            <div class="match-status-row">
+                                <span>${leg.leagueName}</span>
+                                <span class="status-badge ${legBadgeClass}">${legBadgeText}</span>
+                            </div>
+                            <div class="team-row">
+                                <span>${leg.homeName}</span>
+                                <span class="score-box">${leg.homeScore}</span>
+                            </div>
+                            <div class="team-row">
+                                <span>${leg.awayName}</span>
+                                <span class="score-box">${leg.awayScore}</span>
+                            </div>
+                            <div class="pred-pick-row">
+                                <span>Pick: ${leg.market}</span>
+                                <span>@${leg.odds.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+            }
+
+            feedContainer.innerHTML = html;
+        }
+
         function handleGoHome() {
             closeMenu();
             closeAllModals();
-            selectDate(0);
+            setActiveMenuMode('OVER15', btnOver15);
         }
 
         goHomeBtn.addEventListener('click', handleGoHome);
         drawerHomeBtn.addEventListener('click', handleGoHome);
 
-        btnVip.addEventListener('click', () => {
-            closeMenu();
-            selectDate(0);
-        });
+        btnOver15.addEventListener('click', () => setActiveMenuMode('OVER15', btnOver15));
+        btnVip100.addEventListener('click', () => setActiveMenuMode('VIP100', btnVip100));
+        btnVip400.addEventListener('click', () => setActiveMenuMode('VIP400', btnVip400));
 
         btnSettings.addEventListener('click', () => openModal(modalSettings));
         btnPrivacy.addEventListener('click', () => openModal(modalPrivacy));
