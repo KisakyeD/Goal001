@@ -187,7 +187,7 @@
         }
 
         .ticket-title {
-            font-[800];
+            font-weight: 800;
             font-size: 14px;
             color: var(--accent-green);
         }
@@ -456,7 +456,8 @@
             <button class="close-btn" id="menuClose">&times;</button>
         </div>
         <ul class="menu-list">
-            <li class="menu-item active-menu" id="btnOver15"><span class="icon">⚽</span> Over 1.5 Goals</li>
+            <li class="menu-item active-menu" id="btnOver1510"><span class="icon">🔥</span> 14 Tickets (10 Odds)</li>
+            <li class="menu-item" id="btnOver15"><span class="icon">⚽</span> Over 1.5 Goals</li>
             <li class="menu-item" id="btnVip100"><span class="icon">🎯</span> VIP 100+ Tickets</li>
             <li class="menu-item" id="btnVip400"><span class="icon">👑</span> VIP 400+ Tickets</li>
             <div class="menu-divider"></div>
@@ -528,6 +529,7 @@
 
         const goHomeBtn = document.getElementById('goHomeBtn');
         const drawerHomeBtn = document.getElementById('drawerHomeBtn');
+        const btnOver1510 = document.getElementById('btnOver1510');
         const btnOver15 = document.getElementById('btnOver15');
         const btnVip100 = document.getElementById('btnVip100');
         const btnVip400 = document.getElementById('btnVip400');
@@ -542,7 +544,7 @@
         const modalCloses = document.querySelectorAll('.modal-close');
 
         let selectedDateOffset = 0;
-        let activeMode = 'OVER15'; // Modes: OVER15, VIP100, VIP400
+        let activeMode = '10ODDS'; // Modes: 10ODDS, OVER15, VIP100, VIP400
 
         function formatDateYYYYMMDD(dateObj) {
             const y = dateObj.getFullYear();
@@ -612,7 +614,7 @@
 
         function setActiveMenuMode(mode, activeBtn) {
             activeMode = mode;
-            [btnOver15, btnVip100, btnVip400].forEach(btn => btn.classList.remove('active-menu'));
+            [btnOver1510, btnOver15, btnVip100, btnVip400].forEach(btn => btn.classList.remove('active-menu'));
             activeBtn.classList.add('active-menu');
             closeMenu();
             fetchMainAIPredictions(selectedDateOffset);
@@ -631,7 +633,9 @@
                 const data = await response.json();
 
                 if (data && data.events && data.events.length > 0) {
-                    if (activeMode === 'OVER15') {
+                    if (activeMode === '10ODDS') {
+                        render10OddsOver15Tickets(data.events, data.leagues);
+                    } else if (activeMode === 'OVER15') {
                         renderOver15Feed(data.events, data.leagues);
                     } else if (activeMode === 'VIP100') {
                         renderAccumulatorFeed(data.events, data.leagues, 5, 100, "VIP 100+ Ticket");
@@ -644,6 +648,114 @@
             } catch (err) {
                 feedContainer.innerHTML = `<div class="spinner-center">Unable to load Wins1™ predictions.</div>`;
             }
+        }
+
+        function render10OddsOver15Tickets(events, leagues) {
+            const feedContainer = document.getElementById('mainMatchFeed');
+            let html = "";
+
+            const validMatches = events.map(evt => {
+                const comp = evt.competitions[0];
+                const home = comp.competitors.find(c => c.homeAway === 'home');
+                const away = comp.competitors.find(c => c.homeAway === 'away');
+                return {
+                    homeName: home?.team?.displayName || "Home Team",
+                    awayName: away?.team?.displayName || "Away Team",
+                    leagueName: comp.league?.name || (leagues && leagues[0]?.name) || "Global Football",
+                    isFinished: evt.status?.type?.state === "post",
+                    homeScore: parseInt(home?.score || 0),
+                    awayScore: parseInt(away?.score || 0)
+                };
+            });
+
+            const numTickets = 14;
+            const legsPerTicket = 7; // 7 legs @ ~1.39 odds = ~10.0 Odds
+
+            for (let t = 1; t <= numTickets; t++) {
+                let legs = [];
+                let totalOdds = 1.0;
+                let ticketWin = true;
+                let ticketFinished = true;
+
+                for (let l = 0; l < legsPerTicket; l++) {
+                    const matchIdx = (t * 2 + l) % validMatches.length;
+                    const m = validMatches[matchIdx];
+
+                    const market = "Over 1.5 Goals";
+                    const odds = 1.39;
+
+                    const totalG = m.homeScore + m.awayScore;
+                    const legWon = totalG >= 2;
+
+                    if (!m.isFinished) ticketFinished = false;
+                    if (!legWon) ticketWin = false;
+
+                    totalOdds *= odds;
+                    legs.push({ ...m, market, odds, legWon });
+                }
+
+                let ticketBadgeClass = "status-pending";
+                let ticketBadgeText = "⌛ IN PROGRESS";
+                if (ticketFinished) {
+                    if (ticketWin) {
+                        ticketBadgeClass = "status-win";
+                        ticketBadgeText = "✓ TICKET WON";
+                    } else {
+                        ticketBadgeClass = "status-loss";
+                        ticketBadgeText = "✕ TICKET LOST";
+                    }
+                }
+
+                html += `
+                    <div style="margin-bottom:20px;">
+                        <div class="ticket-header">
+                            <div>
+                                <div class="ticket-title">Over 1.5 Ticket #${t}</div>
+                                <div class="ticket-odds">Target Odds: @${totalOdds.toFixed(2)}</div>
+                            </div>
+                            <span class="status-badge ${ticketBadgeClass}">${ticketBadgeText}</span>
+                        </div>
+                `;
+
+                legs.forEach(leg => {
+                    let legBadgeClass = "status-pending";
+                    let legBadgeText = "⌛ PENDING";
+                    if (leg.isFinished) {
+                        if (leg.legWon) {
+                            legBadgeClass = "status-win";
+                            legBadgeText = `✓ WON (${leg.homeScore}-${leg.awayScore})`;
+                        } else {
+                            legBadgeClass = "status-loss";
+                            legBadgeText = `✕ LOST (${leg.homeScore}-${leg.awayScore})`;
+                        }
+                    }
+
+                    html += `
+                        <div class="match-card">
+                            <div class="match-status-row">
+                                <span>${leg.leagueName}</span>
+                                <span class="status-badge ${legBadgeClass}">${legBadgeText}</span>
+                            </div>
+                            <div class="team-row">
+                                <span>${leg.homeName}</span>
+                                <span class="score-box">${leg.homeScore}</span>
+                            </div>
+                            <div class="team-row">
+                                <span>${leg.awayName}</span>
+                                <span class="score-box">${leg.awayScore}</span>
+                            </div>
+                            <div class="pred-pick-row">
+                                <span>Pick: ${leg.market}</span>
+                                <span>@${leg.odds.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                html += `</div>`;
+            }
+
+            feedContainer.innerHTML = html;
         }
 
         function renderOver15Feed(events, leagues) {
@@ -815,12 +927,13 @@
         function handleGoHome() {
             closeMenu();
             closeAllModals();
-            setActiveMenuMode('OVER15', btnOver15);
+            setActiveMenuMode('10ODDS', btnOver1510);
         }
 
         goHomeBtn.addEventListener('click', handleGoHome);
         drawerHomeBtn.addEventListener('click', handleGoHome);
 
+        btnOver1510.addEventListener('click', () => setActiveMenuMode('10ODDS', btnOver1510));
         btnOver15.addEventListener('click', () => setActiveMenuMode('OVER15', btnOver15));
         btnVip100.addEventListener('click', () => setActiveMenuMode('VIP100', btnVip100));
         btnVip400.addEventListener('click', () => setActiveMenuMode('VIP400', btnVip400));
