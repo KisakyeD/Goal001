@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI VIP Football Predictions (1 Safe Pick Daily)</title>
+  <title>AI VIP Football Predictions (Table Calendar • 1 Pick Daily)</title>
   <style>
     :root {
       --bg-dark: #0b0e14;
@@ -225,52 +225,98 @@
       margin-top: 4px;
     }
 
-    /* Date Navigation Slider */
-    .date-nav-container {
-      margin-bottom: 24px;
+    /* Table Calendar Widget Styles */
+    .calendar-container {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 10px;
+      border-radius: 16px;
+      padding: 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
     }
 
-    .date-slider {
+    .cal-header {
       display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      scroll-behavior: smooth;
-      padding-bottom: 6px;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
     }
 
-    .date-slider::-webkit-scrollbar {
-      height: 6px;
-    }
-    .date-slider::-webkit-scrollbar-thumb {
-      background: var(--border-color);
-      border-radius: 3px;
+    .cal-title {
+      font-weight: bold;
+      font-size: 1.05rem;
+      color: var(--accent-gold);
     }
 
-    .date-btn {
-      flex: 0 0 auto;
+    .cal-nav-btn {
       background: var(--bg-dark);
       border: 1px solid var(--border-color);
-      color: var(--text-muted);
-      padding: 8px 14px;
-      border-radius: 8px;
+      color: var(--text-main);
+      padding: 6px 12px;
+      border-radius: 6px;
       cursor: pointer;
+      font-size: 0.9rem;
+      transition: background 0.2s;
+    }
+
+    .cal-nav-btn:hover {
+      background: var(--border-color);
+    }
+
+    .cal-table {
+      width: 100%;
+      border-collapse: collapse;
       text-align: center;
-      transition: all 0.2s ease;
     }
 
-    .date-btn.active {
-      background: var(--accent-gold);
-      color: #000;
-      border-color: var(--accent-gold);
+    .cal-table th {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      padding-bottom: 8px;
+      text-transform: uppercase;
+    }
+
+    .cal-table td {
+      padding: 8px 0;
+      cursor: pointer;
+    }
+
+    .cal-day {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .cal-day:hover {
+      background: rgba(255, 215, 0, 0.1);
+      border-color: var(--border-color);
+    }
+
+    .cal-day.other-month {
+      color: rgba(138, 153, 173, 0.3);
+    }
+
+    .cal-day.selected {
+      background: var(--accent-gold) !important;
+      color: #000 !important;
       font-weight: bold;
+      border-color: var(--accent-gold);
+      box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
     }
 
-    .date-btn .day-label { font-size: 0.7rem; display: block; text-transform: uppercase; }
-    .date-btn .date-num { font-size: 0.95rem; font-weight: bold; }
+    .cal-day.today {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
 
     /* Single Pick Container Card */
     .master-list-card {
@@ -427,9 +473,23 @@
       </div>
     </div>
 
-    <!-- Date Navigation Slider -->
-    <div class="date-nav-container">
-      <div class="date-slider" id="date-slider"></div>
+    <!-- Table Calendar Widget -->
+    <div class="calendar-container">
+      <div class="cal-header">
+        <button class="cal-nav-btn" onclick="changeMonth(-1)">&larr; Prev</button>
+        <div class="cal-title" id="cal-month-year">November 2026</div>
+        <button class="cal-nav-btn" onclick="changeMonth(1)">Next &rarr;</button>
+      </div>
+      <table class="cal-table">
+        <thead>
+          <tr>
+            <th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th>
+          </tr>
+        </thead>
+        <tbody id="cal-body">
+          <!-- Dynamically populated table calendar rows -->
+        </tbody>
+      </table>
     </div>
 
     <!-- Container for Single Daily Pick or Zero-Force Message -->
@@ -439,11 +499,12 @@
   </div>
 
   <script>
-    let currentDateKey = getFormattedDate(0);
+    let currentDateKey = getFormattedDate(new Date());
     let currentCategory = "STANDARD";
+    let viewDate = new Date(); // Tracks month/year displayed in table calendar
 
     document.addEventListener("DOMContentLoaded", () => {
-      buildDateSlider();
+      renderTableCalendar(viewDate);
       loadCategoryData(currentDateKey);
     });
 
@@ -489,58 +550,99 @@
       loadCategoryData(currentDateKey);
     }
 
-    function getFormattedDate(offsetDays) {
-      const date = new Date();
-      date.setDate(date.getDate() + offsetDays);
-      return date.toISOString().split('T')[0];
+    function getFormattedDate(dateObj) {
+      const year = dateObj.getFullYear();
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
     }
 
-    function buildDateSlider() {
-      const slider = document.getElementById("date-slider");
-      slider.innerHTML = "";
+    function changeMonth(direction) {
+      viewDate.setMonth(viewDate.getMonth() + direction);
+      renderTableCalendar(viewDate);
+    }
 
-      for (let i = -30; i <= 30; i++) {
-        const dateObj = new Date();
-        dateObj.setDate(dateObj.getDate() + i);
-        
-        const dateKey = dateObj.toISOString().split('T')[0];
-        const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'short' });
-        const dayNum = dateObj.getDate();
-        const monthName = dateObj.toLocaleDateString('en-US', { month: 'short' });
+    function renderTableCalendar(dateObj) {
+      const year = dateObj.getFullYear();
+      const month = dateObj.getMonth();
 
-        const btn = document.createElement("button");
-        btn.className = `date-btn ${i === 0 ? 'active' : ''}`;
-        btn.id = `date-btn-${dateKey}`;
-        btn.onclick = () => selectDate(dateKey);
-        
-        btn.innerHTML = `
-          <span class="day-label">${i === 0 ? 'Today' : dayName}</span>
-          <span class="date-num">${dayNum} ${monthName}</span>
-        `;
+      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      document.getElementById("cal-month-year").innerText = `${monthNames[month]} ${year}`;
 
-        slider.appendChild(btn);
-      }
+      const firstDayIndex = new Date(year, month, 1).getDay();
+      const totalDays = new Date(year, month + 1, 0).getDate();
+      const prevTotalDays = new Date(year, month, 0).getDate();
 
-      setTimeout(() => {
-        const todayBtn = document.getElementById(`date-btn-${getFormattedDate(0)}`);
-        if (todayBtn) {
-          todayBtn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      const tbody = document.getElementById("cal-body");
+      tbody.innerHTML = "";
+
+      let dateCounter = 1;
+      let nextMonthCounter = 1;
+      let row = document.createElement("tr");
+
+      const todayStr = getFormattedDate(new Date());
+
+      // Generate 6 rows to maintain consistent table height
+      for (let i = 0; i < 42; i++) {
+        if (i % 7 === 0 && i !== 0) {
+          tbody.appendChild(row);
+          row = document.createElement("tr");
         }
-      }, 100);
+
+        const cell = document.createElement("td");
+        const dayDiv = document.createElement("div");
+        dayDiv.className = "cal-day";
+
+        if (i < firstDayIndex) {
+          // Previous month padding days
+          let prevDayNum = prevTotalDays - firstDayIndex + i + 1;
+          let prevMonthDate = new Date(year, month - 1, prevDayNum);
+          let dateKey = getFormattedDate(prevMonthDate);
+
+          dayDiv.innerText = prevDayNum;
+          dayDiv.classList.add("other-month");
+          if (dateKey === currentDateKey) dayDiv.classList.add("selected");
+          dayDiv.onclick = () => { selectCalendarDate(prevMonthDate); };
+        } else if (dateCounter <= totalDays) {
+          // Current month days
+          let currMonthDate = new Date(year, month, dateCounter);
+          let dateKey = getFormattedDate(currMonthDate);
+
+          dayDiv.innerText = dateCounter;
+          if (dateKey === todayStr) dayDiv.classList.add("today");
+          if (dateKey === currentDateKey) dayDiv.classList.add("selected");
+          
+          let capturedDate = new Date(currMonthDate);
+          dayDiv.onclick = () => { selectCalendarDate(capturedDate); };
+          dateCounter++;
+        } else {
+          // Next month padding days
+          let nextMonthDate = new Date(year, month + 1, nextMonthCounter);
+          let dateKey = getFormattedDate(nextMonthDate);
+
+          dayDiv.innerText = nextMonthCounter;
+          dayDiv.classList.add("other-month");
+          if (dateKey === currentDateKey) dayDiv.classList.add("selected");
+          dayDiv.onclick = () => { selectCalendarDate(nextMonthDate); };
+          nextMonthCounter++;
+        }
+
+        cell.appendChild(dayDiv);
+        row.appendChild(cell);
+      }
+      tbody.appendChild(row);
     }
 
-    function selectDate(dateKey) {
-      currentDateKey = dateKey;
-      document.querySelectorAll(".date-btn").forEach(b => b.classList.remove("active"));
-      const activeBtn = document.getElementById(`date-btn-${dateKey}`);
-      if (activeBtn) activeBtn.classList.add("active");
-
-      loadCategoryData(dateKey);
+    function selectCalendarDate(dateObj) {
+      currentDateKey = getFormattedDate(dateObj);
+      viewDate = new Date(dateObj);
+      renderTableCalendar(viewDate);
+      loadCategoryData(currentDateKey);
     }
 
     async function loadCategoryData(dateKey) {
       const container = document.getElementById("tickets-container");
-      container.innerHTML = `<div class="loading-box">Scanning fixtures for today's single verified pick on ${dateKey}...</div>`;
+      container.innerHTML = `<div class="loading-box">Scanning fixtures for single verified pick on ${dateKey}...</div>`;
 
       try {
         const formattedDateParam = dateKey.replace(/-/g, '');
@@ -554,7 +656,6 @@
           return;
         }
 
-        // Find the absolute highest confidence match for the selected category
         let bestDailyPick = null;
         for (let ev of events) {
           let pickData = analyzeStrictSinglePick(ev, dateKey, currentCategory);
@@ -564,12 +665,11 @@
           }
         }
 
-        // ZERO-FORCE PROTECTION: If no match qualifies, post nothing
         if (!bestDailyPick) {
           container.innerHTML = `
             <div class="no-pick-box">
               <h3>🛡️ Zero-Force Protocol Active</h3>
-              <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.9rem;">No match on ${dateKey} cleared our strict safety threshold for [${currentCategory}]. To protect your bankroll, no pick has been posted today.</p>
+              <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.9rem;">No match on ${dateKey} cleared our strict safety threshold for [${currentCategory}]. To protect your bankroll, no pick has been posted.</p>
             </div>
           `;
           return;
@@ -583,7 +683,6 @@
       }
     }
 
-    // Strict Single-Pick Analyzer (Returns only 1 top pick or null)
     function analyzeStrictSinglePick(ev, dateKey, cat) {
       const comp = ev.competitions[0];
       const homeComp = comp.competitors.find(c => c.homeAway === 'home');
@@ -651,7 +750,6 @@
           return null;
         }
       } else {
-        // Standard Double Chance
         if (rankDiff >= 14) {
           pick = "Double Chance (1X)";
           oddVal = "1.11";
@@ -674,7 +772,6 @@
       };
     }
 
-    // Evaluation Engine
     function evaluateGame(pickType, homeScore, awayScore, matchState) {
       if (homeScore === '-' || awayScore === '-' || matchState !== 'post') return null;
       
@@ -734,7 +831,7 @@
         </div>
         <div class="master-footer">
           <span>Status: <strong class="status-badge status-${ticketStatus}" style="padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">${ticketStatus}</strong></span>
-          <span>1 Pick Daily Mode</span>
+          <span>Table Calendar Mode</span>
         </div>
       `;
 
