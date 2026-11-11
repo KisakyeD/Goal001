@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Football Predictions (-30 to +30 History & Upcoming)</title>
+  <title>Free Football Predictions (Table View)</title>
   <style>
     :root {
       --bg-dark: #07090e;
@@ -215,108 +215,6 @@
       align-items: center;
     }
 
-    /* Table Calendar Widget Styles */
-    .calendar-container {
-      background: var(--card-bg);
-      border: 1px solid var(--card-border);
-      border-radius: 16px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    }
-
-    .cal-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .cal-title {
-      font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--accent-yellow);
-      letter-spacing: 0.5px;
-    }
-
-    .cal-nav-btn {
-      background: #1a2234;
-      border: 1px solid var(--card-border);
-      color: var(--text-main);
-      padding: 8px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 0.85rem;
-      font-weight: 600;
-      transition: all 0.2s;
-    }
-
-    .cal-nav-btn:hover {
-      background: var(--card-border);
-      color: var(--accent-yellow);
-      border-color: var(--accent-yellow);
-    }
-
-    .cal-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: center;
-    }
-
-    .cal-table th {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      padding-bottom: 12px;
-      text-transform: uppercase;
-      font-weight: 700;
-      letter-spacing: 1px;
-    }
-
-    .cal-table td {
-      padding: 6px 0;
-    }
-
-    .cal-day {
-      width: 38px;
-      height: 38px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 10px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      background: #161e30;
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
-    }
-
-    .cal-day:hover {
-      background: rgba(245, 197, 24, 0.25);
-      border-color: var(--accent-yellow);
-      color: var(--accent-yellow);
-      transform: scale(1.1);
-      box-shadow: 0 0 12px rgba(245, 197, 24, 0.4);
-    }
-
-    .cal-day.other-month {
-      color: rgba(148, 163, 184, 0.25);
-      background: transparent;
-    }
-
-    .cal-day.selected {
-      background: var(--accent-yellow) !important;
-      color: #07090e !important;
-      font-weight: 800;
-      border-color: var(--accent-yellow);
-      box-shadow: 0 0 15px rgba(245, 197, 24, 0.5);
-    }
-
-    .cal-day.today {
-      border-color: var(--accent-green);
-      color: var(--accent-green);
-    }
-
     /* Reference Image Style Table Container */
     .predictions-table-wrapper {
       background: var(--card-bg);
@@ -455,49 +353,27 @@
     <header>
       <div class="brand-title">
         <span>AI VIP Tips</span>
-        <span class="badge-ai" id="winrate-badge">-30 to +30 Day Range</span>
+        <span class="badge-ai" id="winrate-badge">-30 to +30 Table View</span>
       </div>
       <button class="hamburger-btn" onclick="toggleMenu(true)">&#9776;</button>
     </header>
 
     <!-- Active Banner -->
     <div class="mode-banner" id="mode-banner">
-      <span id="mode-title"><span class="live-dot"></span>Category: Daily Safe Pick (1 Verified Selection) — Hover any date to load (-30 to +30 window)</span>
-    </div>
-
-    <!-- Table Calendar Widget -->
-    <div class="calendar-container">
-      <div class="cal-header">
-        <button class="cal-nav-btn" onclick="changeMonth(-1)">&larr; Prev</button>
-        <div class="cal-title" id="cal-month-year">November 2026</div>
-        <button class="cal-nav-btn" onclick="changeMonth(1)">Next &rarr;</button>
-      </div>
-      <table class="cal-table">
-        <thead>
-          <tr>
-            <th>Su</th><th>Mo</th><th>Tu</th><th>We</th><th>Th</th><th>Fr</th><th>Sa</th>
-          </tr>
-        </thead>
-        <tbody id="cal-body">
-          <!-- Dynamically populated table calendar rows -->
-        </tbody>
-      </table>
+      <span id="mode-title"><span class="live-dot"></span>Category: Daily Safe Pick (1 Verified Selection per day)</span>
     </div>
 
     <!-- Predictions Container -->
     <div id="tickets-container">
-      <div class="loading-box">Hover a date on the calendar above...</div>
+      <div class="loading-box">Compiling -30 to +30 history and upcoming table...</div>
     </div>
   </div>
 
   <script>
-    let currentDateKey = getFormattedDate(new Date());
     let currentCategory = "STANDARD";
-    let viewDate = new Date();
 
     document.addEventListener("DOMContentLoaded", () => {
-      renderTableCalendar(viewDate);
-      loadMultiDayTableData(currentDateKey);
+      loadMultiDayTableData();
     });
 
     function toggleMenu(open) {
@@ -539,7 +415,7 @@
         banner.innerHTML = `<span class="live-dot"></span>Category: Half-Time Result (1 Verified Selection)`;
       }
 
-      loadMultiDayTableData(currentDateKey);
+      loadMultiDayTableData();
     }
 
     function getFormattedDate(dateObj) {
@@ -547,85 +423,6 @@
       const month = String(dateObj.getMonth() + 1).padStart(2, '0');
       const day = String(dateObj.getDate()).padStart(2, '0');
       return `${year}-${month}-${day}`;
-    }
-
-    function changeMonth(direction) {
-      viewDate.setMonth(viewDate.getMonth() + direction);
-      renderTableCalendar(viewDate);
-    }
-
-    function renderTableCalendar(dateObj) {
-      const year = dateObj.getFullYear();
-      const month = dateObj.getMonth();
-
-      const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-      document.getElementById("cal-month-year").innerText = `${monthNames[month]} ${year}`;
-
-      const firstDayIndex = new Date(year, month, 1).getDay();
-      const totalDays = new Date(year, month + 1, 0).getDate();
-      const prevTotalDays = new Date(year, month, 0).getDate();
-
-      const tbody = document.getElementById("cal-body");
-      tbody.innerHTML = "";
-
-      let dateCounter = 1;
-      let nextMonthCounter = 1;
-      let row = document.createElement("tr");
-
-      const todayStr = getFormattedDate(new Date());
-
-      for (let i = 0; i < 42; i++) {
-        if (i % 7 === 0 && i !== 0) {
-          tbody.appendChild(row);
-          row = document.createElement("tr");
-        }
-
-        const cell = document.createElement("td");
-        const dayDiv = document.createElement("div");
-        dayDiv.className = "cal-day";
-
-        if (i < firstDayIndex) {
-          let prevDayNum = prevTotalDays - firstDayIndex + i + 1;
-          let prevMonthDate = new Date(year, month - 1, prevDayNum);
-          let dateKey = getFormattedDate(prevMonthDate);
-
-          dayDiv.innerText = prevDayNum;
-          dayDiv.classList.add("other-month");
-          if (dateKey === currentDateKey) dayDiv.classList.add("selected");
-          dayDiv.onmouseenter = () => { selectCalendarDate(prevMonthDate); };
-        } else if (dateCounter <= totalDays) {
-          let currMonthDate = new Date(year, month, dateCounter);
-          let dateKey = getFormattedDate(currMonthDate);
-
-          dayDiv.innerText = dateCounter;
-          if (dateKey === todayStr) dayDiv.classList.add("today");
-          if (dateKey === currentDateKey) dayDiv.classList.add("selected");
-          
-          let capturedDate = new Date(currMonthDate);
-          dayDiv.onmouseenter = () => { selectCalendarDate(capturedDate); };
-          dateCounter++;
-        } else {
-          let nextMonthDate = new Date(year, month + 1, nextMonthCounter);
-          let dateKey = getFormattedDate(nextMonthDate);
-
-          dayDiv.innerText = nextMonthCounter;
-          dayDiv.classList.add("other-month");
-          if (dateKey === currentDateKey) dayDiv.classList.add("selected");
-          dayDiv.onmouseenter = () => { selectCalendarDate(nextMonthDate); };
-          nextMonthCounter++;
-        }
-
-        cell.appendChild(dayDiv);
-        row.appendChild(cell);
-      }
-      tbody.appendChild(row);
-    }
-
-    function selectCalendarDate(dateObj) {
-      currentDateKey = getFormattedDate(dateObj);
-      viewDate = new Date(dateObj);
-      renderTableCalendar(viewDate);
-      loadMultiDayTableData(currentDateKey);
     }
 
     async function fetchWithCache(dKey) {
@@ -641,17 +438,16 @@
       return data;
     }
 
-    // EXPANDED TO -30 TO +30 DAY RANGE WITH PARALLEL PROMISES
-    async function loadMultiDayTableData(centerDateKey) {
+    async function loadMultiDayTableData() {
       const container = document.getElementById("tickets-container");
-      container.innerHTML = `<div class="loading-box">Compiling -30 to +30 history window around ${centerDateKey}...</div>`;
+      container.innerHTML = `<div class="loading-box">Compiling -30 to +30 history table...</div>`;
 
       try {
-        let centerDate = new Date(centerDateKey);
+        let today = new Date();
         let promises = [];
 
         for (let offset = -30; offset <= 30; offset++) {
-          let d = new Date(centerDate);
+          let d = new Date(today);
           d.setDate(d.getDate() + offset);
           let dKey = getFormattedDate(d);
           
