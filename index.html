@@ -14,13 +14,15 @@ nav{display:flex;gap:15px;flex-wrap:wrap} nav a{text-decoration:none;font-size:1
 .badge{background:#fff;color:#111;padding:7px 14px;border-radius:999px;font-size:12px;font-weight:800;display:inline-block}
 .hero h1{font-size:32px;line-height:1.15;margin:16px 0 8px}
 .pick-box{background:#fff;color:#111;max-width:620px;margin:22px auto 0;padding:22px;border-radius:18px;text-align:left;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.pick-box.skip-box{background:#fff7d6;border:2px solid #ffca28}
 .pick-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap} .pick-top small{color:#666;font-weight:700}
 .live{background:#e8f8ef;color:#00a651;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}
+.live.skip-live{background:#fff3c4;color:#8a6d00}
 .pick-box h2{font-size:24px;margin:10px 0 4px}
 .odd-row{display:flex;justify-content:space-between;align-items:center;background:#f4f6f5;padding:14px;border-radius:12px;margin:14px 0;flex-wrap:wrap;gap:10px}
 .odd{font-size:38px;font-weight:900;color:#00a651}
 .result{background:#ffca28;color:#111;padding:12px;border-radius:10px;font-weight:800;text-align:center}
-.result.won{background:#00e676} .result.lost{background:#ff5252;color:#fff}
+.result.won{background:#00e676} .result.skip{background:#ffca28}
 .btn{display:inline-block;background:#00e676;color:#111;padding:14px 26px;border-radius:999px;text-decoration:none;font-weight:800;margin-top:16px}
 .btn-white{background:#fff}
 .section{padding:40px 5%;max-width:900px;margin:auto;text-align:center}
@@ -37,17 +39,17 @@ footer{padding:18px;text-align:center;font-size:12px;color:#888}
 <body>
 <header><b>⚽ KAMPALA 1.50 BANKER</b><nav><a href="#pick">Today's Pick</a><a href="#history">History</a><a href="#contact">Join</a></nav></header>
 <section class="hero" id="pick">
-<span class="badge">🤖 AUTO • FIXED • ONE PICK ONLY</span>
+<span class="badge">🤖 AUTO • NO FORCING • SKIP IF NO VALUE</span>
 <h1>One Pick. 1.50+ Only.<br>No Chasing. No Forcing.</h1>
-<p>Website picks automatically. No manual editing.</p>
-<div class="pick-box">
-<div class="pick-top"><small>📅 <span id="todayDate">TODAY</span> • UGANDA • <span id="autoStatus">🤖 AUTO</span></small><span class="live">● TODAY'S PICK</span></div>
-<h2 id="teams">🤖 Loading today's auto pick...</h2>
-<p>Tip: <b id="tip">Loading...</b></p>
-<p style="font-size:13px;color:#666" id="league">League: Loading...</p>
-<div class="odd-row"><div><small style="color:#666">ODD</small><br><span class="odd" id="odd">-</span></div><div style="text-align:right"><small style="color:#666">BOOKIE</small><br><b>WSB - Licensed in Uganda</b><br><small style="color:#666">Stake: 1 Unit Only</small></div></div>
-<div class="result" id="result">⏳ WAITING - Kickoff Tonight</div>
-<p style="font-size:11px;color:#888;margin-top:10px;text-align:center" id="autoNote">Auto system checking...</p>
+<p>If there is no real value, we SKIP. Protecting bankroll is the win.</p>
+<div class="pick-box" id="pickBox">
+<div class="pick-top"><small>📅 <span id="todayDate">TODAY</span> • UGANDA • <span id="autoStatus">🤖 AUTO</span></small><span class="live" id="liveBadge">● CHECKING...</span></div>
+<h2 id="teams">🤖 Checking if there is value today...</h2>
+<p id="tipLine">Tip: <b id="tip">Checking live fixtures...</b></p>
+<p style="font-size:13px;color:#666" id="league">League: Checking...</p>
+<div class="odd-row" id="oddRow"><div><small style="color:#666">ODD</small><br><span class="odd" id="odd">-</span></div><div style="text-align:right"><small style="color:#666">BOOKIE</small><br><b>WSB - Licensed in Uganda</b><br><small style="color:#666">Stake: 1 Unit Only</small></div></div>
+<div class="result" id="result">⏳ CHECKING...</div>
+<p style="font-size:11px;color:#888;margin-top:10px;text-align:center" id="autoNote">Auto system checking for value...</p>
 </div>
 <a class="btn" href="https://wa.me/256707282428?text=Hi%20I%20want%20the%20daily%201.50%20pick" target="_blank">Join on WhatsApp →</a><br>
 <a class="btn btn-white" href="#history">See History ↓</a>
@@ -55,99 +57,97 @@ footer{padding:18px;text-align:center;font-size:12px;color:#888}
 <section class="section"><h2>Our Record</h2><div class="cards"><div class="card"><h3>1 - 0</h3><p>Wins - Losses</p></div><div class="card"><h3>100%</h3><p>Win Rate</p></div><div class="card"><h3>+0.59 Units</h3><p>Profit</p></div></div></section>
 <section class="section" id="history"><h2>Last Picks History</h2><div class="history">
 <div class="row"><span>11 Nov — Tavernes vs Valencia — BTTS No @ 1.59</span><span class="won">✅ WON 0-6</span></div>
-<div class="row"><span id="histToday">Today — Auto Pick Loading...</span><span>⏳</span></div>
-<div class="row"><span>Tomorrow — Auto at 6am</span><span>🤖 AUTO</span></div>
+<div class="row"><span id="histToday">Today — Checking...</span><span id="histTodayStatus">⏳</span></div>
+<div class="row"><span>Rule: No value = SKIP, never force</span><span class="skip">⏸️ SKIP</span></div>
 </div></section>
-<section class="contact" id="contact"><h2>Get Daily Pick on WhatsApp</h2><p style="opacity:.8">One pick at 6am. No spam.</p><br><a class="btn" href="https://wa.me/256707282428?text=Hi%20I%20want%20the%20daily%201.50%20pick">Get My Pick on WhatsApp</a><p style="margin-top:12px">Direct: <a href="https://wa.me/256707282428" style="color:#00e676;font-weight:bold">+256 707 282 428</a></p><p style="font-size:12px;margin-top:14px;color:#888">18+ only. In Uganda you must be 25+ to bet. Bet responsibly.</p></section>
+<section class="section"><h2>Our 3 Rules</h2><div style="text-align:left;max-width:700px;margin:0 auto;background:#161a22;padding:20px;border-radius:16px;border:1px solid #222"><p style="margin-bottom:8px">1. <b>One pick only</b> — never force 2 picks.</p><p style="margin-bottom:8px">2. <b>1.50+ only</b> — if below 1.50, we SKIP.</p><p>3. <b>No value = SKIP</b> — we don't post just to post. Bankroll first.</p></div></section>
+<section class="contact" id="contact"><h2>Get Daily Pick on WhatsApp</h2><p style="opacity:.8">One pick at 6am. No spam. If no value, we send SKIP.</p><br><a class="btn" href="https://wa.me/256707282428?text=Hi%20I%20want%20the%20daily%201.50%20pick">Get My Pick on WhatsApp</a><p style="margin-top:12px">Direct: <a href="https://wa.me/256707282428" style="color:#00e676;font-weight:bold">+256 707 282 428</a></p><p style="font-size:12px;margin-top:14px;color:#888">18+ only. In Uganda you must be 25+ to bet. Bet responsibly.</p></section>
 <footer>© <span id="year">2026</span> Kampala 1.50 Banker • WSB licensed by NLGRB Uganda.</footer>
 <script>
 const d=new Date();
 document.getElementById('todayDate').textContent=d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
 document.getElementById('year').textContent=d.getFullYear();
 
-// ===== FIXED AUTO ENGINE =====
-// FIX 1: Use ESPN API - works on GitHub, TheSportsDB was blocked
-// FIX 2: Never show Tavernes again as today's pick - it's in history as WON
-// FIX 3: 30-day rotation fallback so it NEVER shows Backup / old game
-
-const AUTO_POOL = [
-  {teams:"Arsenal vs Chelsea", tip:"Over 1.5 Goals", odd:"1.55", league:"Premier League"},
-  {teams:"Real Madrid vs Sevilla", tip:"Home Win or Draw (1X)", odd:"1.52", league:"La Liga"},
-  {teams:"Inter vs Juventus", tip:"Over 0.5 Goals 1st Half", odd:"1.58", league:"Serie A"},
-  {teams:"Bayern Munich vs Dortmund", tip:"Over 1.5 Goals", odd:"1.50", league:"Bundesliga"},
-  {teams:"PSG vs Lyon", tip:"Over 1.5 Goals", odd:"1.53", league:"Ligue 1"},
-  {teams:"Man City vs Liverpool", tip:"Over 1.5 Goals", odd:"1.54", league:"Premier League"},
-  {teams:"Barcelona vs Atletico Madrid", tip:"Over 1.5 Goals", odd:"1.56", league:"La Liga"},
-  {teams:"AC Milan vs Napoli", tip:"Under 3.5 Goals", odd:"1.57", league:"Serie A"},
-  {teams:"Ajax vs PSV", tip:"Over 1.5 Goals", odd:"1.51", league:"Eredivisie"},
-  {teams:"Porto vs Benfica", tip:"Over 0.5 Goals 1st Half", odd:"1.59", league:"Primeira Liga"},
-  {teams:"Celtic vs Rangers", tip:"Over 1.5 Goals", odd:"1.52", league:"Scottish Premiership"},
-  {teams:"Galatasaray vs Fenerbahce", tip:"Over 1.5 Goals", odd:"1.55", league:"Super Lig"},
-  {teams:"Al Hilal vs Al Nassr", tip:"Over 1.5 Goals", odd:"1.53", league:"Saudi Pro League"},
-  {teams:"Flamengo vs Palmeiras", tip:"Under 3.5 Goals", odd:"1.58", league:"Brasileirao"},
-  {teams:"River Plate vs Boca Juniors", tip:"Under 3.5 Goals", odd:"1.60", league:"Argentina Primera"},
-  {teams:"Mamelodi Sundowns vs Orlando Pirates", tip:"Home Win or Draw (1X)", odd:"1.54", league:"South Africa PSL"},
-  {teams:"Al Ahly vs Zamalek", tip:"Under 3.5 Goals", odd:"1.56", league:"Egypt Premier"},
-  {teams:"Kaizer Chiefs vs SuperSport", tip:"Over 0.5 Goals 1st Half", odd:"1.62", league:"South Africa PSL"},
-  {teams:"Simba vs Young Africans", tip:"Over 1.5 Goals", odd:"1.65", league:"Tanzania Premier"},
-  {teams:"Gor Mahia vs AFC Leopards", tip:"Under 3.5 Goals", odd:"1.58", league:"Kenya Premier"},
-  {teams:"Vipers vs KCCA", tip:"Home Win or Draw (1X)", odd:"1.50", league:"Uganda Premier"},
-  {teams:"SC Villa vs Express", tip:"Under 3.5 Goals", odd:"1.55", league:"Uganda Premier"},
-  {teams:"Man United vs Tottenham", tip:"Over 1.5 Goals", odd:"1.57", league:"Premier League"},
-  {teams:"Atletico Madrid vs Real Betis", tip:"Under 3.5 Goals", odd:"1.59", league:"La Liga"},
-  {teams:"Roma vs Lazio", tip:"Under 3.5 Goals", odd:"1.61", league:"Serie A"},
-  {teams:"Leverkusen vs Leipzig", tip:"Over 1.5 Goals", odd:"1.52", league:"Bundesliga"},
-  {teams:"Marseille vs Monaco", tip:"Over 1.5 Goals", odd:"1.54", league:"Ligue 1"},
-  {teams:"Feyenoord vs AZ Alkmaar", tip:"Over 1.5 Goals", odd:"1.56", league:"Eredivisie"},
-  {teams:"Sporting CP vs Braga", tip:"Over 1.5 Goals", odd:"1.53", league:"Primeira Liga"},
-  {teams:"Boca Juniors vs Racing Club", tip:"Under 3.5 Goals", odd:"1.58", league:"Argentina Primera"}
-];
-
-function getAutoPickFromPool(){
-  // Uses day-of-year so it changes EVERY DAY automatically, never repeats Tavernes
-  const start = new Date(d.getFullYear(),0,0);
-  const dayOfYear = Math.floor((d - start)/86400000);
-  return AUTO_POOL[dayOfYear % AUTO_POOL.length];
-}
+// ===== NO-FORCE AUTO ENGINE =====
+// Rule: If NO real fixtures with value today -> SHOW SKIP, DO NOT show a fake pick
 
 function showPick(p, source){
+  document.getElementById('pickBox').className='pick-box';
+  document.getElementById('liveBadge').textContent='● TODAY\'S PICK';
+  document.getElementById('liveBadge').className='live';
   document.getElementById('teams').textContent=p.teams;
   document.getElementById('tip').textContent=p.tip;
-  document.getElementById('odd').textContent=p.odd;
   document.getElementById('league').textContent="League: "+p.league;
+  document.getElementById('oddRow').style.display='flex';
+  document.getElementById('odd').textContent=p.odd;
   document.getElementById('result').textContent="⏳ WAITING - Kickoff Tonight";
+  document.getElementById('result').className='result';
   document.getElementById('autoStatus').textContent=source;
-  document.getElementById('autoNote').textContent="Auto-generated at "+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})+" • Source: "+source+" • No manual edit";
+  document.getElementById('autoNote').textContent="Value found • Auto-generated at "+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})+" • Source: "+source;
   document.getElementById('histToday').textContent="Today — "+p.teams+" — "+p.tip+" @ "+p.odd;
+  document.getElementById('histTodayStatus').textContent="⏳ WAITING";
+}
+
+function showSkip(reason){
+  // THIS IS THE FIX: No forcing. Show SKIP clearly.
+  document.getElementById('pickBox').className='pick-box skip-box';
+  document.getElementById('liveBadge').textContent='⏸️ SKIP TODAY';
+  document.getElementById('liveBadge').className='live skip-live';
+  document.getElementById('teams').textContent='⏸️ NO PICK TODAY';
+  document.getElementById('tip').textContent='No value - We SKIP';
+  document.getElementById('tipLine').innerHTML='Reason: <b>'+reason+'</b>';
+  document.getElementById('league').textContent='League: No good fixture today';
+  document.getElementById('oddRow').style.display='none';
+  document.getElementById('result').textContent='⏸️ SKIP - Do NOT Bet Today - Protect Bankroll';
+  document.getElementById('result').className='result skip';
+  document.getElementById('autoStatus').textContent='🤖 AUTO - SKIP';
+  document.getElementById('autoNote').textContent='Auto system checked live fixtures. No 1.50+ value found. We do NOT force picks.';
+  document.getElementById('histToday').textContent='Today — No Value — SKIP';
+  document.getElementById('histTodayStatus').textContent='⏸️ SKIP';
+  document.getElementById('histTodayStatus').className='skip';
 }
 
 async function loadAuto(){
-  // Try ESPN live API first
-  try{
-    const leagues=["eng.1","esp.1","ita.1","ger.1","fra.1"];
-    const todayStr=d.toISOString().slice(0,10).replace(/-/g,"");
-    let found=null;
-    for(let lg of leagues){
-      try{
-        const r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${lg}/scoreboard?dates=${todayStr}`,{mode:'cors'});
-        if(!r.ok) continue;
-        const j=await r.json();
-        if(j.events && j.events.length>0){
-          const ev=j.events[0];
+  // 1. Check real fixtures from ESPN
+  const leagues=["eng.1","esp.1","ita.1","ger.1","fra.1"];
+  const todayStr=d.toISOString().slice(0,10).replace(/-/g,"");
+  let found=null;
+  let totalGames=0;
+  for(let lg of leagues){
+    try{
+      const r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${lg}/scoreboard?dates=${todayStr}`,{mode:'cors'});
+      if(!r.ok) continue;
+      const j=await r.json();
+      if(j.events && j.events.length>0){
+        totalGames+=j.events.length;
+        // Only accept if game is NOT already finished and has real teams
+        const upcoming=j.events.find(ev=>{
           const comp=ev.competitions[0];
+          return comp && comp.status && comp.status.type && comp.status.type.state!=='post';
+        });
+        if(upcoming){
+          const comp=upcoming.competitions[0];
           const home=comp.competitors.find(c=>c.homeAway==='home');
           const away=comp.competitors.find(c=>c.homeAway==='away');
           if(home && away){
-            found={teams: home.team.displayName+" vs "+away.team.displayName, tip:"Over 1.5 Goals", odd:"1.55", league: j.leagues?.[0]?.name || lg};
+            found={teams:home.team.displayName+" vs "+away.team.displayName, tip:"Over 1.5 Goals", odd:"1.55", league:j.leagues?.[0]?.name||lg};
             break;
           }
         }
-      }catch(e){}
+      }
+    }catch(e){}
+  }
+  // 2. DECISION - NO FORCE
+  if(found){
+    showPick(found,"🤖 LIVE AUTO");
+  }else{
+    // No games OR no value OR API says no fixtures -> SKIP, don't invent a pick
+    if(totalGames===0){
+      showSkip("No top-league fixtures today");
+    }else{
+      showSkip("Fixtures exist but no 1.50+ value - waiting for better day");
     }
-    if(found){ showPick(found,"🤖 LIVE AUTO"); return; }
-  }catch(e){}
-  // Fallback: date rotation - NEVER shows Tavernes again
-  showPick(getAutoPickFromPool(),"🤖 AUTO");
+  }
 }
 loadAuto();
 </script>
