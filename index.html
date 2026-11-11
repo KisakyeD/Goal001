@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Football Predictions (Full History & Upcoming Table)</title>
+  <title>Free Football Predictions (Calendar + History & Upcoming Table)</title>
   <style>
     :root {
       --bg-dark: #0b0e14;
@@ -422,7 +422,7 @@
     <header>
       <div class="brand-title">
         <span>AI VIP Tips</span>
-        <span class="badge-ai" id="winrate-badge">History & Upcoming Table</span>
+        <span class="badge-ai" id="winrate-badge">Calendar + Table Mode</span>
       </div>
       <button class="hamburger-btn" onclick="toggleMenu(true)">&#9776;</button>
     </header>
@@ -453,7 +453,7 @@
 
     <!-- Predictions Container -->
     <div id="tickets-container">
-      <div class="loading-box">Scanning history and upcoming fixtures...</div>
+      <div class="loading-box">Loading calendar and table history...</div>
     </div>
   </div>
 
@@ -595,16 +595,14 @@
       loadMultiDayTableData(currentDateKey);
     }
 
-    // Fetches a window of 9 days (4 days history, selected date, 4 days upcoming) to build a continuous history & upcoming table view
     async function loadMultiDayTableData(centerDateKey) {
       const container = document.getElementById("tickets-container");
-      container.innerHTML = `<div class="loading-box">Compiling history and upcoming fixtures around ${centerDateKey}...</div>`;
+      container.innerHTML = `<div class="loading-box">Compiling history and upcoming table around ${centerDateKey}...</div>`;
 
       try {
         let centerDate = new Date(centerDateKey);
         let tableRows = [];
 
-        // Generate 9-day span: -4 days to +4 days
         for (let offset = -4; offset <= 4; offset++) {
           let d = new Date(centerDate);
           d.setDate(d.getDate() + offset);
@@ -623,7 +621,7 @@
                   dateStr: dKey,
                   ...pickData
                 });
-                break; // 1 pick per day limit
+                break;
               }
             }
           } catch (e) {
