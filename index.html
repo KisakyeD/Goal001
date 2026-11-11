@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Football Predictions (Table Layout)</title>
+  <title>Free Football Predictions (Full History & Upcoming Table)</title>
   <style>
     :root {
       --bg-dark: #0b0e14;
@@ -35,7 +35,7 @@
 
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 950px;
     }
 
     /* Top Header & Hamburger Menu */
@@ -297,6 +297,7 @@
       border-radius: 8px;
       overflow: hidden;
       box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
     }
 
     .predictions-table-header {
@@ -354,6 +355,8 @@
     }
     .result-pending {
       color: var(--text-muted);
+      font-style: italic;
+      font-size: 0.85rem;
     }
 
     .table-footer-note {
@@ -419,7 +422,7 @@
     <header>
       <div class="brand-title">
         <span>AI VIP Tips</span>
-        <span class="badge-ai" id="winrate-badge">Table Layout Mode</span>
+        <span class="badge-ai" id="winrate-badge">History & Upcoming Table</span>
       </div>
       <button class="hamburger-btn" onclick="toggleMenu(true)">&#9776;</button>
     </header>
@@ -450,7 +453,7 @@
 
     <!-- Predictions Container -->
     <div id="tickets-container">
-      <div class="loading-box">Scanning fixtures for table layout...</div>
+      <div class="loading-box">Scanning history and upcoming fixtures...</div>
     </div>
   </div>
 
@@ -461,7 +464,7 @@
 
     document.addEventListener("DOMContentLoaded", () => {
       renderTableCalendar(viewDate);
-      loadCategoryData(currentDateKey);
+      loadMultiDayTableData(currentDateKey);
     });
 
     function toggleMenu(open) {
@@ -503,7 +506,7 @@
         banner.innerHTML = `<span class="live-dot"></span>Category: Half-Time Result (1 Verified Selection)`;
       }
 
-      loadCategoryData(currentDateKey);
+      loadMultiDayTableData(currentDateKey);
     }
 
     function getFormattedDate(dateObj) {
@@ -589,48 +592,59 @@
       currentDateKey = getFormattedDate(dateObj);
       viewDate = new Date(dateObj);
       renderTableCalendar(viewDate);
-      loadCategoryData(currentDateKey);
+      loadMultiDayTableData(currentDateKey);
     }
 
-    async function loadCategoryData(dateKey) {
+    // Fetches a window of 9 days (4 days history, selected date, 4 days upcoming) to build a continuous history & upcoming table view
+    async function loadMultiDayTableData(centerDateKey) {
       const container = document.getElementById("tickets-container");
-      container.innerHTML = `<div class="loading-box">Scanning fixtures for ${dateKey}...</div>`;
+      container.innerHTML = `<div class="loading-box">Compiling history and upcoming fixtures around ${centerDateKey}...</div>`;
 
       try {
-        const formattedDateParam = dateKey.replace(/-/g, '');
-        const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard?dates=${formattedDateParam}`);
-        const data = await res.json();
+        let centerDate = new Date(centerDateKey);
+        let tableRows = [];
 
-        let events = data.events || [];
+        // Generate 9-day span: -4 days to +4 days
+        for (let offset = -4; offset <= 4; offset++) {
+          let d = new Date(centerDate);
+          d.setDate(d.getDate() + offset);
+          let dKey = getFormattedDate(d);
+          let formattedDateParam = dKey.replace(/-/g, '');
 
-        if (events.length === 0) {
-          container.innerHTML = `<div class="no-pick-box">🛡️ No fixtures scheduled for ${dateKey}. No pick generated.</div>`;
-          return;
-        }
+          try {
+            const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard?dates=${formattedDateParam}`);
+            const data = await res.json();
+            let events = data.events || [];
 
-        let bestDailyPick = null;
-        for (let ev of events) {
-          let pickData = analyzeStrictSinglePick(ev, dateKey, currentCategory);
-          if (pickData) {
-            bestDailyPick = pickData;
-            break;
+            for (let ev of events) {
+              let pickData = analyzeStrictSinglePick(ev, dKey, currentCategory);
+              if (pickData) {
+                tableRows.push({
+                  dateStr: dKey,
+                  ...pickData
+                });
+                break; // 1 pick per day limit
+              }
+            }
+          } catch (e) {
+            console.warn("Failed fetching date:", dKey);
           }
         }
 
-        if (!bestDailyPick) {
+        if (tableRows.length === 0) {
           container.innerHTML = `
             <div class="no-pick-box">
               <h3>🛡️ Zero-Force Protocol Active</h3>
-              <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.9rem;">No match on ${dateKey} cleared our strict safety threshold for [${currentCategory}]. To protect your bankroll, no pick has been posted.</p>
+              <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.9rem;">No qualified picks found for this date range under [${currentCategory}].</p>
             </div>
           `;
           return;
         }
 
-        renderTableLayout(bestDailyPick, dateKey);
+        renderFullTable(tableRows);
 
       } catch (err) {
-        console.error("Failed to load secure data:", err);
+        console.error("Failed to load table data:", err);
         container.innerHTML = `<div class="loading-box">Unable to connect to live match feed. Check internet connection.</div>`;
       }
     }
@@ -745,25 +759,37 @@
       return true;
     }
 
-    function renderTableLayout(g, dateKey) {
+    function renderFullTable(rows) {
       const container = document.getElementById("tickets-container");
       container.innerHTML = "";
 
-      const result = evaluateGame(g.pick, g.homeScore, g.awayScore, g.state);
-      let resultDisplay = '<span class="result-pending">-</span>';
-
-      if (result === true) {
-        resultDisplay = '<span class="result-win">&#10003;</span>';
-      } else if (result === false) {
-        resultDisplay = '<span class="result-loss">&#10005;</span>';
-      }
-
-      // Format date key to MM.DD as shown in reference layout
-      const parts = dateKey.split('-');
-      const formattedDate = `${parts[1]}.${parts[2]}`;
-
       const wrapper = document.createElement("div");
       wrapper.className = "predictions-table-wrapper";
+
+      let tableRowsHtml = rows.map(r => {
+        const parts = r.dateStr.split('-');
+        const formattedDate = `${parts[1]}.${parts[2]}`;
+
+        const result = evaluateGame(r.pick, r.homeScore, r.awayScore, r.state);
+        let resultDisplay = '<span class="result-pending">Upcoming</span>';
+
+        if (result === true) {
+          resultDisplay = '<span class="result-win">&#10003;</span>';
+        } else if (result === false) {
+          resultDisplay = '<span class="result-loss">&#10005;</span>';
+        }
+
+        return `
+          <tr>
+            <td class="td-date">${formattedDate}</td>
+            <td class="td-league">${r.league}</td>
+            <td class="td-game">${r.teams}</td>
+            <td class="td-prediction">${r.pick}</td>
+            <td class="td-odds">${r.odd}</td>
+            <td>${resultDisplay}</td>
+          </tr>
+        `;
+      }).join('');
 
       wrapper.innerHTML = `
         <div class="predictions-table-header">Free Football Predictions</div>
@@ -779,14 +805,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="td-date">${formattedDate}</td>
-              <td class="td-league">${g.league}</td>
-              <td class="td-game">${g.teams}</td>
-              <td class="td-prediction">${g.pick}</td>
-              <td class="td-odds">${g.odd}</td>
-              <td>${resultDisplay}</td>
-            </tr>
+            ${tableRowsHtml}
           </tbody>
         </table>
         <div class="table-footer-note">
