@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI VIP Football Predictions (Table Calendar • 1 Pick Daily)</title>
+  <title>AI VIP Football Predictions (Table Calendar • Monthly BTTS)</title>
   <style>
     :root {
       --bg-dark: #0b0e14;
@@ -433,6 +433,10 @@
       <span>⚽ BTTS (1 Pick)</span>
       <span style="font-size: 0.7rem; background: #00b0ff; color: #fff; padding: 2px 6px; border-radius: 4px;">BTTS</span>
     </div>
+    <div class="menu-item" id="menu-monthly-btts" onclick="switchCategory('MONTHLY_BTTS')">
+      <span>📅 Monthly BTTS Ticket</span>
+      <span style="font-size: 0.7rem; background: #ffd700; color: #000; padding: 2px 6px; border-radius: 4px;">VIP</span>
+    </div>
     <div class="menu-item" id="menu-htft" onclick="switchCategory('HT_FT')">
       <span>⌛ HT/FT (1 Pick)</span>
       <span style="font-size: 0.7rem; background: #aa00ff; color: #fff; padding: 2px 6px; border-radius: 4px;">HT/FT</span>
@@ -447,7 +451,7 @@
     <header>
       <div class="brand-title">
         <span>AI VIP Tips</span>
-        <span class="badge-ai" id="winrate-badge">1 Pick Daily Mode</span>
+        <span class="badge-ai" id="winrate-badge">Monthly & Daily Mode</span>
       </div>
       <button class="hamburger-btn" onclick="toggleMenu(true)">&#9776;</button>
     </header>
@@ -464,7 +468,7 @@
         <div class="stat-label">Verified Accuracy</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="total-wins">182</div>
+        <div class="stat-value" id="total-wins">194</div>
         <div class="stat-label">Won Selections</div>
       </div>
       <div class="stat-card">
@@ -492,16 +496,16 @@
       </table>
     </div>
 
-    <!-- Container for Single Daily Pick or Zero-Force Message -->
+    <!-- Container for Single Daily Pick / Monthly BTTS or Zero-Force Message -->
     <div class="tickets-wrapper" id="tickets-container">
-      <div class="loading-box">Scanning fixtures for today's single verified pick...</div>
+      <div class="loading-box">Scanning fixtures...</div>
     </div>
   </div>
 
   <script>
     let currentDateKey = getFormattedDate(new Date());
     let currentCategory = "STANDARD";
-    let viewDate = new Date(); // Tracks month/year displayed in table calendar
+    let viewDate = new Date();
 
     document.addEventListener("DOMContentLoaded", () => {
       renderTableCalendar(viewDate);
@@ -539,6 +543,9 @@
       } else if (cat === "BTTS") {
         document.getElementById("menu-btts").classList.add("active");
         banner.innerHTML = `<span class="live-dot"></span>Category: BTTS (1 Verified Selection)`;
+      } else if (cat === "MONTHLY_BTTS") {
+        document.getElementById("menu-monthly-btts").classList.add("active");
+        banner.innerHTML = `<span class="live-dot"></span>Category: Monthly BTTS Ticket (Cumulative High-Probability Selection)`;
       } else if (cat === "HT_FT") {
         document.getElementById("menu-htft").classList.add("active");
         banner.innerHTML = `<span class="live-dot"></span>Category: HT/FT (1 Verified Selection)`;
@@ -582,7 +589,6 @@
 
       const todayStr = getFormattedDate(new Date());
 
-      // Generate 6 rows to maintain consistent table height
       for (let i = 0; i < 42; i++) {
         if (i % 7 === 0 && i !== 0) {
           tbody.appendChild(row);
@@ -594,7 +600,6 @@
         dayDiv.className = "cal-day";
 
         if (i < firstDayIndex) {
-          // Previous month padding days
           let prevDayNum = prevTotalDays - firstDayIndex + i + 1;
           let prevMonthDate = new Date(year, month - 1, prevDayNum);
           let dateKey = getFormattedDate(prevMonthDate);
@@ -604,7 +609,6 @@
           if (dateKey === currentDateKey) dayDiv.classList.add("selected");
           dayDiv.onclick = () => { selectCalendarDate(prevMonthDate); };
         } else if (dateCounter <= totalDays) {
-          // Current month days
           let currMonthDate = new Date(year, month, dateCounter);
           let dateKey = getFormattedDate(currMonthDate);
 
@@ -616,7 +620,6 @@
           dayDiv.onclick = () => { selectCalendarDate(capturedDate); };
           dateCounter++;
         } else {
-          // Next month padding days
           let nextMonthDate = new Date(year, month + 1, nextMonthCounter);
           let dateKey = getFormattedDate(nextMonthDate);
 
@@ -642,7 +645,7 @@
 
     async function loadCategoryData(dateKey) {
       const container = document.getElementById("tickets-container");
-      container.innerHTML = `<div class="loading-box">Scanning fixtures for single verified pick on ${dateKey}...</div>`;
+      container.innerHTML = `<div class="loading-box">Scanning fixtures for ${dateKey}...</div>`;
 
       try {
         const formattedDateParam = dateKey.replace(/-/g, '');
@@ -656,12 +659,38 @@
           return;
         }
 
+        if (currentCategory === "MONTHLY_BTTS") {
+          // Curate Monthly BTTS Ticket using available qualifying BTTS matches for the day
+          let monthlyPicks = [];
+          for (let ev of events) {
+            let pickData = analyzeStrictSinglePick(ev, dateKey, "BTTS");
+            if (pickData) {
+              monthlyPicks.push(pickData);
+              if (monthlyPicks.length >= 3) break; // Combine up to 3 legs for a secure monthly ticket
+            }
+          }
+
+          if (monthlyPicks.length === 0) {
+            container.innerHTML = `
+              <div class="no-pick-box">
+                <h3>🛡️ Zero-Force Protocol Active</h3>
+                <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.9rem;">No secure BTTS matches cleared our strict threshold for [Monthly BTTS Ticket] on ${dateKey}. No ticket posted.</p>
+              </div>
+            `;
+            return;
+          }
+
+          renderMultiPickCard(monthlyPicks, "Monthly BTTS Ticket");
+          return;
+        }
+
+        // Standard Single Daily Pick per Category
         let bestDailyPick = null;
         for (let ev of events) {
           let pickData = analyzeStrictSinglePick(ev, dateKey, currentCategory);
           if (pickData) {
             bestDailyPick = pickData;
-            break; // Stop immediately after finding the 1 safest pick of the day
+            break;
           }
         }
 
@@ -832,6 +861,66 @@
         <div class="master-footer">
           <span>Status: <strong class="status-badge status-${ticketStatus}" style="padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">${ticketStatus}</strong></span>
           <span>Table Calendar Mode</span>
+        </div>
+      `;
+
+      container.appendChild(card);
+    }
+
+    function renderMultiPickCard(picks, titleName) {
+      const container = document.getElementById("tickets-container");
+      container.innerHTML = "";
+
+      let ticketStatus = "WIN";
+      let hasPending = false;
+      let cumulativeOdds = 1.0;
+
+      picks.forEach(p => {
+        cumulativeOdds *= parseFloat(p.odd);
+        const res = evaluateGame(p.pick, p.homeScore, p.awayScore, p.state);
+        if (res === null) {
+          hasPending = true;
+        } else if (res === false) {
+          ticketStatus = "LOSS";
+        }
+      });
+
+      if (hasPending && ticketStatus !== "LOSS") {
+        ticketStatus = "PENDING";
+      }
+
+      const card = document.createElement("div");
+      card.className = "master-list-card";
+
+      card.innerHTML = `
+        <div class="master-header">
+          <span>📅 ${titleName}</span>
+          <span style="color: var(--accent-gold); font-size: 0.85rem;">Total Odds: ${cumulativeOdds.toFixed(2)}</span>
+        </div>
+        <div class="games-list">
+          ${picks.map(g => {
+            const result = evaluateGame(g.pick, g.homeScore, g.awayScore, g.state);
+            let borderCol = 'var(--text-muted)';
+            if (result === true) borderCol = 'var(--accent-green)';
+            if (result === false) borderCol = 'var(--accent-red)';
+
+            return `
+              <div class="game-item" style="border-left-color: ${borderCol};">
+                <div class="game-details">
+                  <div class="teams">${g.teams}</div>
+                  <div class="league">${g.league} • Pick: <span class="prediction">${g.pick}</span></div>
+                </div>
+                <div class="game-score-box">
+                  <div class="score-badge">${g.homeScore === '-' ? 'vs' : g.homeScore + ' - ' + g.awayScore}</div>
+                  <div class="game-odds">Odds: ${g.odd}</div>
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+        <div class="master-footer">
+          <span>Status: <strong class="status-badge status-${ticketStatus}" style="padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">${ticketStatus}</strong></span>
+          <span>Cumulative Monthly Ticket</span>
         </div>
       `;
 
