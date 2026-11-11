@@ -1,176 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buy TikTok Coins - Airtel Pay - @bluewhaa</title>
-<script src="https://checkout.flutterwave.com/v3.js"></script>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Arial,sans-serif}
-body{background:#000;color:#fff;min-height:100vh}
-.wrap{max-width:600px;margin:auto;padding:16px 16px 30px}
-header{background:#111;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;border-bottom:1px solid #222;position:sticky;top:0;z-index:100}
-header b span{color:#ff2e63}
-.profile{background:#121722;border:2px solid #ff2e63;border-radius:20px;padding:20px;text-align:center;margin:14px 0}
-.profile .avatar{width:84px;height:84px;border-radius:50%;background:linear-gradient(135deg,#ff2e63,#ff6b9d);display:flex;align-items:center;justify-content:center;font-size:40px;margin:0 auto}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
-.card{background:#121722;border:2px solid #333;border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer}
-.card.active{border-color:#ff2e63;background:#1a2234;box-shadow:0 0 0 3px rgba(255,46,99,.25)}
-.card b{font-size:18px;display:block} .card small{opacity:.7;font-size:12px}
-.box{background:#121722;border:1px solid #222;border-radius:16px;padding:18px;margin:14px 0}
-.box h3{color:#f5c518;margin-bottom:8px}
-input{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#0b0e13;color:#fff;font-size:16px;margin:8px 0;outline:none}
-input:focus{border-color:#ff2e63}
-label{font-weight:700;font-size:14px;display:block;margin-top:6px}
-.btn{display:block;text-align:center;padding:16px;border-radius:999px;font-weight:800;font-size:16px;margin-top:12px;border:none;width:100%;cursor:pointer;text-decoration:none}
-.btn-airtel{background:#e40000;color:#fff} .btn-mtn{background:#ffcc00;color:#111} .btn-wa{background:#25D366;color:#fff} .btn-dark{background:#fff;color:#111}
-.daily-code{background:#fff7d6;color:#111;border-radius:14px;padding:16px;text-align:center;margin:12px 0}
-.daily-code b{font-size:26px;letter-spacing:2px;display:block;margin:6px 0;word-break:break-all}
-.toast{display:none;background:#00e676;color:#111;border-radius:12px;padding:14px;font-size:14px;font-weight:700;text-align:center;margin-top:12px;line-height:1.5}
-.toast.show{display:block} .toast.error{background:#ff2e63;color:#fff}
-.toast.warn{background:#ffb800;color:#111}
-.ussd-box{background:#0b0e13;border-radius:12px;padding:12px;font-size:13px;line-height:1.8;word-break:break-word}
-footer{padding:20px;text-align:center;font-size:12px;color:#888;border-top:1px solid #222}
-</style>
-</head>
-<body>
-<header><b>🎵 TikTok <span>Coins UG</span></b><a href="https://www.tiktok.com/@bluewhaa" style="color:#fff;text-decoration:none;font-size:13px;background:#222;padding:7px 12px;border-radius:999px">@bluewhaa →</a></header>
-<div class="wrap">
-<div class="profile">
-<div class="avatar">🎵</div>
-<h1>@bluewhaa</h1>
-<p>🪙 TikTok Coins Seller • Kampala<br>Pay with Airtel Money or MTN MoMo<br>Coins go to YOUR TikTok Balance</p>
+<div style="max-width:420px; margin:auto; font-family:Arial; text-align:center; border:1px solid #eee; border-radius:15px; padding:20px;">
+  <h2>🎵 Buy TikTok Coins - Automatic</h2>
+  <p>Pay with Airtel Money • Auto-Confirmed</p>
+
+  <label><b>Your TikTok Username</b></label><br>
+  <input id="username" type="text" placeholder="@nakato_ug" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ccc; margin:10px 0;">
+
+  <label><b>Choose Pack</b></label><br>
+  <select id="pack" style="width:100%; padding:12px; border-radius:10px; margin:10px 0;">
+    <option value="100 Coins - 35000">100 Coins - 35,000 UGX</option>
+    <option value="350 Coins - 120000">350 Coins - 120,000 UGX</option>
+    <option value="1000 Coins - 330,000 UGX">1000 Coins - 330,000 UGX</option>
+  </select>
+
+  <div style="background:#FF0000; color:white; padding:15px; border-radius:10px;">
+    <b>PAY TO AIRTEL MERCHANT CODE</b><br>
+    <span style="font-size:28px; font-weight:bold;">YOUR_CODE</span><br>
+    Name: Whealth Services<br>
+    Dial: *185*9*YOUR_CODE*Amount#
+  </div>
+
+  <br>
+  <label><b>Paste Airtel Transaction ID from SMS</b></label><br>
+  <input id="txid" type="text" placeholder="e.g. AP123456" style="width:100%; padding:12px; border-radius:10px; border:1px solid #ccc; margin:10px 0;">
+
+  <a href="#" onclick="sendOrder()" style="background:#25D366; color:white; padding:15px; display:block; border-radius:10px; text-decoration:none; font-weight:bold;">
+    I HAVE PAID → SEND ORDER
+  </a>
+  <p style="font-size:12px; color:grey;">We check your payment in our Airtel Merchant account automatically. Delivery in 2 mins.</p>
 </div>
 
-<div class="box">
-<h3>🛒 1. Choose Coins</h3>
-<div class="grid">
-<div class="card" onclick="selectPack(70,26000,this)"><b>70 Coins</b><small>26,000 UGX</small></div>
-<div class="card active" onclick="selectPack(100,35000,this)"><b>100 Coins</b><small>35,000 UGX</small></div>
-<div class="card" onclick="selectPack(350,120000,this)"><b>350 Coins</b><small>120,000 UGX</small></div>
-<div class="card" onclick="selectPack(700,235000,this)"><b>700 Coins</b><small>235,000 UGX</small></div>
-<div class="card" onclick="selectPack(1000,330000,this)"><b>1,000 Coins ⭐</b><small>330,000 UGX</small></div>
-<div class="card" onclick="selectPack(2000,650000,this)"><b>2,000 Coins</b><small>650,000 UGX</small></div>
-</div>
-<label>Your TikTok Username (Where coins go)</label>
-<input type="text" id="buyerUser" placeholder="@yourusername">
-<label>Your Airtel / MTN Number (Popup goes to THIS number)</label>
-<input type="tel" id="buyerPhone" placeholder="0707282428" inputmode="numeric">
-</div>
-
-<div class="daily-code">
-<small style="font-weight:800">📅 TODAY'S CODE - <span id="todayDate"></span></small>
-<b id="dailyCode">BLUE-1111-26</b>
-<small>Seller MoMo: <b>0707282428</b> • Reference: Use code above</small><br>
-<button onclick="copyCode()" style="background:#111;color:#fff;border:none;padding:9px 18px;border-radius:999px;cursor:pointer;margin-top:10px;font-weight:700">📋 Copy Daily Code</button>
-</div>
-
-<div class="box">
-<h3>💳 2. Pay With Mobile Money - REAL POPUP</h3>
-<p style="font-size:13px;opacity:.85;line-height:1.7">
-You will pay: <b id="payAmt" style="color:#f5c518">35,000 UGX</b> to <b>0707282428</b><br>
-Tap Pay → Airtel sends <b>PIN popup to YOUR phone</b> → Enter PIN on phone → Done.
-</p>
-<div id="payToast" class="toast"></div>
-<!-- THIS BUTTON NOW TRIGGERS REAL FLUTTERWAVE POPUP -->
-<button class="btn btn-airtel" onclick="payWithFlutterwave('airtel')">🔴 Pay With Airtel Money - <span class="amtLabel">35,000 UGX</span> - POPUP WILL COME</button>
-<button class="btn btn-mtn" onclick="payWithFlutterwave('mtn')">🟡 Pay With MTN MoMo - <span class="amtLabel">35,000 UGX</span> - POPUP WILL COME</button>
-<p style="font-size:12px;text-align:center;color:#888;margin-top:8px">If popup doesn't come in 10 seconds, use manual USSD below ↓</p>
-<div class="ussd-box">
-<b>Manual (No Popup):</b> Dial <b>*185#</b> → Send Money → <b>0707282428</b> → Amount <b id="ussdAmt">35000</b> → PIN on phone<br>
-<button onclick="dialFullUSSD()" style="background:#e40000;color:#fff;border:none;padding:11px 16px;border-radius:999px;cursor:pointer;margin-top:8px;font-weight:700;width:100%">📞 Tap To Dial *185*1*0707282428*35000# (Auto-Filled)</button>
-</div>
-<button class="btn btn-wa" onclick="confirmPaid()">✅ I Paid - Send Coins To My TikTok →</button>
-<div id="msg" class="toast"></div>
-</div>
-</div>
-<footer>© 2026 @bluewhaa • MoMo: 0707282428 • Airtel Money Accepted • Kampala</footer>
 <script>
-// === STEP 1: PASTE YOUR FLUTTERWAVE PUBLIC KEY HERE ===
-// Go to flutterwave.com -> Dashboard -> Settings -> API Keys -> Copy PUBLIC KEY
-// Example: FLWPUBK-xxxxxxxxxxxxxxxx-X
-const FLUTTERWAVE_PUBLIC_KEY = "FLWPUBK-XXXXXXXXXXXXXXXX-X"; // <-- REPLACE THIS
-
-let selCoins=100, selPrice=35000;
-function selectPack(c,p,el){
-  selCoins=c; selPrice=p;
-  document.querySelectorAll('.card').forEach(x=>x.classList.remove('active'));
-  if(el) el.classList.add('active');
-  document.querySelectorAll('.amtLabel').forEach(e=>e.textContent=p.toLocaleString()+' UGX');
-  document.getElementById('payAmt').textContent=p.toLocaleString()+' UGX';
-  document.getElementById('ussdAmt').textContent=p;
-  hideToast();
-}
-function showToast(id,text,isError,isWarn){
-  const el=document.getElementById(id);
-  el.textContent=text; el.className='toast show'+(isError?' error':isWarn?' warn':''); el.style.display='block';
-}
-function hideToast(){ document.getElementById('payToast').style.display='none'; }
-function makeDailyCode(){
-  const d=new Date();
-  const day=String(d.getDate()).padStart(2,'0');
-  const month=String(d.getMonth()+1).padStart(2,'0');
-  const code='BLUE-'+day+month+'-'+(d.getFullYear()%100);
-  document.getElementById('dailyCode').textContent=code;
-  document.getElementById('todayDate').textContent=d.toDateString();
-  return code;
-}
-let dailyCode=makeDailyCode();
-function copyCode(){
-  if(navigator.clipboard) navigator.clipboard.writeText(dailyCode).then(()=>showToast('payToast','✅ Copied: '+dailyCode));
-}
-function validate(){
-  const user=document.getElementById('buyerUser').value.trim();
-  const phone=document.getElementById('buyerPhone').value.trim();
-  if(!user){ showToast('payToast','⚠️ Enter your TikTok @username first',true); document.getElementById('buyerUser').focus(); return null; }
-  if(!phone || phone.length<10){ showToast('payToast','⚠️ Enter your Airtel number correctly - popup goes to this number. Example: 0707282428',true); document.getElementById('buyerPhone').focus(); return null; }
-  let cleanPhone=phone.replace(/\s/g,'').replace(/^\+256/,'0');
-  return {user:user.startsWith('@')?user:'@'+user, phone:cleanPhone};
-}
-function dialFullUSSD(){
-  const v=validate(); if(!v) return;
-  // Full USSD: *185*1*NUMBER*AMOUNT#
-  // Android will ask to confirm call - tap Call, then Airtel popup comes
-  const ussd = "*185*1*0707282428*"+selPrice+"%23";
-  showToast('payToast','📞 Dialing *185*1*0707282428*'+selPrice+'# - Tap CALL on your phone. Airtel popup will come. Enter PIN there. Reference: '+dailyCode);
-  setTimeout(()=>{ window.location.href='tel:'+ussd; },400);
-}
-function payWithFlutterwave(method){
-  const v=validate(); if(!v) return;
-  // If you have NOT yet pasted Flutterwave key, use USSD fallback so popup still comes via dialer
-  if(!FLUTTERWAVE_PUBLIC_KEY || FLUTTERWAVE_PUBLIC_KEY.includes('XXXX')){
-    showToast('payToast','⚠️ Flutterwave key not set yet. Using USSD dialer instead - Tap CALL, Airtel popup will come on your phone. To make popup automatic, paste your Flutterwave Public Key in the code (see top of file).',true);
-    setTimeout(()=>dialFullUSSD(),800);
-    return;
-  }
-  // REAL FLUTTERWAVE - This is what triggers the REAL Airtel PIN popup
-  showToast('payToast','⏳ Opening Airtel Money popup... Check your phone - Airtel will send PIN popup to '+v.phone+' in 5-10 seconds. Do NOT close this page.');
-  FlutterwaveCheckout({
-    public_key: FLUTTERWAVE_PUBLIC_KEY,
-    tx_ref: dailyCode + "-" + Date.now(),
-    amount: selPrice,
-    currency: "UGX",
-    payment_options: "mobilemoneyuganda",
-    customer: { email: "buyer@tiktok.ug", phone_number: v.phone, name: v.user },
-    customizations: { title: "TikTok Coins @bluewhaa", description: selCoins+" TikTok Coins for "+v.user+" - Ref: "+dailyCode, logo: "https://www.tiktok.com/favicon.ico" },
-    callback: function(data){
-      if(data.status==="successful"){
-        showToast('msg','✅ Payment Successful! '+selCoins+' Coins for '+v.user+'. Opening WhatsApp to send coins...');
-        const msg='Hi @bluewhaa! I paid with Mobile Money\n\n🎵 Coins: '+selCoins+'\n💰 Paid: '+selPrice.toLocaleString()+' UGX\n📅 Daily Code: '+dailyCode+'\n👤 My TikTok: '+v.user+'\n📱 My Number: '+v.phone+'\nTx: '+data.transaction_id+'\n\nPlease send coins to my TikTok.';
-        setTimeout(()=>window.open('https://wa.me/256707282428?text='+encodeURIComponent(msg),'_blank'),600);
-      } else {
-        showToast('payToast','❌ Payment not completed. Try again or use manual USSD below.',true);
-      }
-    },
-    onclose: function(){ showToast('payToast','Popup closed. If you paid, tap "I Paid" below.',true); }
-  });
-}
-function confirmPaid(){
-  const v=validate(); if(!v) return;
-  showToast('msg','✅ Order for '+selCoins+' Coins to '+v.user+' created! Opening WhatsApp - send MoMo screenshot.');
-  const msg='Hi @bluewhaa! I paid with Mobile Money\n\n🎵 Coins: '+selCoins+'\n💰 Paid: '+selPrice.toLocaleString()+' UGX\n📅 Daily Code: '+dailyCode+'\n👤 My TikTok: '+v.user+'\n📱 My Number: '+v.phone+'\n\nI sent MoMo/Airtel to 0707282428. Here is screenshot. Please send coins to my TikTok account.';
-  setTimeout(()=>window.open('https://wa.me/256707282428?text='+encodeURIComponent(msg),'_blank'),600);
+function sendOrder(){
+  var pack = document.getElementById('pack').value;
+  var user = document.getElementById('username').value;
+  var tx = document.getElementById('txid').value;
+  if(!user || !tx){ alert('Enter username + Transaction ID'); return; }
+  var msg = "NEW COIN ORDER - AIRTEL%0A%0APack: " + pack + "%0AUsername: " + user + "%0ATxID: " + tx;
+  window.open("https://wa.me/256707282428?text=" + msg, "_blank");
 }
 </script>
-</body>
-</html>
