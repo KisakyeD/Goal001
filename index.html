@@ -1,983 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wins1™ - VIP Predictions</title>
-    <style>
-        :root {
-            --bg-color: #0f0f0f;
-            --body-bg: #000000;
-            --text-color: #ffffff;
-            --text-muted: #b3b3b3;
-            --subtext-color: #888888;
-            --card-bg: #1c1c1c;
-            --btn-bg: #1e1e1e;
-            --border-color: #2a2a2a;
-            --modal-bg: #1a1a1a;
-            --modal-border: #333333;
-            --menu-bg: #161616;
-            --hover-bg: #242424;
-            --select-bg: #2a2a2a;
-            --accent-green: #10b981;
-            --accent-red: #ef4444;
-            --accent-amber: #f59e0b;
-        }
-
-        body.light-theme {
-            --bg-color: #ffffff;
-            --body-bg: #f4f4f5;
-            --text-color: #09090b;
-            --text-muted: #52525b;
-            --subtext-color: #71717a;
-            --card-bg: #f4f4f5;
-            --btn-bg: #e4e4e7;
-            --border-color: #e4e4e7;
-            --modal-bg: #ffffff;
-            --modal-border: #e4e4e7;
-            --menu-bg: #ffffff;
-            --hover-bg: #f4f4f5;
-            --select-bg: #e4e4e7;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
-        }
-
-        body {
-            background-color: var(--body-bg);
-            color: var(--text-color);
-            display: flex;
-            justify-content: center;
-            padding: 0;
-            margin: 0;
-            min-height: 100vh;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 650px;
-            background-color: var(--bg-color);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-            padding-bottom: 20px;
-        }
-
-        .top-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 14px 16px;
-            background-color: var(--bg-color);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .icon-btn {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--btn-bg);
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            color: var(--text-color);
-        }
-
-        .brand-logo {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--accent-green);
-            letter-spacing: -0.5px;
-            display: flex;
-            align-items: baseline;
-            user-select: none;
-            cursor: pointer;
-        }
-
-        .brand-logo span {
-            font-size: 10px;
-            font-weight: 600;
-            color: var(--text-color);
-            margin-left: 2px;
-            vertical-align: super;
-        }
-
-        .calendar-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 10px 16px;
-            background-color: var(--bg-color);
-            border-bottom: 1px solid var(--border-color);
-            overflow-x: auto;
-            scroll-behavior: smooth;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-        .calendar-bar::-webkit-scrollbar {
-            display: none;
-        }
-
-        .date-chip {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-width: 62px;
-            padding: 6px 12px;
-            border-radius: 12px;
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            cursor: pointer;
-            user-select: none;
-            flex-shrink: 0;
-        }
-
-        .date-chip.active {
-            background-color: var(--accent-green);
-            border-color: var(--accent-green);
-        }
-
-        .date-chip.active .day-name,
-        .date-chip.active .day-number {
-            color: #000000;
-            font-weight: 800;
-        }
-
-        .day-name {
-            font-size: 10px;
-            font-weight: 700;
-            color: var(--subtext-color);
-            text-transform: uppercase;
-        }
-
-        .day-number {
-            font-size: 13px;
-            font-weight: 800;
-            color: var(--text-color);
-            margin-top: 2px;
-            white-space: nowrap;
-        }
-
-        .feed-container {
-            padding: 16px;
-        }
-
-        .ticket-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 12px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid var(--accent-green);
-            border-radius: 8px;
-            margin-bottom: 12px;
-        }
-
-        .ticket-title {
-            font-weight: 800;
-            font-size: 14px;
-            color: var(--accent-green);
-        }
-
-        .ticket-odds {
-            font-size: 12px;
-            font-weight: 800;
-            color: var(--text-color);
-        }
-
-        .match-card {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 12px 14px;
-            margin-bottom: 10px;
-            position: relative;
-        }
-
-        .match-status-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 11px;
-            font-weight: 800;
-            margin-bottom: 8px;
-            color: var(--subtext-color);
-        }
-
-        .team-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 700;
-            font-size: 14px;
-            color: var(--text-color);
-            margin: 4px 0;
-        }
-
-        .score-box {
-            font-size: 15px;
-            font-weight: 800;
-            color: var(--accent-green);
-        }
-
-        .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-size: 10px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            user-select: none;
-        }
-
-        .status-win { background-color: rgba(16, 185, 129, 0.15); color: var(--accent-green); border: 1px solid var(--accent-green); }
-        .status-loss { background-color: rgba(239, 68, 68, 0.15); color: var(--accent-red); border: 1px solid var(--accent-red); }
-        .status-pending { background-color: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid var(--accent-amber); }
-
-        .pred-pick-row {
-            margin-top: 8px;
-            padding-top: 8px;
-            border-top: 1px dashed var(--border-color);
-            font-weight: 700;
-            font-size: 13px;
-            color: var(--accent-green);
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.75);
-            backdrop-filter: blur(4px);
-            z-index: 100;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.25s ease, visibility 0.25s ease;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .side-menu {
-            position: fixed;
-            top: 0;
-            left: -300px;
-            width: 280px;
-            height: 100%;
-            background-color: var(--menu-bg);
-            z-index: 101;
-            transition: transform 0.25s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .side-menu.open {
-            transform: translateX(300px);
-        }
-
-        .menu-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--subtext-color);
-            font-size: 22px;
-            cursor: pointer;
-        }
-
-        .menu-list {
-            list-style: none;
-            padding: 8px 0;
-        }
-
-        .menu-item {
-            display: flex;
-            align-items: center;
-            padding: 12px 20px;
-            color: var(--text-color);
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .menu-item:hover, .menu-item.active-menu {
-            background-color: var(--hover-bg);
-            color: var(--accent-green);
-        }
-
-        .menu-item .icon {
-            margin-right: 12px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .menu-divider {
-            height: 1px;
-            background-color: var(--border-color);
-            margin: 6px 0;
-        }
-
-        .modal {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0.95);
-            width: 92%;
-            max-width: 480px;
-            background-color: var(--modal-bg);
-            border: 1px solid var(--modal-border);
-            border-radius: 14px;
-            padding: 18px;
-            z-index: 200;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.2s ease-in-out;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-        }
-
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 10px;
-            margin-bottom: 12px;
-        }
-
-        .modal-title {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--text-color);
-        }
-
-        .modal-body {
-            max-height: 65vh;
-            overflow-y: auto;
-            font-size: 13px;
-            color: var(--text-color);
-        }
-
-        .setting-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        select {
-            background-color: var(--select-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            padding: 6px 10px;
-            border-radius: 6px;
-            outline: none;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .spinner-center {
-            text-align: center;
-            padding: 30px;
-            color: var(--subtext-color);
-            font-weight: 600;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kampala 1.50 Banker | Daily 1.50+ Pick</title>
+<meta name="description" content="One daily 1.50+ football pick. No chasing. Licensed bookie only.">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Arial,sans-serif}
+  body{background:#0b0e13;color:#fff;line-height:1.6}
+  a{color:inherit}
+  header{background:#0b0e13;border-bottom:1px solid #222;display:flex;justify-content:space-between;align-items:center;padding:16px 5%;position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:10px}
+  header b{font-size:20px;color:#00e676;white-space:nowrap}
+  nav{display:flex;gap:15px;flex-wrap:wrap}
+  nav a{text-decoration:none;font-size:14px;opacity:.9}
+  .hero{background:linear-gradient(180deg,#00a651 0%,#0b0e13 85%);padding:40px 5% 30px;text-align:center}
+  .badge{background:#fff;color:#111;padding:7px 14px;border-radius:999px;font-size:12px;font-weight:800;display:inline-block}
+  .hero h1{font-size:32px;line-height:1.15;margin:16px 0 8px}
+  .hero p{opacity:.9;max-width:600px;margin:0 auto}
+  .pick-box{background:#fff;color:#111;max-width:620px;margin:22px auto 0;padding:22px;border-radius:18px;text-align:left;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+  .pick-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+  .pick-top small{color:#666;font-weight:700}
+  .live{background:#e8f8ef;color:#00a651;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}
+  .pick-box h2{font-size:24px;margin:10px 0 4px}
+  .pick-box p{color:#333}
+  .odd-row{display:flex;justify-content:space-between;align-items:center;background:#f4f6f5;padding:14px;border-radius:12px;margin:14px 0;flex-wrap:wrap;gap:10px}
+  .odd{font-size:38px;font-weight:900;color:#00a651;line-height:1}
+  .result{background:#00e676;color:#111;padding:12px;border-radius:10px;font-weight:800;text-align:center}
+  .btn{display:inline-block;background:#00e676;color:#111;padding:14px 26px;border-radius:999px;text-decoration:none;font-weight:800;margin-top:16px}
+  .btn-white{background:#fff}
+  .section{padding:40px 5%;max-width:900px;margin:auto;text-align:center}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+  .card{background:#161a22;padding:20px;border-radius:16px;border:1px solid #222}
+  .card h3{color:#00e676;font-size:26px}
+  .card p{font-size:13px;opacity:.8}
+  .history{max-width:700px;margin:18px auto;background:#161a22;border-radius:16px;overflow:hidden;border:1px solid #222;text-align:left}
+  .row{display:flex;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid #262a33;flex-wrap:wrap}
+  .row:last-child{border-bottom:none}
+  .won{color:#00e676;font-weight:800;white-space:nowrap}
+  .skip{color:#ffca28;font-weight:800;white-space:nowrap}
+  .rules{text-align:left;max-width:700px;margin:0 auto;background:#161a22;padding:20px;border-radius:16px;border:1px solid #222}
+  .rules li{margin-left:18px;margin-bottom:8px;font-size:14px}
+  .contact{padding:40px 5%;text-align:center;background:#111;border-top:1px solid #222}
+  .contact input{width:100%;max-width:420px;padding:14px;margin:8px 0;border-radius:10px;border:1px solid #333;background:#fff;color:#111}
+  .contact button{background:#00e676;border:none;padding:14px 28px;border-radius:999px;font-weight:800;cursor:pointer;width:100%;max-width:420px}
+  footer{padding:18px;text-align:center;font-size:12px;color:#888;line-height:1.5}
+  @media(max-width:600px){
+    .hero h1{font-size:26px}
+    .cards{grid-template-columns:1fr}
+    header{justify-content:center;text-align:center}
+    .pick-box{padding:18px}
+    .odd{font-size:32px}
+  }
+</style>
 </head>
 <body>
 
-    <div class="container">
-        <!-- Top Bar -->
-        <header class="top-bar">
-            <button class="icon-btn" id="menuToggle" aria-label="Open Menu">
-                <svg width="18" height="12" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <line x1="0" y1="2" x2="20" y2="2" />
-                    <line x1="0" y1="7" x2="20" y2="7" />
-                    <line x1="0" y1="12" x2="20" y2="12" />
-                </svg>
-            </button>
-            <div class="brand-logo home-btn" id="goHomeBtn">
-                Wins1<span>TM</span>
-            </div>
-            <div style="width: 40px;"></div>
-        </header>
+<header>
+  <b>⚽ KAMPALA 1.50 BANKER</b>
+  <nav><a href="#pick">Today's Pick</a><a href="#history">History</a><a href="#rules">Rules</a><a href="#contact">Join</a></nav>
+</header>
 
-        <!-- Calendar Bar -->
-        <div class="calendar-bar" id="homepageCalendar"></div>
+<section class="hero" id="pick">
+  <span class="badge">🔥 UPDATED DAILY AT 6AM • ONE PICK ONLY</span>
+  <h1>One Pick. 1.50+ Only.<br>No Chasing. No Forcing.</h1>
+  <p>If there is no real value, we SKIP. That is how we protect the bankroll.</p>
 
-        <!-- Feed Container -->
-        <div class="feed-container" id="mainMatchFeed">
-            <div class="spinner-center">Loading Wins1™ predictions...</div>
-        </div>
+  <div class="pick-box">
+    <div class="pick-top">
+      <small>📅 <span id="todayDate">TODAY</span> • UGANDA</small>
+      <span class="live">● TODAY'S PICK</span>
     </div>
-
-    <!-- Overlay -->
-    <div class="overlay" id="overlay"></div>
-
-    <!-- Drawer Menu -->
-    <aside class="side-menu" id="sideMenu">
-        <div class="menu-header">
-            <div class="brand-logo home-btn" id="drawerHomeBtn">Wins1<span>TM</span></div>
-            <button class="close-btn" id="menuClose">&times;</button>
-        </div>
-        <ul class="menu-list">
-            <li class="menu-item active-menu" id="btnOver1510"><span class="icon">🔥</span> 14 Tickets (10 Odds)</li>
-            <li class="menu-item" id="btnOver15"><span class="icon">⚽</span> Over 1.5 Goals</li>
-            <li class="menu-item" id="btnVip100"><span class="icon">🎯</span> VIP 100+ Tickets</li>
-            <li class="menu-item" id="btnVip400"><span class="icon">👑</span> VIP 400+ Tickets</li>
-            <div class="menu-divider"></div>
-            <li class="menu-item" id="btnSettings"><span class="icon">⚙️</span> Settings</li>
-            <li class="menu-item" id="btnPrivacy"><span class="icon">🔒</span> Privacy Policy</li>
-        </ul>
-    </aside>
-
-    <!-- Settings Modal -->
-    <div class="modal" id="modalSettings">
-        <div class="modal-header">
-            <div class="modal-title">⚙️ Settings</div>
-            <button class="close-btn modal-close">&times;</button>
-        </div>
-        <div class="modal-body">
-            <div class="setting-row">
-                <div>
-                    <div style="font-weight:700;">Match Notifications</div>
-                    <div style="font-size:11px; color:var(--subtext-color);">Receive updates on winning predictions</div>
-                </div>
-                <select id="notifSelect">
-                    <option value="enabled">Enabled</option>
-                    <option value="disabled">Disabled</option>
-                </select>
-            </div>
-            <div class="setting-row">
-                <div>
-                    <div style="font-weight:700;">Sound Effects</div>
-                    <div style="font-size:11px; color:var(--subtext-color);">Play sound on status changes</div>
-                </div>
-                <select id="soundSelect">
-                    <option value="off">Off</option>
-                    <option value="on">On</option>
-                </select>
-            </div>
-            <div class="setting-row">
-                <div>
-                    <div style="font-weight:700;">Theme Mode</div>
-                    <div style="font-size:11px; color:var(--subtext-color);">Dark or white layout preference</div>
-                </div>
-                <select id="themeSelect">
-                    <option value="dark">Dark</option>
-                    <option value="white">White</option>
-                </select>
-            </div>
-        </div>
+    <h2>Tavernes vs Valencia</h2>
+    <p>Tip: <b>BTTS No</b> — Tavernes Not To Score</p>
+    <div class="odd-row">
+      <div><small style="color:#666">ODD</small><br><span class="odd">1.59</span></div>
+      <div style="text-align:right"><small style="color:#666">BOOKIE</small><br><b>WSB - Licensed in Uganda</b><br><small style="color:#666">Stake: 1 Unit Only</small></div>
     </div>
+    <div class="result">✅ RESULT: Tavernes 0 - 6 Valencia — WON</div>
+    <p style="font-size:12px;color:#666;margin-top:10px;text-align:center">To update tomorrow: change Teams, Tip, Odd and Result only. Nothing else.</p>
+  </div>
+
+  <a class="btn" href="https://wa.me/256707282428?text=Hi%20I%20want%20the%20daily%201.50%20pick" target="_blank">Join on WhatsApp →</a>
+  <br>
+  <a class="btn btn-white" href="#history">See History ↓</a>
+</section>
+
+<section class="section">
+  <h2>Our Record</h2>
+  <div class="cards">
+    <div class="card"><h3>1 - 0</h3><p>Wins - Losses</p></div>
+    <div class="card"><h3>100%</h3><p>Win Rate So Far</p></div>
+    <div class="card"><h3>+0.59 Units</h3><p>Profit (1 Unit Stake)</p></div>
+  </div>
+</section>
+
+<section class="section" id="history">
+  <h2>Last Picks History</h2>
+  <div class="history">
+    <div class="row"><span>11 Nov — Tavernes vs Valencia — BTTS No @ 1.59</span><span class="won">✅ WON</span></div>
+    <div class="row"><span>12 Nov — International Break — No Value</span><span class="skip">⏸️ SKIP</span></div>
+    <div class="row"><span>13 Nov — Next Pick Drops 6am</span><span>⏳ WAITING</span></div>
+  </div>
+</section>
+
+<section class="section" id="rules">
+  <h2>Our 3 Rules</h2>
+  <ul class="rules">
+    <li><b>1. One pick per day only</b> — never 2, never accumulator chasing.</li>
+    <li><b>2. 1.50+ odds only</b> — if it's below 1.50, we SKIP.</li>
+    <li><b>3. Licensed bookie only</b> — WSB, verified on NLGRB Uganda list.</li>
+  </ul>
+</section>
+
+<section class="contact" id="contact">
+  <h2>Get Daily Pick on WhatsApp</h2>
+  <p style="opacity:.8">One pick at 6am. No spam.</p><br>
+  <form onsubmit="window.open('https://wa.me/256707282428?text=Hi%20I%20want%20the%20daily%201.50%20pick','_blank');return false;">
+    <input type="tel" placeholder="Your WhatsApp Number e.g. 0707 282 428" required><br>
+    <button type="submit">Get My Pick on WhatsApp</button>
+  </form>
+  <p style="font-size:12px;margin-top:14px;color:#888">18+ only. In Uganda you must be 25+ to bet. Bet responsibly. Only bet what you can afford to lose. Gambling can be addictive.</p>
+  <p style="margin-top:10px">Direct WhatsApp: <a href="https://wa.me/256707282428" style="color:#00e676;font-weight:bold">+256 707 282 428</a></p>
+</section>
+
+<footer>© <span id="year">2026</span> Kampala 1.50 Banker • All rights reserved.<br>WSB is licensed by the National Lotteries and Gaming Regulatory Board (NLGRB) Uganda.</footer>
+
+<script>
+  const d = new Date();
+  document.getElementById('todayDate').textContent = d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+  document.getElementById('year').textContent = d.getFullYear();
+</script>
 
-    <!-- Privacy Policy Modal -->
-    <div class="modal" id="modalPrivacy">
-        <div class="modal-header">
-            <div class="modal-title">🔒 Privacy Policy</div>
-            <button class="close-btn modal-close">&times;</button>
-        </div>
-        <div class="modal-body">
-            <p><strong>Wins1™ Privacy Policy</strong></p><br>
-            <p>1. <strong>Master Feeds:</strong> Live scores and predictions are posted by admin.</p><br>
-            <p>2. <strong>Data Privacy:</strong> User selections and view preferences remain saved locally inside your browser cache.</p>
-        </div>
-    </div>
-
-    <!-- JS Engine -->
-    <script>
-        const menuToggle = document.getElementById('menuToggle');
-        const menuClose = document.getElementById('menuClose');
-        const sideMenu = document.getElementById('sideMenu');
-        const overlay = document.getElementById('overlay');
-        const calendarBar = document.getElementById('homepageCalendar');
-
-        const goHomeBtn = document.getElementById('goHomeBtn');
-        const drawerHomeBtn = document.getElementById('drawerHomeBtn');
-        const btnOver1510 = document.getElementById('btnOver1510');
-        const btnOver15 = document.getElementById('btnOver15');
-        const btnVip100 = document.getElementById('btnVip100');
-        const btnVip400 = document.getElementById('btnVip400');
-        const btnSettings = document.getElementById('btnSettings');
-        const btnPrivacy = document.getElementById('btnPrivacy');
-        const themeSelect = document.getElementById('themeSelect');
-
-        const modalSettings = document.getElementById('modalSettings');
-        const modalPrivacy = document.getElementById('modalPrivacy');
-
-        const allModals = [modalSettings, modalPrivacy];
-        const modalCloses = document.querySelectorAll('.modal-close');
-
-        let selectedDateOffset = 0;
-        let activeMode = '10ODDS'; // Modes: 10ODDS, OVER15, VIP100, VIP400
-
-        function formatDateYYYYMMDD(dateObj) {
-            const y = dateObj.getFullYear();
-            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
-            const d = String(dateObj.getDate()).padStart(2, '0');
-            return `${y}${m}${d}`;
-        }
-
-        function applyTheme(themeName) {
-            if (themeName === 'white') {
-                document.body.classList.add('light-theme');
-            } else {
-                document.body.classList.remove('light-theme');
-            }
-            localStorage.setItem('wins1_theme', themeName);
-            themeSelect.value = themeName;
-        }
-
-        themeSelect.addEventListener('change', (e) => {
-            applyTheme(e.target.value);
-        });
-
-        const savedTheme = localStorage.getItem('wins1_theme') || 'dark';
-        applyTheme(savedTheme);
-
-        function renderContinuousCalendar() {
-            let html = "";
-            const pastDays = 30;
-            const futureDays = 30;
-
-            for (let offset = -pastDays; offset <= futureDays; offset++) {
-                const date = new Date(2026, 9, 30);
-                date.setDate(date.getDate() + offset);
-
-                let dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
-                let dayNumber = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-
-                if (offset === 0) dayName = "TODAY";
-                else if (offset === -1) dayName = "YEST";
-                else if (offset === 1) dayName = "TOMM";
-
-                const isActive = offset === selectedDateOffset ? "active" : "";
-                const chipId = `date-chip-${offset}`;
-
-                html += `
-                    <div class="date-chip ${isActive}" id="${chipId}" onclick="selectDate(${offset})">
-                        <span class="day-name">${dayName}</span>
-                        <span class="day-number">${dayNumber}</span>
-                    </div>
-                `;
-            }
-            calendarBar.innerHTML = html;
-
-            setTimeout(() => {
-                const activeChip = document.getElementById(`date-chip-${selectedDateOffset}`);
-                if (activeChip) {
-                    activeChip.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-                }
-            }, 100);
-        }
-
-        function selectDate(offset) {
-            selectedDateOffset = offset;
-            renderContinuousCalendar();
-            fetchMainAIPredictions(offset);
-        }
-
-        function setActiveMenuMode(mode, activeBtn) {
-            activeMode = mode;
-            [btnOver1510, btnOver15, btnVip100, btnVip400].forEach(btn => btn.classList.remove('active-menu'));
-            activeBtn.classList.add('active-menu');
-            closeMenu();
-            fetchMainAIPredictions(selectedDateOffset);
-        }
-
-        async function fetchMainAIPredictions(offset) {
-            const feedContainer = document.getElementById('mainMatchFeed');
-            feedContainer.innerHTML = `<div class="spinner-center">Loading Wins1™ predictions...</div>`;
-
-            const targetDate = new Date(2026, 9, 30);
-            targetDate.setDate(targetDate.getDate() + offset);
-            const dateStr = formatDateYYYYMMDD(targetDate);
-
-            try {
-                const response = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard?dates=${dateStr}&limit=50`);
-                const data = await response.json();
-
-                if (data && data.events && data.events.length > 0) {
-                    if (activeMode === '10ODDS') {
-                        render10OddsOver15Tickets(data.events, data.leagues);
-                    } else if (activeMode === 'OVER15') {
-                        renderOver15Feed(data.events, data.leagues);
-                    } else if (activeMode === 'VIP100') {
-                        renderAccumulatorFeed(data.events, data.leagues, 5, 100, "VIP 100+ Ticket");
-                    } else if (activeMode === 'VIP400') {
-                        renderAccumulatorFeed(data.events, data.leagues, 5, 400, "VIP 400+ Ticket");
-                    }
-                } else {
-                    feedContainer.innerHTML = `<div class="spinner-center">No predictions scheduled for this date.</div>`;
-                }
-            } catch (err) {
-                feedContainer.innerHTML = `<div class="spinner-center">Unable to load Wins1™ predictions.</div>`;
-            }
-        }
-
-        function render10OddsOver15Tickets(events, leagues) {
-            const feedContainer = document.getElementById('mainMatchFeed');
-            let html = "";
-
-            const validMatches = events.map(evt => {
-                const comp = evt.competitions[0];
-                const home = comp.competitors.find(c => c.homeAway === 'home');
-                const away = comp.competitors.find(c => c.homeAway === 'away');
-                return {
-                    homeName: home?.team?.displayName || "Home Team",
-                    awayName: away?.team?.displayName || "Away Team",
-                    leagueName: comp.league?.name || (leagues && leagues[0]?.name) || "Global Football",
-                    isFinished: evt.status?.type?.state === "post",
-                    homeScore: parseInt(home?.score || 0),
-                    awayScore: parseInt(away?.score || 0)
-                };
-            });
-
-            const numTickets = 14;
-            const legsPerTicket = 7; // 7 legs @ ~1.39 odds = ~10.0 Odds
-
-            for (let t = 1; t <= numTickets; t++) {
-                let legs = [];
-                let totalOdds = 1.0;
-                let ticketWin = true;
-                let ticketFinished = true;
-
-                for (let l = 0; l < legsPerTicket; l++) {
-                    const matchIdx = (t * 2 + l) % validMatches.length;
-                    const m = validMatches[matchIdx];
-
-                    const market = "Over 1.5 Goals";
-                    const odds = 1.39;
-
-                    const totalG = m.homeScore + m.awayScore;
-                    const legWon = totalG >= 2;
-
-                    if (!m.isFinished) ticketFinished = false;
-                    if (!legWon) ticketWin = false;
-
-                    totalOdds *= odds;
-                    legs.push({ ...m, market, odds, legWon });
-                }
-
-                let ticketBadgeClass = "status-pending";
-                let ticketBadgeText = "⌛ IN PROGRESS";
-                if (ticketFinished) {
-                    if (ticketWin) {
-                        ticketBadgeClass = "status-win";
-                        ticketBadgeText = "✓ TICKET WON";
-                    } else {
-                        ticketBadgeClass = "status-loss";
-                        ticketBadgeText = "✕ TICKET LOST";
-                    }
-                }
-
-                html += `
-                    <div style="margin-bottom:20px;">
-                        <div class="ticket-header">
-                            <div>
-                                <div class="ticket-title">Over 1.5 Ticket #${t}</div>
-                                <div class="ticket-odds">Target Odds: @${totalOdds.toFixed(2)}</div>
-                            </div>
-                            <span class="status-badge ${ticketBadgeClass}">${ticketBadgeText}</span>
-                        </div>
-                `;
-
-                legs.forEach(leg => {
-                    let legBadgeClass = "status-pending";
-                    let legBadgeText = "⌛ PENDING";
-                    if (leg.isFinished) {
-                        if (leg.legWon) {
-                            legBadgeClass = "status-win";
-                            legBadgeText = `✓ WON (${leg.homeScore}-${leg.awayScore})`;
-                        } else {
-                            legBadgeClass = "status-loss";
-                            legBadgeText = `✕ LOST (${leg.homeScore}-${leg.awayScore})`;
-                        }
-                    }
-
-                    html += `
-                        <div class="match-card">
-                            <div class="match-status-row">
-                                <span>${leg.leagueName}</span>
-                                <span class="status-badge ${legBadgeClass}">${legBadgeText}</span>
-                            </div>
-                            <div class="team-row">
-                                <span>${leg.homeName}</span>
-                                <span class="score-box">${leg.homeScore}</span>
-                            </div>
-                            <div class="team-row">
-                                <span>${leg.awayName}</span>
-                                <span class="score-box">${leg.awayScore}</span>
-                            </div>
-                            <div class="pred-pick-row">
-                                <span>Pick: ${leg.market}</span>
-                                <span>@${leg.odds.toFixed(2)}</span>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                html += `</div>`;
-            }
-
-            feedContainer.innerHTML = html;
-        }
-
-        function renderOver15Feed(events, leagues) {
-            const feedContainer = document.getElementById('mainMatchFeed');
-            let html = "";
-            events.slice(0, 25).forEach(evt => {
-                const comp = evt.competitions[0];
-                const home = comp.competitors.find(c => c.homeAway === 'home');
-                const away = comp.competitors.find(c => c.homeAway === 'away');
-                
-                const homeName = home?.team?.displayName || "Home Team";
-                const awayName = away?.team?.displayName || "Away Team";
-                const leagueName = comp.league?.name || (leagues && leagues[0]?.name) || "Global Football";
-
-                const isFinished = evt.status?.type?.state === "post";
-                const homeScore = parseInt(home?.score || 0);
-                const awayScore = parseInt(away?.score || 0);
-                const totalGoals = homeScore + awayScore;
-
-                let isWin = totalGoals >= 2;
-                let badgeClass = "status-pending";
-                let badgeHtml = `⌛ PENDING`;
-
-                if (isFinished) {
-                    if (isWin) {
-                        badgeClass = "status-win";
-                        badgeHtml = `✓ WIN`;
-                    } else {
-                        badgeClass = "status-loss";
-                        badgeHtml = `✕ LOSS`;
-                    }
-                }
-
-                html += `
-                    <div class="match-card">
-                        <div class="match-status-row">
-                            <span>${leagueName}</span>
-                            <span class="status-badge ${badgeClass}">${badgeHtml}</span>
-                        </div>
-                        <div class="team-row">
-                            <span>${homeName}</span>
-                            <span class="score-box">${home?.score !== undefined ? home.score : 0}</span>
-                        </div>
-                        <div class="team-row">
-                            <span>${awayName}</span>
-                            <span class="score-box">${away?.score !== undefined ? away.score : 0}</span>
-                        </div>
-                        <div class="pred-pick-row">
-                            <span>Pick: Over 1.5 Goals</span>
-                            <span>92% Winrate</span>
-                        </div>
-                    </div>
-                `;
-            });
-            feedContainer.innerHTML = html;
-        }
-
-        function renderAccumulatorFeed(events, leagues, numTickets, targetOddsBase, ticketTitlePrefix) {
-            const feedContainer = document.getElementById('mainMatchFeed');
-            let html = "";
-
-            const validMatches = events.map(evt => {
-                const comp = evt.competitions[0];
-                const home = comp.competitors.find(c => c.homeAway === 'home');
-                const away = comp.competitors.find(c => c.homeAway === 'away');
-                return {
-                    homeName: home?.team?.displayName || "Home Team",
-                    awayName: away?.team?.displayName || "Away Team",
-                    leagueName: comp.league?.name || (leagues && leagues[0]?.name) || "Global Football",
-                    isFinished: evt.status?.type?.state === "post",
-                    homeScore: parseInt(home?.score || 0),
-                    awayScore: parseInt(away?.score || 0)
-                };
-            });
-
-            for (let t = 1; t <= numTickets; t++) {
-                let legs = [];
-                let totalOdds = 1.0;
-                let ticketWin = true;
-                let ticketFinished = true;
-
-                const legsCount = targetOddsBase === 100 ? 6 : 8;
-                for (let l = 0; l < legsCount; l++) {
-                    const matchIdx = (t * 3 + l * 2) % validMatches.length;
-                    const m = validMatches[matchIdx];
-
-                    let market = "Over 1.5 Goals";
-                    let odds = 1.35;
-                    if (l % 3 === 1) { market = "Double Chance 1X"; odds = 1.28; }
-                    if (l % 3 === 2) { market = "Over 2.5 Goals"; odds = 1.65; }
-
-                    let legWon = false;
-                    const totalG = m.homeScore + m.awayScore;
-                    if (market === "Over 1.5 Goals") legWon = totalG >= 2;
-                    else if (market === "Double Chance 1X") legWon = m.homeScore >= m.awayScore;
-                    else if (market === "Over 2.5 Goals") legWon = totalG >= 3;
-
-                    if (!m.isFinished) ticketFinished = false;
-                    if (!legWon) ticketWin = false;
-
-                    totalOdds *= odds;
-                    legs.push({ ...m, market, odds, legWon });
-                }
-
-                let ticketBadgeClass = "status-pending";
-                let ticketBadgeText = "⌛ IN PROGRESS";
-                if (ticketFinished) {
-                    if (ticketWin) {
-                        ticketBadgeClass = "status-win";
-                        ticketBadgeText = "✓ TICKET WON";
-                    } else {
-                        ticketBadgeClass = "status-loss";
-                        ticketBadgeText = "✕ TICKET LOST";
-                    }
-                }
-
-                html += `
-                    <div style="margin-bottom:20px;">
-                        <div class="ticket-header">
-                            <div>
-                                <div class="ticket-title">${ticketTitlePrefix} #${t}</div>
-                                <div class="ticket-odds">Est. Total Odds: @${totalOdds.toFixed(2)}</div>
-                            </div>
-                            <span class="status-badge ${ticketBadgeClass}">${ticketBadgeText}</span>
-                        </div>
-                `;
-
-                legs.forEach(leg => {
-                    let legBadgeClass = "status-pending";
-                    let legBadgeText = "⌛ PENDING";
-                    if (leg.isFinished) {
-                        if (leg.legWon) {
-                            legBadgeClass = "status-win";
-                            legBadgeText = `✓ WON (${leg.homeScore}-${leg.awayScore})`;
-                        } else {
-                            legBadgeClass = "status-loss";
-                            legBadgeText = `✕ LOST (${leg.homeScore}-${leg.awayScore})`;
-                        }
-                    }
-
-                    html += `
-                        <div class="match-card">
-                            <div class="match-status-row">
-                                <span>${leg.leagueName}</span>
-                                <span class="status-badge ${legBadgeClass}">${legBadgeText}</span>
-                            </div>
-                            <div class="team-row">
-                                <span>${leg.homeName}</span>
-                                <span class="score-box">${leg.homeScore}</span>
-                            </div>
-                            <div class="team-row">
-                                <span>${leg.awayName}</span>
-                                <span class="score-box">${leg.awayScore}</span>
-                            </div>
-                            <div class="pred-pick-row">
-                                <span>Pick: ${leg.market}</span>
-                                <span>@${leg.odds.toFixed(2)}</span>
-                            </div>
-                        </div>
-                    `;
-                });
-
-                html += `</div>`;
-            }
-
-            feedContainer.innerHTML = html;
-        }
-
-        function handleGoHome() {
-            closeMenu();
-            closeAllModals();
-            setActiveMenuMode('10ODDS', btnOver1510);
-        }
-
-        goHomeBtn.addEventListener('click', handleGoHome);
-        drawerHomeBtn.addEventListener('click', handleGoHome);
-
-        btnOver1510.addEventListener('click', () => setActiveMenuMode('10ODDS', btnOver1510));
-        btnOver15.addEventListener('click', () => setActiveMenuMode('OVER15', btnOver15));
-        btnVip100.addEventListener('click', () => setActiveMenuMode('VIP100', btnVip100));
-        btnVip400.addEventListener('click', () => setActiveMenuMode('VIP400', btnVip400));
-
-        btnSettings.addEventListener('click', () => openModal(modalSettings));
-        btnPrivacy.addEventListener('click', () => openModal(modalPrivacy));
-
-        function openMenu() {
-            sideMenu.classList.add('open');
-            overlay.classList.add('active');
-        }
-
-        function closeMenu() {
-            sideMenu.classList.remove('open');
-            if (!document.querySelector('.modal.active')) {
-                overlay.classList.remove('active');
-            }
-        }
-
-        menuToggle.addEventListener('click', openMenu);
-        menuClose.addEventListener('click', closeMenu);
-
-        function openModal(modal) {
-            closeMenu();
-            setTimeout(() => {
-                modal.classList.add('active');
-                overlay.classList.add('active');
-            }, 100);
-        }
-
-        function closeAllModals() {
-            allModals.forEach(m => m.classList.remove('active'));
-            overlay.classList.remove('active');
-        }
-
-        overlay.addEventListener('click', () => {
-            closeMenu();
-            closeAllModals();
-        });
-
-        modalCloses.forEach(btn => btn.addEventListener('click', closeAllModals));
-
-        renderContinuousCalendar();
-        fetchMainAIPredictions(0);
-    </script>
 </body>
 </html>
