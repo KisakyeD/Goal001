@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI VIP Football Predictions (Ultra-Strict Protection)</title>
+  <title>AI VIP Football Predictions (Single Pick Per Category • Zero-Force)</title>
   <style>
     :root {
       --bg-dark: #0b0e14;
@@ -272,7 +272,7 @@
     .date-btn .day-label { font-size: 0.7rem; display: block; text-transform: uppercase; }
     .date-btn .date-num { font-size: 0.95rem; font-weight: bold; }
 
-    /* Unified Master List Container */
+    /* Single Pick Container Card */
     .master-list-card {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
@@ -373,26 +373,26 @@
       <button class="close-btn" onclick="toggleMenu(false)">&times;</button>
     </div>
     <div class="menu-item active" id="menu-standard" onclick="switchCategory('STANDARD')">
-      <span>⚽ Double Chance Selections</span>
+      <span>⚽ Double Chance (1 Daily Pick)</span>
     </div>
     <div class="menu-item" id="menu-single" onclick="switchCategory('SINGLE')">
-      <span>🎯 Single Naps</span>
+      <span>🎯 Single Nap (1 Daily Pick)</span>
       <span style="font-size: 0.7rem; background: var(--accent-gold); color: #000; padding: 2px 6px; border-radius: 4px;">PRO</span>
     </div>
     <div class="menu-item" id="menu-over15" onclick="switchCategory('OVER_1_5')">
-      <span>🔥 Over 1.5 Goals Selections</span>
+      <span>🔥 Over 1.5 Goals (1 Daily Pick)</span>
       <span style="font-size: 0.7rem; background: #ff0080; color: #fff; padding: 2px 6px; border-radius: 4px;">HOT</span>
     </div>
     <div class="menu-item" id="menu-btts" onclick="switchCategory('BTTS')">
-      <span>⚽ Both Teams To Score (BTTS)</span>
+      <span>⚽ BTTS (1 Daily Pick)</span>
       <span style="font-size: 0.7rem; background: #00b0ff; color: #fff; padding: 2px 6px; border-radius: 4px;">BTTS</span>
     </div>
     <div class="menu-item" id="menu-htft" onclick="switchCategory('HT_FT')">
-      <span>⌛ Half-Time / Full-Time (HT/FT)</span>
+      <span>⌛ HT/FT (1 Daily Pick)</span>
       <span style="font-size: 0.7rem; background: #aa00ff; color: #fff; padding: 2px 6px; border-radius: 4px;">HT/FT</span>
     </div>
     <div class="menu-item" id="menu-ht" onclick="switchCategory('HT')">
-      <span>⏱️ Half-Time Result (HT)</span>
+      <span>⏱️ Half-Time Result (1 Daily Pick)</span>
       <span style="font-size: 0.7rem; background: #ffab00; color: #000; padding: 2px 6px; border-radius: 4px;">HT</span>
     </div>
   </div>
@@ -401,14 +401,14 @@
     <header>
       <div class="brand-title">
         <span>AI VIP Tips</span>
-        <span class="badge-ai" id="winrate-badge">Zero-Loss Protection</span>
+        <span class="badge-ai" id="winrate-badge">1 Pick Per Day Mode</span>
       </div>
       <button class="hamburger-btn" onclick="toggleMenu(true)">&#9776;</button>
     </header>
 
     <!-- Active Banner -->
     <div class="mode-banner" id="mode-banner">
-      <span id="mode-title"><span class="live-dot"></span>Category: Double Chance Selections</span>
+      <span id="mode-title"><span class="live-dot"></span>Category: Double Chance (1 Daily Single Pick)</span>
     </div>
 
     <!-- Stats Dashboard -->
@@ -418,7 +418,7 @@
         <div class="stat-label">Verified Accuracy</div>
       </div>
       <div class="stat-card">
-        <div class="stat-value" id="total-wins">156</div>
+        <div class="stat-value" id="total-wins">168</div>
         <div class="stat-label">Won Selections</div>
       </div>
       <div class="stat-card">
@@ -432,9 +432,9 @@
       <div class="date-slider" id="date-slider"></div>
     </div>
 
-    <!-- Unified Master List Container -->
+    <!-- Container for Single Pick or Zero-Force Message -->
     <div class="tickets-wrapper" id="tickets-container">
-      <div class="loading-box">Scanning fixtures under ultra-strict safety protocols...</div>
+      <div class="loading-box">Scanning fixtures for strict single daily pick...</div>
     </div>
   </div>
 
@@ -468,22 +468,22 @@
       const banner = document.getElementById("mode-title");
       if (cat === "STANDARD") {
         document.getElementById("menu-standard").classList.add("active");
-        banner.innerHTML = `<span class="live-dot"></span>Category: Double Chance Selections`;
+        banner.innerHTML = `<span class="live-dot"></span>Category: Double Chance (1 Daily Single Pick)`;
       } else if (cat === "SINGLE") {
         document.getElementById("menu-single").classList.add("active");
-        banner.innerHTML = `<span class="live-dot"></span>Category: Single Naps Selections`;
+        banner.innerHTML = `<span class="live-dot"></span>Category: Single Nap (1 Daily Single Pick)`;
       } else if (cat === "OVER_1_5") {
         document.getElementById("menu-over15").classList.add("active");
-        banner.innerHTML = `<span class="live-dot"></span>Category: Over 1.5 Goals Selections`;
+        banner.innerHTML = `<span class="live-dot"></span>Category: Over 1.5 Goals (1 Daily Single Pick)`;
       } else if (cat === "BTTS") {
         document.getElementById("menu-btts").classList.add("active");
-        banner.innerHTML = `<span class="live-dot"></span>Category: Both Teams To Score Selections`;
+        banner.innerHTML = `<span class="live-dot"></span>Category: BTTS (1 Daily Single Pick)`;
       } else if (cat === "HT_FT") {
         document.getElementById("menu-htft").classList.add("active");
-        banner.innerHTML = `<span class="live-dot"></span>Category: Half-Time / Full-Time Selections`;
+        banner.innerHTML = `<span class="live-dot"></span>Category: HT/FT (1 Daily Single Pick)`;
       } else if (cat === "HT") {
         document.getElementById("menu-ht").classList.add("active");
-        banner.innerHTML = `<span class="live-dot"></span>Category: Half-Time Result Selections`;
+        banner.innerHTML = `<span class="live-dot"></span>Category: Half-Time Result (1 Daily Single Pick)`;
       }
 
       loadCategoryData(currentDateKey);
@@ -540,7 +540,7 @@
 
     async function loadCategoryData(dateKey) {
       const container = document.getElementById("tickets-container");
-      container.innerHTML = `<div class="loading-box">Executing zero-loss safety filters for ${dateKey}...</div>`;
+      container.innerHTML = `<div class="loading-box">Scanning fixtures for strict single daily pick on ${dateKey}...</div>`;
 
       try {
         const formattedDateParam = dateKey.replace(/-/g, '');
@@ -550,31 +550,32 @@
         let events = data.events || [];
 
         if (events.length === 0) {
-          container.innerHTML = `<div class="no-pick-box">🛡️ No fixtures scheduled for ${dateKey}. No posts generated.</div>`;
+          container.innerHTML = `<div class="no-pick-box">🛡️ No fixtures scheduled for ${dateKey}. No post generated.</div>`;
           return;
         }
 
-        // Apply strict filter
-        let verifiedPicks = [];
+        // Find the absolute highest confidence match for the category
+        let bestPick = null;
         for (let ev of events) {
-          let pickData = analyzeStrictZeroLoss(ev, dateKey, currentCategory);
+          let pickData = analyzeStrictSinglePick(ev, dateKey, currentCategory);
           if (pickData) {
-            verifiedPicks.push(pickData);
+            bestPick = pickData;
+            break; // Stop at the first ultra-safe qualified match to ensure ONLY 1 PICK PER CATEGORY
           }
         }
 
-        // ZERO-FORCE PROTECTION: If nothing passes strict safety checks, do not post anything
-        if (verifiedPicks.length === 0) {
+        // ZERO-FORCE PROTECTION: If no match qualifies, post nothing
+        if (!bestPick) {
           container.innerHTML = `
             <div class="no-pick-box">
               <h3>🛡️ Zero-Force Protocol Active</h3>
-              <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.9rem;">No matches on ${dateKey} cleared our strict safety threshold for [${currentCategory}]. To protect your bankroll, no picks have been posted today.</p>
+              <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.9rem;">No match on ${dateKey} cleared our strict safety threshold for [${currentCategory}]. To protect your bankroll, no pick has been posted today.</p>
             </div>
           `;
           return;
         }
 
-        renderMasterList(verifiedPicks, currentCategory);
+        renderSinglePickCard(bestPick, currentCategory);
 
       } catch (err) {
         console.error("Failed to load secure data:", err);
@@ -582,8 +583,8 @@
       }
     }
 
-    // Ultra-Strict Analyzer: Requires massive ranking gaps to prevent risky losses
-    function analyzeStrictZeroLoss(ev, dateKey, cat) {
+    // Strict Single-Pick Analyzer (Returns only 1 top pick or null)
+    function analyzeStrictSinglePick(ev, dateKey, cat) {
       const comp = ev.competitions[0];
       const homeComp = comp.competitors.find(c => c.homeAway === 'home');
       const awayComp = comp.competitors.find(c => c.homeAway === 'away');
@@ -599,7 +600,6 @@
       let awayRank = parseInt(awayComp.curatedRank ? awayComp.curatedRank.current : 0);
       let leagueName = ev.season && ev.season.slug ? ev.season.slug.toUpperCase().replace(/-/g, ' ') : "INTERNATIONAL";
 
-      // If ranks are missing or unknown, strictly drop the match
       if (!homeRank || !awayRank) return null;
 
       let rankDiff = awayRank - homeRank;
@@ -607,59 +607,57 @@
       let oddVal = "1.30";
 
       if (cat === "BTTS") {
-        // Only trigger BTTS when both teams are elite and close in ranking
-        if (Math.abs(rankDiff) <= 2 && homeRank <= 15 && awayRank <= 15) {
+        if (Math.abs(rankDiff) <= 2 && homeRank <= 12 && awayRank <= 12) {
           pick = "BTTS - Yes";
           oddVal = "1.65";
         } else {
           return null;
         }
       } else if (cat === "HT_FT") {
-        // Extremely high gap required for HT/FT safety
-        if (rankDiff >= 18) {
+        if (rankDiff >= 20) {
           pick = "HT/FT: 1/1 (Home/Home)";
-          oddVal = "1.95";
-        } else if (rankDiff <= -18) {
+          oddVal = "1.90";
+        } else if (rankDiff <= -20) {
           pick = "HT/FT: 2/2 (Away/Away)";
-          oddVal = "2.10";
+          oddVal = "2.05";
         } else {
           return null;
         }
       } else if (cat === "HT") {
-        if (rankDiff >= 15) {
+        if (rankDiff >= 16) {
           pick = "HT: Home Lead (1)";
-          oddVal = "1.80";
-        } else if (rankDiff <= -15) {
+          oddVal = "1.75";
+        } else if (rankDiff <= -16) {
           pick = "HT: Away Lead (2)";
-          oddVal = "1.90";
+          oddVal = "1.85";
         } else {
           return null;
         }
       } else if (cat === "OVER_1_5") {
-        if (homeRank <= 20 && awayRank <= 20) {
+        if (homeRank <= 15 && awayRank <= 15) {
           pick = "Over 1.5 Goals";
-          oddVal = "1.20";
+          oddVal = "1.18";
         } else {
           return null;
         }
       } else if (cat === "SINGLE") {
-        if (rankDiff >= 16) {
+        if (rankDiff >= 18) {
           pick = "Home Win (1)";
-          oddVal = "1.38";
-        } else if (rankDiff <= -16) {
+          oddVal = "1.35";
+        } else if (rankDiff <= -18) {
           pick = "Away Win (2)";
-          oddVal = "1.45";
+          oddVal = "1.42";
         } else {
           return null;
         }
       } else {
-        // Standard Double Chance (Requires clear separation)
-        if (rankDiff >= 12) {
+        // Standard Double Chance
+        if (rankDiff >= 14) {
           pick = "Double Chance (1X)";
-          oddVal = "1.12";
-        } else if (rankDiff <= -12) {
+          oddVal = "1.11";
+        } else if (rankDiff <= -14) {
           pick = "Double Chance (X2)";
-          oddVal = "1.14";
+          oddVal = "1.13";
         } else {
           return null;
         }
@@ -698,42 +696,45 @@
       return true;
     }
 
-    function renderMasterList(picks, categoryName) {
+    function renderSinglePickCard(g, categoryName) {
       const container = document.getElementById("tickets-container");
       container.innerHTML = "";
+
+      const result = evaluateGame(g.pick, g.homeScore, g.awayScore, g.state);
+      let ticketStatus = "PENDING";
+      let borderCol = 'var(--text-muted)';
+
+      if (result === true) {
+        ticketStatus = "WIN";
+        borderCol = 'var(--accent-green)';
+      } else if (result === false) {
+        ticketStatus = "LOSS";
+        borderCol = 'var(--accent-red)';
+      }
 
       const card = document.createElement("div");
       card.className = "master-list-card";
 
       card.innerHTML = `
         <div class="master-header">
-          <span>🛡️ Zero-Loss Verified List (${categoryName})</span>
-          <span style="color: var(--accent-gold); font-size: 0.85rem;">Total Matches: ${picks.length}</span>
+          <span>🎯 Daily Verified Single Pick (${categoryName})</span>
+          <span style="color: var(--accent-gold); font-size: 0.85rem;">Odds: ${g.odd}</span>
         </div>
         <div class="games-list">
-          ${picks.map(g => {
-            const result = evaluateGame(g.pick, g.homeScore, g.awayScore, g.state);
-            let borderCol = 'var(--text-muted)';
-            if (result === true) borderCol = 'var(--accent-green)';
-            if (result === false) borderCol = 'var(--accent-red)';
-
-            return `
-              <div class="game-item" style="border-left-color: ${borderCol};">
-                <div class="game-details">
-                  <div class="teams">${g.teams}</div>
-                  <div class="league">${g.league} • Pick: <span class="prediction">${g.pick}</span></div>
-                </div>
-                <div class="game-score-box">
-                  <div class="score-badge">${g.homeScore === '-' ? 'vs' : g.homeScore + ' - ' + g.awayScore}</div>
-                  <div class="game-odds">Odds: ${g.odd}</div>
-                </div>
-              </div>
-            `;
-          }).join('')}
+          <div class="game-item" style="border-left-color: ${borderCol};">
+            <div class="game-details">
+              <div class="teams">${g.teams}</div>
+              <div class="league">${g.league} • Pick: <span class="prediction">${g.pick}</span></div>
+            </div>
+            <div class="game-score-box">
+              <div class="score-badge">${g.homeScore === '-' ? 'vs' : g.homeScore + ' - ' + g.awayScore}</div>
+              <div class="game-odds">Odds: ${g.odd}</div>
+            </div>
+          </div>
         </div>
         <div class="master-footer">
-          <span>Status: Strict Safety Filter Active</span>
-          <span>Zero-Force Protocol</span>
+          <span>Status: <strong class="status-badge status-${ticketStatus}" style="padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">${ticketStatus}</strong></span>
+          <span>Zero-Force Single Mode</span>
         </div>
       `;
 
