@@ -3,17 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI VIP Football Predictions (Table Calendar • Monthly BTTS)</title>
+  <title>Free Football Predictions (Table Layout)</title>
   <style>
     :root {
       --bg-dark: #0b0e14;
       --card-bg: #151a23;
+      --accent-yellow: #ffd700;
       --accent-green: #00e676;
       --accent-red: #ff5252;
-      --accent-gold: #ffd700;
       --text-main: #f0f4f8;
       --text-muted: #8a99ad;
-      --border-color: #232d3f;
+      --border-color: #333333;
     }
 
     * {
@@ -35,7 +35,7 @@
 
     .container {
       width: 100%;
-      max-width: 800px;
+      max-width: 900px;
     }
 
     /* Top Header & Hamburger Menu */
@@ -119,7 +119,7 @@
     .drawer-title {
       font-size: 1.1rem;
       font-weight: bold;
-      color: var(--accent-gold);
+      color: var(--accent-yellow);
     }
 
     .close-btn {
@@ -149,8 +149,8 @@
 
     .menu-item:hover, .menu-item.active {
       background: rgba(255, 215, 0, 0.15);
-      border-color: var(--accent-gold);
-      color: var(--accent-gold);
+      border-color: var(--accent-yellow);
+      color: var(--accent-yellow);
     }
 
     .overlay {
@@ -197,34 +197,6 @@
       font-weight: bold;
     }
 
-    /* Stats Dashboard */
-    .stats-bar {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-
-    .stat-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 12px;
-      text-align: center;
-    }
-
-    .stat-value {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: var(--accent-gold);
-    }
-
-    .stat-label {
-      font-size: 0.75rem;
-      color: var(--text-muted);
-      margin-top: 4px;
-    }
-
     /* Table Calendar Widget Styles */
     .calendar-container {
       background: var(--card-bg);
@@ -245,7 +217,7 @@
     .cal-title {
       font-weight: bold;
       font-size: 1.05rem;
-      color: var(--accent-gold);
+      color: var(--accent-yellow);
     }
 
     .cal-nav-btn {
@@ -306,10 +278,10 @@
     }
 
     .cal-day.selected {
-      background: var(--accent-gold) !important;
+      background: var(--accent-yellow) !important;
       color: #000 !important;
       font-weight: bold;
-      border-color: var(--accent-gold);
+      border-color: var(--accent-yellow);
       box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
     }
 
@@ -318,92 +290,92 @@
       color: var(--accent-green);
     }
 
-    /* Single Pick Container Card */
-    .master-list-card {
-      background: var(--card-bg);
-      border: 1px solid var(--border-color);
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
-    }
-
-    .master-header {
-      background: #1c2330;
-      padding: 14px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border-color);
-      font-weight: bold;
-      font-size: 1rem;
-    }
-
-    .games-list {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .game-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 12px;
-      background: rgba(255, 255, 255, 0.02);
-      border-radius: 8px;
-      border-left: 3px solid var(--text-muted);
-    }
-
-    .game-details { display: flex; flex-direction: column; gap: 4px; }
-    .teams { font-weight: 600; font-size: 0.95rem; }
-    .league { font-size: 0.75rem; color: var(--text-muted); }
-    .prediction { font-size: 0.85rem; color: var(--accent-gold); font-weight: bold; }
-
-    .game-score-box {
-      text-align: right;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 4px;
-    }
-
-    .score-badge {
-      background: #1c2330;
-      color: var(--accent-gold);
-      padding: 4px 8px;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 0.9rem;
-      border: 1px solid var(--border-color);
-    }
-
-    .game-odds { font-size: 0.8rem; color: var(--text-muted); }
-
-    .master-footer {
-      padding: 12px 18px;
+    /* Reference Image Style Table Container */
+    .predictions-table-wrapper {
       background: #11151c;
-      border-top: 1px solid var(--border-color);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.85rem;
-      color: var(--text-muted);
+      border: 2px solid var(--accent-yellow);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
     }
 
-    .loading-box {
+    .predictions-table-header {
+      background-color: var(--accent-yellow);
+      color: #000000;
       text-align: center;
-      padding: 40px;
+      padding: 14px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+    }
+
+    .predictions-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .predictions-table th {
+      background-color: #1a2230;
+      color: var(--accent-yellow);
+      padding: 10px 8px;
+      border: 1px solid var(--border-color);
+      font-weight: bold;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+    }
+
+    .predictions-table td {
+      padding: 12px 8px;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+    }
+
+    .predictions-table tr:nth-child(even) {
+      background-color: rgba(255, 255, 255, 0.015);
+    }
+
+    .td-date { color: var(--accent-yellow); font-weight: bold; }
+    .td-league { color: var(--accent-green); font-weight: 600; }
+    .td-game { font-weight: 600; }
+    .td-prediction { color: var(--accent-yellow); font-weight: bold; }
+    .td-odds { font-weight: bold; }
+
+    .result-win {
+      color: var(--accent-green);
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .result-loss {
+      color: var(--accent-red);
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+    .result-pending {
       color: var(--text-muted);
     }
 
-    .no-pick-box {
+    .table-footer-note {
+      padding: 12px 16px;
+      background: #151a23;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+    }
+
+    .table-footer-note strong {
+      color: var(--text-main);
+    }
+
+    .loading-box, .no-pick-box {
       background: var(--card-bg);
       border: 1px solid var(--border-color);
-      border-radius: 16px;
+      border-radius: 12px;
       padding: 30px;
       text-align: center;
-      color: var(--accent-gold);
+      color: var(--accent-yellow);
       font-weight: 600;
     }
   </style>
@@ -423,7 +395,7 @@
     </div>
     <div class="menu-item" id="menu-single" onclick="switchCategory('SINGLE')">
       <span>🎯 Single Nap (1 Pick)</span>
-      <span style="font-size: 0.7rem; background: var(--accent-gold); color: #000; padding: 2px 6px; border-radius: 4px;">PRO</span>
+      <span style="font-size: 0.7rem; background: var(--accent-yellow); color: #000; padding: 2px 6px; border-radius: 4px;">PRO</span>
     </div>
     <div class="menu-item" id="menu-over15" onclick="switchCategory('OVER_1_5')">
       <span>🔥 Over 1.5 Goals (1 Pick)</span>
@@ -432,10 +404,6 @@
     <div class="menu-item" id="menu-btts" onclick="switchCategory('BTTS')">
       <span>⚽ BTTS (1 Pick)</span>
       <span style="font-size: 0.7rem; background: #00b0ff; color: #fff; padding: 2px 6px; border-radius: 4px;">BTTS</span>
-    </div>
-    <div class="menu-item" id="menu-monthly-btts" onclick="switchCategory('MONTHLY_BTTS')">
-      <span>📅 Monthly BTTS Ticket</span>
-      <span style="font-size: 0.7rem; background: #ffd700; color: #000; padding: 2px 6px; border-radius: 4px;">VIP</span>
     </div>
     <div class="menu-item" id="menu-htft" onclick="switchCategory('HT_FT')">
       <span>⌛ HT/FT (1 Pick)</span>
@@ -451,7 +419,7 @@
     <header>
       <div class="brand-title">
         <span>AI VIP Tips</span>
-        <span class="badge-ai" id="winrate-badge">Monthly & Daily Mode</span>
+        <span class="badge-ai" id="winrate-badge">Table Layout Mode</span>
       </div>
       <button class="hamburger-btn" onclick="toggleMenu(true)">&#9776;</button>
     </header>
@@ -459,22 +427,6 @@
     <!-- Active Banner -->
     <div class="mode-banner" id="mode-banner">
       <span id="mode-title"><span class="live-dot"></span>Category: Daily Safe Pick (1 Verified Selection)</span>
-    </div>
-
-    <!-- Stats Dashboard -->
-    <div class="stats-bar">
-      <div class="stat-card">
-        <div class="stat-value" id="winrate-val">99.9%</div>
-        <div class="stat-label">Verified Accuracy</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="total-wins">194</div>
-        <div class="stat-label">Won Selections</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value" id="total-loss">0</div>
-        <div class="stat-label">Lost Selections</div>
-      </div>
     </div>
 
     <!-- Table Calendar Widget -->
@@ -496,9 +448,9 @@
       </table>
     </div>
 
-    <!-- Container for Single Daily Pick / Monthly BTTS or Zero-Force Message -->
-    <div class="tickets-wrapper" id="tickets-container">
-      <div class="loading-box">Scanning fixtures...</div>
+    <!-- Predictions Container -->
+    <div id="tickets-container">
+      <div class="loading-box">Scanning fixtures for table layout...</div>
     </div>
   </div>
 
@@ -543,9 +495,6 @@
       } else if (cat === "BTTS") {
         document.getElementById("menu-btts").classList.add("active");
         banner.innerHTML = `<span class="live-dot"></span>Category: BTTS (1 Verified Selection)`;
-      } else if (cat === "MONTHLY_BTTS") {
-        document.getElementById("menu-monthly-btts").classList.add("active");
-        banner.innerHTML = `<span class="live-dot"></span>Category: Monthly BTTS Ticket (Cumulative High-Probability Selection)`;
       } else if (cat === "HT_FT") {
         document.getElementById("menu-htft").classList.add("active");
         banner.innerHTML = `<span class="live-dot"></span>Category: HT/FT (1 Verified Selection)`;
@@ -659,32 +608,6 @@
           return;
         }
 
-        if (currentCategory === "MONTHLY_BTTS") {
-          // Curate Monthly BTTS Ticket using available qualifying BTTS matches for the day
-          let monthlyPicks = [];
-          for (let ev of events) {
-            let pickData = analyzeStrictSinglePick(ev, dateKey, "BTTS");
-            if (pickData) {
-              monthlyPicks.push(pickData);
-              if (monthlyPicks.length >= 3) break; // Combine up to 3 legs for a secure monthly ticket
-            }
-          }
-
-          if (monthlyPicks.length === 0) {
-            container.innerHTML = `
-              <div class="no-pick-box">
-                <h3>🛡️ Zero-Force Protocol Active</h3>
-                <p style="margin-top: 8px; color: var(--text-muted); font-size: 0.9rem;">No secure BTTS matches cleared our strict threshold for [Monthly BTTS Ticket] on ${dateKey}. No ticket posted.</p>
-              </div>
-            `;
-            return;
-          }
-
-          renderMultiPickCard(monthlyPicks, "Monthly BTTS Ticket");
-          return;
-        }
-
-        // Standard Single Daily Pick per Category
         let bestDailyPick = null;
         for (let ev of events) {
           let pickData = analyzeStrictSinglePick(ev, dateKey, currentCategory);
@@ -704,7 +627,7 @@
           return;
         }
 
-        renderSinglePickCard(bestDailyPick, currentCategory);
+        renderTableLayout(bestDailyPick, dateKey);
 
       } catch (err) {
         console.error("Failed to load secure data:", err);
@@ -791,7 +714,7 @@
       }
 
       return {
-        teams: `${homeName} vs ${awayName}`,
+        teams: `${homeName} -- ${awayName}`,
         league: leagueName,
         pick: pick,
         odd: oddVal,
@@ -822,109 +745,56 @@
       return true;
     }
 
-    function renderSinglePickCard(g, categoryName) {
+    function renderTableLayout(g, dateKey) {
       const container = document.getElementById("tickets-container");
       container.innerHTML = "";
 
       const result = evaluateGame(g.pick, g.homeScore, g.awayScore, g.state);
-      let ticketStatus = "PENDING";
-      let borderCol = 'var(--text-muted)';
+      let resultDisplay = '<span class="result-pending">-</span>';
 
       if (result === true) {
-        ticketStatus = "WIN";
-        borderCol = 'var(--accent-green)';
+        resultDisplay = '<span class="result-win">&#10003;</span>';
       } else if (result === false) {
-        ticketStatus = "LOSS";
-        borderCol = 'var(--accent-red)';
+        resultDisplay = '<span class="result-loss">&#10005;</span>';
       }
 
-      const card = document.createElement("div");
-      card.className = "master-list-card";
+      // Format date key to MM.DD as shown in reference layout
+      const parts = dateKey.split('-');
+      const formattedDate = `${parts[1]}.${parts[2]}`;
 
-      card.innerHTML = `
-        <div class="master-header">
-          <span>🎯 Daily Verified Single Pick (${categoryName})</span>
-          <span style="color: var(--accent-gold); font-size: 0.85rem;">Odds: ${g.odd}</span>
-        </div>
-        <div class="games-list">
-          <div class="game-item" style="border-left-color: ${borderCol};">
-            <div class="game-details">
-              <div class="teams">${g.teams}</div>
-              <div class="league">${g.league} • Pick: <span class="prediction">${g.pick}</span></div>
-            </div>
-            <div class="game-score-box">
-              <div class="score-badge">${g.homeScore === '-' ? 'vs' : g.homeScore + ' - ' + g.awayScore}</div>
-              <div class="game-odds">Odds: ${g.odd}</div>
-            </div>
-          </div>
-        </div>
-        <div class="master-footer">
-          <span>Status: <strong class="status-badge status-${ticketStatus}" style="padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">${ticketStatus}</strong></span>
-          <span>Table Calendar Mode</span>
+      const wrapper = document.createElement("div");
+      wrapper.className = "predictions-table-wrapper";
+
+      wrapper.innerHTML = `
+        <div class="predictions-table-header">Free Football Predictions</div>
+        <table class="predictions-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>League</th>
+              <th>Game</th>
+              <th>Prediction</th>
+              <th>Odds</th>
+              <th>Results</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="td-date">${formattedDate}</td>
+              <td class="td-league">${g.league}</td>
+              <td class="td-game">${g.teams}</td>
+              <td class="td-prediction">${g.pick}</td>
+              <td class="td-odds">${g.odd}</td>
+              <td>${resultDisplay}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="table-footer-note">
+          Be ready to win and visit <strong>Today Football Predictions</strong> to get the sure football predictions from the best experts around the world.
         </div>
       `;
 
-      container.appendChild(card);
-    }
-
-    function renderMultiPickCard(picks, titleName) {
-      const container = document.getElementById("tickets-container");
-      container.innerHTML = "";
-
-      let ticketStatus = "WIN";
-      let hasPending = false;
-      let cumulativeOdds = 1.0;
-
-      picks.forEach(p => {
-        cumulativeOdds *= parseFloat(p.odd);
-        const res = evaluateGame(p.pick, p.homeScore, p.awayScore, p.state);
-        if (res === null) {
-          hasPending = true;
-        } else if (res === false) {
-          ticketStatus = "LOSS";
-        }
-      });
-
-      if (hasPending && ticketStatus !== "LOSS") {
-        ticketStatus = "PENDING";
-      }
-
-      const card = document.createElement("div");
-      card.className = "master-list-card";
-
-      card.innerHTML = `
-        <div class="master-header">
-          <span>📅 ${titleName}</span>
-          <span style="color: var(--accent-gold); font-size: 0.85rem;">Total Odds: ${cumulativeOdds.toFixed(2)}</span>
-        </div>
-        <div class="games-list">
-          ${picks.map(g => {
-            const result = evaluateGame(g.pick, g.homeScore, g.awayScore, g.state);
-            let borderCol = 'var(--text-muted)';
-            if (result === true) borderCol = 'var(--accent-green)';
-            if (result === false) borderCol = 'var(--accent-red)';
-
-            return `
-              <div class="game-item" style="border-left-color: ${borderCol};">
-                <div class="game-details">
-                  <div class="teams">${g.teams}</div>
-                  <div class="league">${g.league} • Pick: <span class="prediction">${g.pick}</span></div>
-                </div>
-                <div class="game-score-box">
-                  <div class="score-badge">${g.homeScore === '-' ? 'vs' : g.homeScore + ' - ' + g.awayScore}</div>
-                  <div class="game-odds">Odds: ${g.odd}</div>
-                </div>
-              </div>
-            `;
-          }).join('')}
-        </div>
-        <div class="master-footer">
-          <span>Status: <strong class="status-badge status-${ticketStatus}" style="padding: 2px 8px; border-radius: 4px; font-size: 0.75rem;">${ticketStatus}</strong></span>
-          <span>Cumulative Monthly Ticket</span>
-        </div>
-      `;
-
-      container.appendChild(card);
+      container.appendChild(wrapper);
     }
   </script>
 </body>
