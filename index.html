@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Free Football Predictions (Modern VIP Design)</title>
+  <title>Free Football Predictions (-30 to +30 History & Upcoming)</title>
   <style>
     :root {
       --bg-dark: #07090e;
@@ -274,7 +274,6 @@
 
     .cal-table td {
       padding: 6px 0;
-      cursor: pointer;
     }
 
     .cal-day {
@@ -293,9 +292,11 @@
     }
 
     .cal-day:hover {
-      background: rgba(245, 197, 24, 0.15);
+      background: rgba(245, 197, 24, 0.25);
       border-color: var(--accent-yellow);
       color: var(--accent-yellow);
+      transform: scale(1.1);
+      box-shadow: 0 0 12px rgba(245, 197, 24, 0.4);
     }
 
     .cal-day.other-month {
@@ -454,14 +455,14 @@
     <header>
       <div class="brand-title">
         <span>AI VIP Tips</span>
-        <span class="badge-ai" id="winrate-badge">Modern UI Active</span>
+        <span class="badge-ai" id="winrate-badge">-30 to +30 Day Range</span>
       </div>
       <button class="hamburger-btn" onclick="toggleMenu(true)">&#9776;</button>
     </header>
 
     <!-- Active Banner -->
     <div class="mode-banner" id="mode-banner">
-      <span id="mode-title"><span class="live-dot"></span>Category: Daily Safe Pick (1 Verified Selection)</span>
+      <span id="mode-title"><span class="live-dot"></span>Category: Daily Safe Pick (1 Verified Selection) — Hover any date to load (-30 to +30 window)</span>
     </div>
 
     <!-- Table Calendar Widget -->
@@ -485,7 +486,7 @@
 
     <!-- Predictions Container -->
     <div id="tickets-container">
-      <div class="loading-box">Loading calendar and table history...</div>
+      <div class="loading-box">Hover a date on the calendar above...</div>
     </div>
   </div>
 
@@ -591,7 +592,7 @@
           dayDiv.innerText = prevDayNum;
           dayDiv.classList.add("other-month");
           if (dateKey === currentDateKey) dayDiv.classList.add("selected");
-          dayDiv.onclick = () => { selectCalendarDate(prevMonthDate); };
+          dayDiv.onmouseenter = () => { selectCalendarDate(prevMonthDate); };
         } else if (dateCounter <= totalDays) {
           let currMonthDate = new Date(year, month, dateCounter);
           let dateKey = getFormattedDate(currMonthDate);
@@ -601,7 +602,7 @@
           if (dateKey === currentDateKey) dayDiv.classList.add("selected");
           
           let capturedDate = new Date(currMonthDate);
-          dayDiv.onclick = () => { selectCalendarDate(capturedDate); };
+          dayDiv.onmouseenter = () => { selectCalendarDate(capturedDate); };
           dateCounter++;
         } else {
           let nextMonthDate = new Date(year, month + 1, nextMonthCounter);
@@ -610,7 +611,7 @@
           dayDiv.innerText = nextMonthCounter;
           dayDiv.classList.add("other-month");
           if (dateKey === currentDateKey) dayDiv.classList.add("selected");
-          dayDiv.onclick = () => { selectCalendarDate(nextMonthDate); };
+          dayDiv.onmouseenter = () => { selectCalendarDate(nextMonthDate); };
           nextMonthCounter++;
         }
 
@@ -627,39 +628,55 @@
       loadMultiDayTableData(currentDateKey);
     }
 
+    async function fetchWithCache(dKey) {
+      const cacheKey = `espn_cache_${dKey}`;
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        return JSON.parse(cached);
+      }
+      const formattedDateParam = dKey.replace(/-/g, '');
+      const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard?dates=${formattedDateParam}`);
+      const data = await res.json();
+      localStorage.setItem(cacheKey, JSON.stringify(data));
+      return data;
+    }
+
+    // EXPANDED TO -30 TO +30 DAY RANGE WITH PARALLEL PROMISES
     async function loadMultiDayTableData(centerDateKey) {
       const container = document.getElementById("tickets-container");
-      container.innerHTML = `<div class="loading-box">Compiling history and upcoming table around ${centerDateKey}...</div>`;
+      container.innerHTML = `<div class="loading-box">Compiling -30 to +30 history window around ${centerDateKey}...</div>`;
 
       try {
         let centerDate = new Date(centerDateKey);
-        let tableRows = [];
+        let promises = [];
 
-        for (let offset = -4; offset <= 4; offset++) {
+        for (let offset = -30; offset <= 30; offset++) {
           let d = new Date(centerDate);
           d.setDate(d.getDate() + offset);
           let dKey = getFormattedDate(d);
-          let formattedDateParam = dKey.replace(/-/g, '');
-
-          try {
-            const res = await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/all/scoreboard?dates=${formattedDateParam}`);
-            const data = await res.json();
-            let events = data.events || [];
-
-            for (let ev of events) {
-              let pickData = analyzeStrictSinglePick(ev, dKey, currentCategory);
-              if (pickData) {
-                tableRows.push({
-                  dateStr: dKey,
-                  ...pickData
-                });
-                break;
-              }
-            }
-          } catch (e) {
-            console.warn("Failed fetching date:", dKey);
-          }
+          
+          promises.push(
+            fetchWithCache(dKey)
+              .then(data => ({ dKey, events: data.events || [] }))
+              .catch(() => ({ dKey, events: [] }))
+          );
         }
+
+        let results = await Promise.all(promises);
+        let tableRows = [];
+
+        results.forEach(({ dKey, events }) => {
+          for (let ev of events) {
+            let pickData = analyzeStrictSinglePick(ev, dKey, currentCategory);
+            if (pickData) {
+              tableRows.push({
+                dateStr: dKey,
+                ...pickData
+              });
+              break;
+            }
+          }
+        });
 
         if (tableRows.length === 0) {
           container.innerHTML = `
