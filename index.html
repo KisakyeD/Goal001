@@ -3,51 +3,174 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Free Football Predictions - Real Odds</title>
+<title>Kampala 1.50 Banker - Real Odds - No Blank Screen</title>
 <style>
 :root{--bg-dark:#07090e;--card-bg:#121722;--card-border:#1e2638;--accent-yellow:#f5c518;--accent-green:#00ff88;--accent-red:#ff3366;--text-main:#f8fafc;--text-muted:#94a3b8}
 *{box-sizing:border-box;margin:0;padding:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif}
-body{background-color:var(--bg-dark);color:var(--text-main);display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:15px 8px;background-image:radial-gradient(circle at top center,#131c31 0%,var(--bg-dark) 70%)}
+body{background:#07090e;color:#f8fafc;display:flex;flex-direction:column;align-items:center;min-height:100vh;padding:15px 8px}
 .container{width:100%;max-width:950px}
-header{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;background:var(--card-bg);border:1px solid var(--card-border);padding:12px 16px;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+header{width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:15px;background:#121722;border:1px solid #1e2638;padding:12px 16px;border-radius:14px}
 .brand-title{font-size:1.1rem;color:#fff;display:flex;align-items:center;gap:10px;font-weight:700}
-.badge-ai{background:linear-gradient(135deg,#00c853,var(--accent-green));font-size:.6rem;padding:4px 8px;border-radius:20px;text-transform:uppercase;font-weight:800;color:#000}
-.hamburger-btn{background:#1a2234;border:1px solid var(--card-border);color:var(--text-main);font-size:1.2rem;padding:6px 12px;border-radius:8px;cursor:pointer}
-.hamburger-btn:hover{background:var(--card-border);border-color:var(--accent-yellow);color:var(--accent-yellow)}
-.menu-drawer{position:fixed;top:0;right:-320px;width:290px;height:100vh;background:#0d121c;border-left:1px solid var(--card-border);box-shadow:-10px 0 30px rgba(0,0,0,.8);z-index:1000;display:flex;flex-direction:column;padding:20px;overflow-y:auto;transition:right .35s cubic-bezier(.16,1,.3,1)}
+.badge-ai{background:#00ff88;font-size:.6rem;padding:4px 8px;border-radius:20px;text-transform:uppercase;font-weight:800;color:#000}
+.hamburger-btn{background:#1a2234;border:1px solid #1e2638;color:#fff;font-size:1.2rem;padding:6px 12px;border-radius:8px;cursor:pointer}
+.menu-drawer{position:fixed;top:0;right:-320px;width:290px;height:100vh;background:#0d121c;border-left:1px solid #1e2638;z-index:1000;display:flex;flex-direction:column;padding:20px;overflow-y:auto;transition:right .35s}
 .menu-drawer.open{right:0}
-.drawer-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid var(--card-border);margin-bottom:16px}
-.drawer-title{font-size:1rem;font-weight:800;color:var(--accent-yellow)}
-.close-btn{background:none;border:none;color:var(--text-muted);font-size:1.5rem;cursor:pointer}
-.menu-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;color:var(--text-main);font-weight:600;cursor:pointer;transition:all .2s ease;margin-bottom:10px;font-size:.85rem}
-.menu-item:hover,.menu-item.active{background:rgba(245,197,24,.1);border-color:var(--accent-yellow);color:var(--accent-yellow)}
-.menu-item .cnt{font-size:.7rem;opacity:.8;font-weight:600}
-.overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.7);backdrop-filter:blur(4px);z-index:999;display:none}
+.drawer-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:14px;border-bottom:1px solid #1e2638;margin-bottom:16px}
+.drawer-title{font-size:1rem;font-weight:800;color:#f5c518}
+.close-btn{background:none;border:none;color:#94a3b8;font-size:1.5rem;cursor:pointer}
+.menu-item{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;background:#121722;border:1px solid #1e2638;border-radius:10px;color:#fff;font-weight:600;cursor:pointer;margin-bottom:10px;font-size:.85rem}
+.menu-item.active{background:rgba(245,197,24,.1);border-color:#f5c518;color:#f5c518}
+.menu-item .cnt{font-size:.7rem;opacity:.8}
+.overlay{position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.7);z-index:999;display:none}
 .overlay.active{display:block}
-.live-dot{display:inline-block;width:8px;height:8px;background-color:var(--accent-green);border-radius:50%;margin-right:8px;box-shadow:0 0 10px var(--accent-green)}
-.mode-banner{background:rgba(0,255,136,.05);border:1px solid rgba(0,255,136,.2);color:var(--accent-green);padding:10px 14px;border-radius:10px;margin-bottom:16px;font-size:.82rem;font-weight:600}
-.predictions-table-wrapper{background:var(--card-bg);border:2px solid var(--accent-yellow);border-radius:12px;overflow:hidden;box-shadow:0 15px 40px rgba(0,0,0,.6);margin-bottom:20px}
-.predictions-table-header{background:linear-gradient(135deg,#e6b800,var(--accent-yellow));color:#07090e;text-align:center;padding:14px;font-size:1.15rem;font-weight:800}
-.table-scroll-container{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mode-banner{background:rgba(0,255,136,.05);border:1px solid rgba(0,255,136,.2);color:#00ff88;padding:10px 14px;border-radius:10px;margin-bottom:16px;font-size:.82rem;font-weight:600}
+.predictions-table-wrapper{background:#121722;border:2px solid #f5c518;border-radius:12px;overflow:hidden;margin-bottom:20px}
+.predictions-table-header{background:#f5c518;color:#07090e;text-align:center;padding:14px;font-size:1.15rem;font-weight:800}
+.table-scroll-container{width:100%;overflow-x:auto}
 .predictions-table{width:100%;min-width:600px;border-collapse:collapse;text-align:center;font-size:.85rem}
-.predictions-table th{background-color:#161e30;color:var(--accent-yellow);padding:10px 6px;border:1px solid var(--card-border);font-weight:700;text-transform:uppercase;font-size:.7rem}
-.predictions-table td{padding:10px 6px;border:1px solid var(--card-border);color:var(--text-main);vertical-align:middle}
-.predictions-table tr:nth-child(even){background-color:rgba(255,255,255,.015)}
-.td-date{color:var(--accent-yellow);font-weight:700;width:65px}
-.td-league{color:var(--accent-green);font-weight:600;font-size:.75rem}
+.predictions-table th{background:#161e30;color:#f5c518;padding:10px 6px;border:1px solid #1e2638;font-weight:700;text-transform:uppercase;font-size:.7rem}
+.predictions-table td{padding:10px 6px;border:1px solid #1e2638;color:#fff;vertical-align:middle}
+.td-date{color:#f5c518;font-weight:700}
+.td-league{color:#00ff88;font-weight:600;font-size:.75rem}
 .td-game{font-weight:600;font-size:.8rem}
-.td-prediction{color:var(--accent-yellow);font-weight:700}
+.td-prediction{color:#f5c518;font-weight:700}
 .td-odds{font-weight:700}
-.result-win{color:var(--accent-green);font-weight:800;font-size:1.1rem}
-.result-loss{color:var(--accent-red);font-weight:800;font-size:1.1rem}
-.result-pending{color:var(--text-muted);font-style:italic;font-size:.75rem}
-.table-footer-note{padding:12px 16px;background:#0d121c;color:var(--text-muted);font-size:.75rem;text-align:center;border-top:1px solid var(--card-border)}
-.loading-box{background:var(--card-bg);border:1px solid var(--card-border);border-radius:12px;padding:40px;text-align:center;color:var(--accent-yellow);font-weight:600}
+.result-win{color:#00ff88;font-weight:800}
+.result-pending{color:#94a3b8;font-style:italic;font-size:.75rem}
+.table-footer-note{padding:12px 16px;background:#0d121c;color:#94a3b8;font-size:.75rem;text-align:center;border-top:1px solid #1e2638}
+.loading-box{background:#121722;border:1px solid #1e2638;border-radius:12px;padding:20px;text-align:center;color:#f5c518;font-weight:600}
 .filter-bar{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
-.filter-btn{background:#1a2234;border:1px solid var(--card-border);color:#fff;padding:9px 14px;border-radius:999px;cursor:pointer;font-weight:700;font-size:.8rem}
-.filter-btn.active{background:var(--accent-yellow);color:#000;border-color:var(--accent-yellow)}
+.filter-btn{background:#1a2234;border:1px solid #1e2638;color:#fff;padding:9px 14px;border-radius:999px;cursor:pointer;font-weight:700;font-size:.8rem}
+.filter-btn.active{background:#f5c518;color:#000;border-color:#f5c518}
+#errorBox{display:none;background:#ff3366;color:#fff;padding:12px;border-radius:10px;margin-bottom:12px;font-size:.85rem;font-weight:600}
 </style>
 </head>
 <body>
 <div class="overlay" id="overlay" onclick="toggleMenu(false)"></div>
-<div class="menu-drawer
+<div class="menu-drawer" id="menu-drawer">
+<div class="drawer-header"><div class="drawer-title">REAL ODDS NAVIGATION</div><button class="close-btn" onclick="toggleMenu(false)">&times;</button></div>
+<div class="menu-item active" id="menu-standard" onclick="switchCategory('STANDARD')"><span>⚽ Daily Safe Pick</span><span class="cnt" id="cnt-STANDARD">-</span></div>
+<div class="menu-item" id="menu-single" onclick="switchCategory('SINGLE')"><span>🎯 Single Nap</span><span class="cnt" id="cnt-SINGLE">-</span></div>
+<div class="menu-item" id="menu-over15" onclick="switchCategory('OVER_1_5')"><span>🔥 Over 1.5 Goals</span><span class="cnt" id="cnt-OVER_1_5">-</span></div>
+<div class="menu-item" id="menu-btts" onclick="switchCategory('BTTS')"><span>⚽ BTTS</span><span class="cnt" id="cnt-BTTS">-</span></div>
+<div class="menu-item" id="menu-htft" onclick="switchCategory('HT_FT')"><span>⌛ HT/FT</span><span class="cnt" id="cnt-HT_FT">-</span></div>
+<div class="menu-item" id="menu-ht" onclick="switchCategory('HT')"><span>⏱️ Half-Time</span><span class="cnt" id="cnt-HT">-</span></div>
+</div>
+<div class="container">
+<header><div class="brand-title"><span>⚽ Kampala 1.50 Banker</span><span class="badge-ai">Real Odds Live</span></div><button class="hamburger-btn" onclick="toggleMenu(true)">&#9776;</button></header>
+<div id="errorBox"></div>
+<div class="mode-banner"><span id="mode-title">● Category: Daily Safe Pick • Real Odds API • No Blank Screen</span></div>
+<div class="filter-bar">
+<button class="filter-btn active" id="f-all" onclick="setFilter('all')">All -30 to +30</button>
+<button class="filter-btn" id="f-past" onclick="setFilter('past')">Past -30</button>
+<button class="filter-btn" id="f-today" onclick="setFilter('today')">Today</button>
+<button class="filter-btn" id="f-future" onclick="setFilter('future')">Future +30</button>
+</div>
+<p id="filterInfo" style="text-align:center;font-size:.8rem;color:#94a3b8;margin-bottom:10px">Loading...</p>
+<div id="tickets-container"><div class="loading-box">Loading... If this stays, JS is blocked - see red box above.</div></div>
+<p style="text-align:center;font-size:.75rem;color:#94a3b8;margin-top:8px">18+ only. In Uganda 25+ to bet. Bet responsibly. • WSB licensed by NLGRB • Odds: The Odds API</p>
+</div>
+<script>
+// ===== BLANK SCREEN FIX: Show error instead of blank =====
+window.onerror = function(msg){ var b=document.getElementById('errorBox'); if(b){ b.style.display='block'; b.textContent='JS Error (not blank anymore): '+msg+' — Screenshot this for me.'; } };
+
+const ODDS_API_KEY = "a665fdcebd267a9179017eabe7fe7586";
+let currentCategory = "STANDARD";
+let currentFilter = "all";
+let realGames = [];
+const VERIFIED = { "2026-11-11": { teams: "Tavernes vs Valencia", league: "COPA DEL REY", pick: "BTTS No", odds: "1.59", result: "✅ WON 0-6" } };
+
+function toggleMenu(open){ try{ document.getElementById("menu-drawer").classList.toggle("open", open); document.getElementById("overlay").classList.toggle("active", open); }catch(e){} }
+function setFilter(f){ currentFilter=f; document.querySelectorAll(".filter-btn").forEach(b=>b.classList.remove("active")); var el=document.getElementById("f-"+f); if(el) el.classList.add("active"); renderRealTable(); }
+function switchCategory(cat){
+  currentCategory=cat; toggleMenu(false);
+  document.querySelectorAll(".menu-item").forEach(el=>el.classList.remove("active"));
+  var map={STANDARD:"menu-standard",SINGLE:"menu-single",OVER_1_5:"menu-over15",BTTS:"menu-btts",HT_FT:"menu-htft",HT:"menu-ht"};
+  var el=document.getElementById(map[cat]); if(el) el.classList.add("active");
+  var mt=document.getElementById("mode-title"); if(mt) mt.textContent="● Category: "+cat+" • Real Odds API";
+  renderRealTable();
+}
+function pickForGame(g, cat){
+  try{
+    let best=null;
+    for(let bm of (g.bookmakers||[])){
+      for(let m of (bm.markets||[])){
+        if(cat==="HT_FT"||cat==="HT") return null;
+        if((cat==="OVER_1_5"||cat==="STANDARD"||cat==="SINGLE") && m.key==="totals"){
+          for(let o of (m.outcomes||[])){ if(o.name==="Over" && o.point===1.5 && o.price>=1.50 && o.price<=1.75){ if(!best||o.price>best.oddsNum) best={pick:"Over 1.5 Goals", odds:o.price.toFixed(2), oddsNum:o.price, bookie:bm.title}; } }
+        }
+        if((cat==="BTTS"||cat==="STANDARD") && m.key==="btts"){
+          for(let o of (m.outcomes||[])){ if(o.name==="No" && o.price>=1.50 && o.price<=1.75 && !best) best={pick:"BTTS No", odds:o.price.toFixed(2), oddsNum:o.price, bookie:bm.title}; }
+        }
+        if(cat==="SINGLE" && m.key==="h2h"){
+          for(let o of (m.outcomes||[])){ if(o.price>=1.50 && o.price<=1.75 && !best) best={pick:o.name+" Win", odds:o.price.toFixed(2), oddsNum:o.price, bookie:bm.title}; }
+        }
+      }
+    }
+    return best;
+  }catch(e){ return null; }
+}
+function renderRealTable(){
+  try{
+    const container=document.getElementById("tickets-container");
+    if(!container) return;
+    const today=new Date(); today.setHours(0,0,0,0);
+    let rows=[]; let shown=0, realCount=0, skipCount=0, verifiedCount=0;
+    const byDate={};
+    for(let g of realGames){ try{ const d=new Date(g.commence_time).toISOString().slice(0,10); if(!byDate[d]) byDate[d]=[]; byDate[d].push(g); }catch(e){} }
+    for(let offset=-30; offset<=30; offset++){
+      if(currentFilter==="past" && offset>=0) continue;
+      if(currentFilter==="future" && offset<=0) continue;
+      if(currentFilter==="today" && offset!==0) continue;
+      shown++;
+      const d=new Date(today); d.setDate(d.getDate()+offset);
+      const key=d.toISOString().slice(0,10);
+      const dateLabel=String(d.getMonth()+1).padStart(2,'0')+"."+String(d.getDate()).padStart(2,'0');
+      if(VERIFIED[key]){ verifiedCount++; const v=VERIFIED[key]; rows.push(`<tr><td class="td-date">${dateLabel}</td><td class="td-league">${v.league}</td><td class="td-game">${v.teams}</td><td class="td-prediction">${v.pick} ✅</td><td class="td-odds">${v.odds}</td><td><span class="result-win">${v.result}</span></td></tr>`); continue; }
+      if(offset<0){ skipCount++; rows.push(`<tr><td class="td-date">${dateLabel}</td><td class="td-league">—</td><td class="td-game">No verified pick</td><td class="td-prediction">⏸️ SKIP</td><td class="td-odds">—</td><td><span class="result-pending">SKIP - No verified pick</span></td></tr>`); continue; }
+      if(offset>3){ skipCount++; rows.push(`<tr><td class="td-date">${dateLabel}</td><td class="td-league">—</td><td class="td-game">Odds not priced yet</td><td class="td-prediction">⏳ NOT OUT YET</td><td class="td-odds">—</td><td><span class="result-pending">Come back closer</span></td></tr>`); continue; }
+      const games=byDate[key]||[];
+      let found=null;
+      for(let g of games){ const p=pickForGame(g, currentCategory); if(p){ found={game:g,pick:p}; break; } }
+      if(!found && currentCategory==="STANDARD"){ for(let g of games){ const p=pickForGame(g,"OVER_1_5")||pickForGame(g,"BTTS")||pickForGame(g,"SINGLE"); if(p){ found={game:g,pick:p}; break; } } }
+      if(found){ realCount++; const g=found.game; const league=(g.sport_title||g.sport||"").toUpperCase(); const kickoff=new Date(g.commence_time).toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}); rows.push(`<tr><td class="td-date">${dateLabel}</td><td class="td-league">${league}</td><td class="td-game">${g.home_team} -- ${g.away_team} (${kickoff})</td><td class="td-prediction">${found.pick.pick}</td><td class="td-odds">${found.pick.odds}</td><td><span class="result-pending" style="color:#00ff88">⚽ Real • ${found.pick.bookie}</span></td></tr>`); }
+      else { skipCount++; let reason=(currentCategory==="HT_FT"||currentCategory==="HT")?"Not in Odds API - SKIP":(games.length===0?"No games (Intl Break) - SKIP":"No 1.50+ value - SKIP"); rows.push(`<tr><td class="td-date">${dateLabel}</td><td class="td-league">—</td><td class="td-game">${games.length? games[0].home_team+" -- "+games[0].away_team : "No real game"}</td><td class="td-prediction">⏸️ SKIP</td><td class="td-odds">—</td><td><span class="result-pending">${reason}</span></td></tr>`); }
+    }
+    const fi=document.getElementById("filterInfo"); if(fi) fi.textContent=`Showing: ${currentFilter} • ${shown} days • ✅ ${verifiedCount} Verified • ⚽ ${realCount} Real Odds • ⏸️ ${skipCount} SKIP`;
+    const setCnt=(id,val)=>{ const e=document.getElementById(id); if(e) e.textContent=val; };
+    setCnt("cnt-STANDARD", realCount+" real"); setCnt("cnt-OVER_1_5", realCount+" real"); setCnt("cnt-BTTS", realCount+" real"); setCnt("cnt-SINGLE", realCount+" real"); setCnt("cnt-HT_FT","0 - Not in API"); setCnt("cnt-HT","0 - Not in API");
+    container.innerHTML=`<div class="predictions-table-wrapper"><div class="predictions-table-header">Free Football Predictions — REAL ODDS</div><div class="table-scroll-container"><table class="predictions-table"><thead><tr><th>Date</th><th>League</th><th>Game</th><th>Prediction</th><th>Odds</th><th>Results</th></tr></thead><tbody>${rows.join('')}</tbody></table></div><div class="table-footer-note">Real Odds API • Past = Verified only • Future >3 days = Not out yet • HT/FT not in API = Honest SKIP</div></div>`;
+  }catch(e){
+    const b=document.getElementById('errorBox'); if(b){ b.style.display='block'; b.textContent='Render error: '+e.message; }
+  }
+}
+// ===== INSTANT RENDER FIRST - NEVER WAIT FOR API =====
+try{ renderRealTable(); }catch(e){}
+// ===== THEN FETCH API IN BACKGROUND =====
+(async function(){
+  try{
+    const cached=localStorage.getItem("banker_real_v6");
+    if(cached){ try{ const c=JSON.parse(cached); if(c.date===new Date().toISOString().slice(0,10) && Array.isArray(c.games)){ realGames=c.games; renderRealTable(); return; } }catch(e){} }
+    const sports=["soccer_epl","soccer_spain_la_liga"];
+    let all=[];
+    for(let sport of sports){
+      try{
+        const url=`https://api.the-odds-api.com/v4/sports/${sport}/odds/?apiKey=${ODDS_API_KEY}&regions=eu&markets=totals,btts,h2h&oddsFormat=decimal&dateFormat=iso`;
+        const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(),5000);
+        const r=await fetch(url,{signal:ctrl.signal}); clearTimeout(t);
+        if(r.status===429) continue;
+        if(!r.ok) continue;
+        const j=await r.json(); if(Array.isArray(j)) all=all.concat(j);
+      }catch(e){}
+    }
+    realGames=all;
+    try{ localStorage.setItem("banker_real_v6", JSON.stringify({date:new Date().toISOString().slice(0,10), games:all})); }catch(e){}
+    renderRealTable();
+  }catch(e){
+    // Even if API fails, table is already shown - never blank
+    renderRealTable();
+  }
+})();
+</script>
+</body>
+</html>
