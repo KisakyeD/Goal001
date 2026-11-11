@@ -3,160 +3,234 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TikTok Coins Uganda - Buy With MoMo | Kampala</title>
+<title>Kampala Coins → Gift on TikTok Live</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Arial,sans-serif}
-body{background:#07090e;color:#fff;line-height:1.5;padding:0}
+body{background:#07090e;color:#fff;min-height:100vh}
 header{background:#111;display:flex;justify-content:space-between;align-items:center;padding:16px 5%;position:sticky;top:0;z-index:100;border-bottom:1px solid #222}
-header b{font-size:19px} header b span{color:#00e676}
-header a{color:#fff;text-decoration:none;font-size:14px;margin-left:14px}
-.hero{background:linear-gradient(180deg,#000 0%,#0a1a2e 50%,#07090e 100%);padding:38px 5% 28px;text-align:center}
-.badge{background:#00e676;color:#000;padding:7px 14px;border-radius:999px;font-size:12px;font-weight:800;display:inline-block}
-.hero h1{font-size:32px;line-height:1.15;margin:16px 0 8px}
-.hero h1 span{color:#00e676}
-.hero p{opacity:.85;max-width:600px;margin:0 auto}
+header b{font-size:19px} header b span{color:#f5c518}
+.wallet-chip{background:#f5c518;color:#111;padding:7px 14px;border-radius:999px;font-weight:800;font-size:14px}
 .wrap{max-width:900px;margin:auto;padding:20px 5% 40px}
-.calc-box{background:#121722;border:2px solid #00e676;border-radius:18px;padding:22px;margin:20px 0}
-.calc-box h2{color:#00e676;font-size:20px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}
-.coin-btn{background:#1a2234;border:2px solid #333;color:#fff;padding:14px 6px;border-radius:12px;cursor:pointer;text-align:center}
-.coin-btn small{display:block;font-size:11px;opacity:.7}
-.coin-btn b{font-size:18px}
-.coin-btn.active{background:#00e676;color:#111;border-color:#00e676}
-.coin-btn.active small{color:#111}
-.total-row{display:flex;justify-content:space-between;align-items:center;background:#0b0e13;padding:14px;border-radius:12px;flex-wrap:wrap;gap:10px}
-.total-row .price{font-size:28px;font-weight:900;color:#00e676}
-input{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#0b0e13;color:#fff;font-size:16px;margin:10px 0}
-.btn{display:block;text-align:center;background:#00e676;color:#111;padding:16px;border-radius:999px;font-weight:800;text-decoration:none;font-size:16px;margin-top:12px}
-.btn-wa{background:#25D366}
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:20px 0}
-.step{background:#161a22;padding:18px;border-radius:16px;border:1px solid #222;text-align:center}
-.step b{color:#00e676;font-size:22px}
-.step p{font-size:13px;opacity:.85;margin-top:6px}
-.price-table{background:#121722;border-radius:16px;overflow:hidden;border:1px solid #222;margin:20px 0}
-.price-table table{width:100%;border-collapse:collapse;font-size:14px}
-.price-table th{background:#1a2234;color:#00e676;padding:12px;text-align:left}
-.price-table td{padding:12px;border-top:1px solid #222}
-.price-table tr:hover{background:#1a2234}
-.best{color:#00e676;font-weight:800}
-.faq{background:#161a22;border-radius:16px;padding:18px;margin:20px 0}
-.faq h3{margin-bottom:10px}
-.faq p{font-size:14px;opacity:.85;margin-bottom:12px}
-.faq b{color:#fff}
+.hero{text-align:center;padding:20px 0 8px}
+.hero h1{font-size:30px;line-height:1.15} .hero h1 span{color:#ff2e63}
+.hero p{opacity:.85;max-width:620px;margin:10px auto}
+.flow{background:#161a22;border:1px solid #333;border-radius:14px;padding:12px;text-align:center;font-size:13px;margin:12px 0}
+.flow b{color:#f5c518}
+.balance-card{background:linear-gradient(135deg,#f5c518,#e6b800);color:#111;border-radius:20px;padding:20px;text-align:center;margin:14px 0}
+.balance-card .bal{font-size:44px;font-weight:900}
+.tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0}
+.tab-btn{background:#1a2234;border:2px solid #333;color:#fff;padding:11px 16px;border-radius:999px;cursor:pointer;font-weight:700;font-size:14px}
+.tab-btn.active{background:#f5c518;color:#111;border-color:#f5c518}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.card{background:#121722;border:2px solid #333;border-radius:16px;padding:14px 8px;text-align:center;cursor:pointer;position:relative}
+.card.active{border-color:#ff2e63;background:#1a2234;box-shadow:0 0 0 3px rgba(255,46,99,.25)}
+.card b{font-size:16px;display:block;margin:4px 0}
+.card small{opacity:.7;font-size:12px;display:block}
+.card .emoji{font-size:32px}
+.box{background:#121722;border:1px solid #222;border-radius:16px;padding:20px;margin:14px 0}
+.box h3{color:#f5c518;margin-bottom:8px}
+input{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#0b0e13;color:#fff;font-size:16px;margin:8px 0}
+.btn{display:block;text-align:center;background:#f5c518;color:#111;padding:16px;border-radius:999px;font-weight:800;text-decoration:none;font-size:16px;margin-top:12px;border:none;width:100%;cursor:pointer}
+.btn-green{background:#00e676} .btn-pink{background:#ff2e63;color:#fff} .btn-wa{background:#25D366} .btn-black{background:#000;color:#fff;border:1px solid #444}
+.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #222;font-size:14px;gap:8px;flex-wrap:wrap}
+.gift-preview{background:linear-gradient(135deg,#ff2e63,#ff6b9d);border-radius:16px;padding:18px;text-align:center;margin:12px 0}
+.gift-preview .big{font-size:48px}
 footer{padding:20px;text-align:center;font-size:12px;color:#888;border-top:1px solid #222}
-@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:1fr}.hero h1{font-size:26px}}
+@media(max-width:600px){.grid{grid-template-columns:repeat(3,1fr)}.hero h1{font-size:26px}.balance-card .bal{font-size:36px}}
 </style>
 </head>
 <body>
-<header><b>🪙 <span>TikTok</span> Coins UG</b><div><a href="#buy">Buy</a><a href="#prices">Prices</a><a href="https://wa.me/256707282428">WhatsApp</a></div></header>
-
-<section class="hero">
-<span class="badge">✅ INSTANT • MTN MOMO • AIRTEL MONEY • KAMPALA</span>
-<h1>Buy TikTok Coins<br><span>With Mobile Money</span></h1>
-<p>No Visa. No PayPal. Pay with MTN MoMo or Airtel Money, get your coins in minutes. Trusted in Kampala.</p>
-<p style="margin-top:12px;font-size:13px">⭐ 500+ Orders • ⏱️ 2-10 Mins Delivery • 💬 WhatsApp Support</p>
-</section>
-
-<div class="wrap" id="buy">
-<div class="calc-box">
-<h2>🛒 1. Choose Coins — Real Price Calculator</h2>
-<p style="font-size:13px;opacity:.8">Tap a pack. Price updates instantly. This is real, not demo.</p>
-<div class="grid" id="coinGrid">
-<button class="coin-btn" onclick="selectPack(70,26000,this)"><b>70 Coins</b><small>26,000 UGX</small></button>
-<button class="coin-btn" onclick="selectPack(100,35000,this)"><b>100 Coins</b><small>35,000 UGX</small></button>
-<button class="coin-btn" onclick="selectPack(350,120000,this)"><b>350 Coins</b><small>120,000 UGX</small></button>
-<button class="coin-btn" onclick="selectPack(700,235000,this)"><b>700 Coins</b><small>235,000 UGX</small></button>
-<button class="coin-btn active" onclick="selectPack(1000,330000,this)"><b>1,000 Coins ⭐</b><small>330,000 UGX</small></button>
-<button class="coin-btn" onclick="selectPack(2000,650000,this)"><b>2,000 Coins</b><small>650,000 UGX</small></button>
+<header><b>🪙 Kampala <span>Coins → Gift on TikTok</span></b><div class="wallet-chip">🪙 <span id="headerBal">0</span> KC</div></header>
+<div class="wrap">
+<div class="hero">
+<h1>Buy KC → Get TikTok Coins<br><span>Gift Them on TikTok Live 🎁</span></h1>
+<p>Your coins don't stay on the website. They become TikTok Coins, and you GIFT them to your favourite creator on TikTok Live.</p>
 </div>
 
-<div class="total-row">
-<div><small style="opacity:.7">You Selected</small><br><b id="selectedLabel">1,000 TikTok Coins</b></div>
-<div style="text-align:right"><small style="opacity:.7">Total To Pay</small><br><span class="price" id="totalPrice">330,000 UGX</span></div>
+<div class="flow">
+<b>Your Site:</b> Buy KC with MoMo → <b>Convert:</b> KC → TikTok Coins → <b>TikTok App:</b> Open Live → Tap 🎁 → Send Gift → Creator Sees Your Name!
 </div>
 
-<label style="font-size:14px;font-weight:700;margin-top:14px;display:block">2. Your TikTok Username (with @)</label>
-<input type="text" id="tiktokUser" placeholder="@yourusername - e.g. @kisakyed" value="">
-<label style="font-size:14px;font-weight:700">3. Your WhatsApp Number</label>
-<input type="text" id="waNumber" placeholder="0707 282 428" value="">
+<div class="balance-card">
+<small>🪙 YOUR KAMPALA COINS</small>
+<div class="bal"><span id="mainBal">0</span> KC</div>
+<div style="font-size:14px;font-weight:700">≈ <span id="balTikTok">0</span> TikTok Coins • <span id="balValue">0 UGX</span></div>
+<p style="font-size:13px;margin-top:6px">TikTok: <b id="displayName">@guest</b> • <a href="#" onclick="changeName(event)" style="color:#111;text-decoration:underline">Change</a></p>
+<p style="font-size:12px;margin-top:6px">🎁 Gifts Sent: <b id="giftCount">0</b> • Last Gift: <b id="lastGift">None yet</b></p>
+</div>
+
+<div class="tabs">
+<button class="tab-btn" id="tab-buy" onclick="showTab('buy')">🛒 1. Buy KC</button>
+<button class="tab-btn" id="tab-tiktok" onclick="showTab('tiktok')">🎵 2. KC → TikTok</button>
+<button class="tab-btn active" id="tab-gift" onclick="showTab('gift')">🎁 3. Gift on TikTok</button>
+<button class="tab-btn" id="tab-wallet" onclick="showTab('wallet')">📜 History</button>
+</div>
+
+<!-- GIFT - MAIN -->
+<div id="section-gift">
+<div class="box">
+<h3>🎁 Step 3: Gift Them On TikTok Live</h3>
+<p style="font-size:13px;opacity:.8">Choose a gift. It uses your KC. Then we open TikTok for you to send it on Live.</p>
+
+<label style="font-size:14px;font-weight:700">Who do you want to gift? (Creator's @username)</label>
+<input type="text" id="creatorName" placeholder="@creator - e.g. @kingkongo - Who is Live now?">
+
+<div class="gift-preview">
+<div class="big" id="previewEmoji">🌹</div>
+<b id="previewName" style="font-size:20px">Rose</b><br>
+<span id="previewCost" style="font-size:14px">1 TikTok Coin = 3.5 KC</span><br>
+<span id="previewDesc" style="font-size:12px;opacity:.9">The classic gift. Everyone loves a Rose.</span>
+</div>
+
+<div class="grid" id="giftGrid">
+<div class="card active" onclick="selectGift('Rose','🌹',1,3.5,'The classic gift',this)"><div class="emoji">🌹</div><b>Rose</b><small>1 Coin</small><small>3.5 KC</small></div>
+<div class="card" onclick="selectGift('Heart','❤️',5,17.5,'Show love',this)"><div class="emoji">❤️</div><b>Heart</b><small>5 Coins</small><small>17.5 KC</small></div>
+<div class="card" onclick="selectGift('TikTok','🎵',10,35,'TikTok logo gift',this)"><div class="emoji">🎵</div><b>TikTok</b><small>10 Coins</small><small>35 KC</small></div>
+<div class="card" onclick="selectGift('Perfume','🧴',20,70,'Smells like support',this)"><div class="emoji">🧴</div><b>Perfume</b><small>20 Coins</small><small>70 KC</small></div>
+<div class="card" onclick="selectGift('Donut','🍩',30,105,'Sweet gift',this)"><div class="emoji">🍩</div><b>Donut</b><small>30 Coins</small><small>105 KC</small></div>
+<div class="card" onclick="selectGift('Cap','🧢',50,175,'Cool cap',this)"><div class="emoji">🧢</div><b>Cap</b><small>50 Coins</small><small>175 KC</small></div>
+<div class="card" onclick="selectGift('Lion','🦁',29999,104996,'BIG! Creator goes crazy',this)"><div class="emoji">🦁</div><b>Lion 🦁</b><small>29,999 Coins</small><small>104,996 KC</small></div>
+<div class="card" onclick="selectGift('Galaxy','🌌',1000,3500,'Beautiful galaxy',this)"><div class="emoji">🌌</div><b>Galaxy</b><small>1,000 Coins</small><small>3,500 KC</small></div>
+<div class="card" onclick="selectGift('Universe','🌍',34999,122496,'BIGGEST! Everyone sees you',this)"><div class="emoji">🌍</div><b>Universe</b><small>34,999 Coins</small><small>122,496 KC</small></div>
+</div>
+
+<label>How many times? (e.g. Send 10 Roses)</label>
+<input type="number" id="giftQty" value="1" min="1" max="100" oninput="updateGiftTotal()">
 
 <div style="background:#fff7d6;color:#111;padding:14px;border-radius:12px;font-size:14px">
-<b>💳 HOW TO PAY:</b><br>
-1. Send <b id="payAmount">330,000 UGX</b> to MTN MoMo <b>0707 282 428</b> (Kisakyed)<br>
-2. Or Airtel Money <b>0707 282 428</b><br>
-3. Tap the green button below — it opens WhatsApp with your order already typed.
+You will gift: <b id="giftSummary">1x 🌹 Rose to @creator</b><br>
+Total TikTok Coins: <b id="giftTotalCoins">1</b> • Total KC to use: <b id="giftTotalKC">3.5</b><br>
+Your balance after: <b id="giftAfter">0 KC</b>
 </div>
 
-<a class="btn btn-wa" id="orderBtn" href="#" onclick="makeOrder(event)">💬 Order on WhatsApp → Send MoMo Screenshot</a>
-<a class="btn" href="#" onclick="copyOrder(event)" style="background:#fff">📋 Copy Order Details</a>
-<p id="orderMsg" style="font-size:13px;text-align:center;margin-top:10px;color:#00e676"></p>
-</div>
+<button class="btn btn-pink" onclick="sendGift()">🎁 Send Gift With My KC → Open TikTok Live</button>
+<button class="btn btn-black" onclick="openTikTok()">📱 Open TikTok App (Manual Gift)</button>
+<p id="giftMsg" style="font-size:13px;text-align:center;margin-top:10px;color:#00e676"></p>
 
-<div class="steps">
-<div class="step"><b>1️⃣</b><h3>Choose Pack</h3><p>Tap coins above. Price is real.</p></div>
-<div class="step"><b>2️⃣</b><h3>Pay With MoMo</h3><p>Send to 0707 282 428. Keep screenshot.</p></div>
-<div class="step"><b>3️⃣</b><h3>Get Coins</h3><p>Send screenshot on WhatsApp. Get code in 2-10 mins.</p></div>
+<div style="background:#0b0e13;padding:14px;border-radius:12px;margin-top:12px;font-size:13px;line-height:1.7">
+<b style="color:#fff">📱 How to Gift INSIDE TikTok (After you pay):</b><br>
+1. Open TikTok app → Go to creator's LIVE<br>
+2. Tap <b>🎁 Gift</b> button (bottom right)<br>
+3. Your TikTok Coins balance shows at top<br>
+4. Tap Rose / Lion / Galaxy → Tap Send<br>
+5. Creator sees: <b>"@yourname sent a Rose!"</b> + your name on screen!
 </div>
-
-<div id="prices" class="price-table">
-<table>
-<tr><th>Coins</th><th>Price (UGX)</th><th>Delivery</th></tr>
-<tr><td>🪙 70 Coins</td><td>26,000</td><td>2-10 mins</td></tr>
-<tr><td>🪙 100 Coins</td><td>35,000</td><td>2-10 mins</td></tr>
-<tr><td>🪙 350 Coins</td><td>120,000</td><td>2-10 mins</td></tr>
-<tr><td>🪙 700 Coins</td><td>235,000</td><td>2-10 mins</td></tr>
-<tr><td>🪙 1,000 Coins <span class="best">⭐ BEST SELLER</span></td><td>330,000</td><td>2-10 mins</td></tr>
-<tr><td>🪙 2,000 Coins</td><td>650,000</td><td>2-10 mins</td></tr>
-</table>
-</div>
-
-<div class="faq">
-<h3>❓ Questions</h3>
-<p><b>Do I need Visa?</b><br>No. Only MTN MoMo or Airtel Money.</p>
-<p><b>How fast?</b><br>2-10 minutes after we confirm your MoMo payment. If delay, WhatsApp us.</p>
-<p><b>Is it safe? Will TikTok ban me?</b><br>We send you an official top-up code. You redeem it yourself in TikTok app. We never ask for your TikTok password.</p>
-<p><b>Refund?</b><br>No refund after code is sent and redeemed. If code doesn't work, we replace it.</p>
-<p><b>Can I pay after?</b><br>No. Payment first. This protects both of us from scams.</p>
-</div>
-
-<div style="text-align:center">
-<a class="btn btn-wa" href="https://wa.me/256707282428?text=Hi%20I%20want%20to%20buy%20TikTok%20Coins">💬 Chat on WhatsApp - 0707 282 428</a>
-<p style="font-size:12px;color:#888;margin-top:12px">18+ only. This is a top-up service. TikTok is a trademark of ByteDance. This site is not owned by TikTok.</p>
 </div>
 </div>
 
-<footer>© 2026 TikTok Coins UG - Kampala • MoMo: 0707 282 428 • WhatsApp: +256 707 282 428</footer>
+<!-- TIKTOK CONVERT -->
+<div id="section-tiktok" style="display:none">
+<div class="box">
+<h3>🎵 Step 2: KC → TikTok Coins</h3>
+<p style="font-size:13px;opacity:.8">Convert KC to TikTok Coins first, then you can gift them.</p>
+<div class="grid">
+<div class="card" onclick="selectTikTok(70,245,this)"><div style="font-size:28px">🎵</div><b>70 TikTok</b><small>245 KC</small></div>
+<div class="card active" onclick="selectTikTok(100,350,this)"><div style="font-size:28px">🎵</div><b>100 TikTok</b><small>350 KC</small></div>
+<div class="card" onclick="selectTikTok(350,1225,this)"><div style="font-size:28px">🎵</div><b>350 TikTok</b><small>1,225 KC</small></div>
+<div class="card" onclick="selectTikTok(700,2450,this)"><div style="font-size:28px">💰</div><b>700 TikTok</b><small>2,450 KC</small></div>
+<div class="card" onclick="selectTikTok(1000,3500,this)"><div style="font-size:28px">💎</div><b>1,000 TikTok</b><small>3,500 KC</small></div>
+<div class="card" onclick="selectTikTok(2000,7000,this)"><div style="font-size:28px">👑</div><b>2,000 TikTok</b><small>7,000 KC</small></div>
+</div>
+<input type="text" id="tiktokUser" placeholder="@yourusername">
+<button class="btn btn-pink" onclick="redeemTikTok()">🎵 Convert <span id="redeemLabel">100</span> TikTok Coins</button>
+<p id="tiktokMsg" style="font-size:13px;text-align:center;margin-top:10px;color:#00e676"></p>
+</div>
+</div>
 
+<!-- BUY KC -->
+<div id="section-buy" style="display:none">
+<div class="box">
+<h3>🛒 Step 1: Buy KC With MoMo</h3>
+<div class="grid">
+<div class="card" onclick="selectPack(100,10000,this)"><div style="font-size:28px">🪙</div><b>100 KC</b><small>10,000 UGX</small></div>
+<div class="card" onclick="selectPack(350,30000,this)"><div style="font-size:28px">🪙</div><b>350 KC</b><small>30,000 UGX</small></div>
+<div class="card" onclick="selectPack(700,60000,this)"><div style="font-size:28px">💰</div><b>700 KC</b><small>60,000 UGX</small></div>
+<div class="card active" onclick="selectPack(1500,120000,this)"><div style="font-size:28px">💎</div><b>1,500 KC</b><small>120,000 UGX</small></div>
+<div class="card" onclick="selectPack(3500,250000,this)"><div style="font-size:28px">👑</div><b>3,500 KC</b><small>250,000 UGX</small></div>
+<div class="card" onclick="selectPack(10000,700000,this)"><div style="font-size:28px">🚀</div><b>10,000 KC</b><small>700,000 UGX</small></div>
+</div>
+<div style="background:#fff7d6;color:#111;padding:14px;border-radius:12px;font-size:14px">Send <b id="payAmt">120,000 UGX</b> to MTN MoMo <b>0707 282 428</b></div>
+<button class="btn btn-green" onclick="buyCoins()">✅ I Paid - Add <span id="buyBtnLabel">1,500</span> KC</button>
+<button class="btn btn-wa" onclick="orderOnWhatsApp()">💬 Order KC On WhatsApp</button>
+<p id="buyMsg" style="font-size:13px;text-align:center;margin-top:10px;color:#00e676"></p>
+</div>
+</div>
+
+<!-- WALLET -->
+<div id="section-wallet" style="display:none">
+<div class="box"><h3>📜 History + Gifts Sent</h3><div id="historyList"></div><button onclick="resetWallet()" style="background:none;border:1px solid #ff3366;color:#ff3366;padding:10px;border-radius:999px;cursor:pointer;width:100%;margin-top:12px">Reset Wallet</button></div>
+</div>
+
+</div>
+<footer>© 2026 Kampala Coins → TikTok Gifts • MoMo: 0707 282 428 • WhatsApp: +256 707 282 428 • Gifts are sent inside TikTok app.</footer>
 <script>
-let selectedCoins = 1000;
-let selectedPrice = 330000;
-function selectPack(coins, price, btn){
-  selectedCoins = coins; selectedPrice = price;
-  document.querySelectorAll('.coin-btn').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  document.getElementById('selectedLabel').textContent = coins.toLocaleString() + ' TikTok Coins';
-  document.getElementById('totalPrice').textContent = price.toLocaleString() + ' UGX';
-  document.getElementById('payAmount').textContent = price.toLocaleString() + ' UGX';
+let balance=0, history=[], userName=localStorage.getItem('kc_name')||'@guest';
+let selectedPackCoins=1500, selectedPackPrice=120000;
+let selectedTikTokCoins=100, selectedTikTokCost=350;
+let selectedGift={name:'Rose',emoji:'🌹',coins:1,kc:3.5,desc:'The classic gift'};
+let giftQty=1, giftCount=0;
+function load(){ try{ balance=parseInt(localStorage.getItem('kc_balance')||'0'); history=JSON.parse(localStorage.getItem('kc_history')||'[]'); userName=localStorage.getItem('kc_name')||'@guest'; giftCount=parseInt(localStorage.getItem('kc_gifts')||'0'); }catch(e){} updateUI(); }
+function save(){ try{ localStorage.setItem('kc_balance',String(balance)); localStorage.setItem('kc_history',JSON.stringify(history)); localStorage.setItem('kc_name',userName); localStorage.setItem('kc_gifts',String(giftCount)); }catch(e){} }
+function updateUI(){
+  document.getElementById('mainBal').textContent=balance.toLocaleString();
+  document.getElementById('headerBal').textContent=balance.toLocaleString();
+  document.getElementById('balValue').textContent=(balance*100).toLocaleString()+' UGX';
+  document.getElementById('balTikTok').textContent=Math.floor(balance/3.5).toLocaleString();
+  document.getElementById('displayName').textContent=userName;
+  document.getElementById('giftCount').textContent=giftCount;
+  const last = history.slice().reverse().find(h=>h.text.includes('Gifted'));
+  document.getElementById('lastGift').textContent = last ? last.text : 'None yet';
+  updateGiftTotal();
+  const list=document.getElementById('historyList');
+  list.innerHTML = history.length? history.slice().reverse().map(h=>`<div class="row"><span>${h.text} <small style="opacity:.6">${h.date}</small></span><b style="color:${h.amount>0?'#00e676':'#ff3366'}">${h.amount>0?'+':''}${h.amount} KC</b></div>`).join('') : '<p style="opacity:.7">No history yet.</p>';
 }
-function makeOrder(e){
-  e.preventDefault();
-  const user = document.getElementById('tiktokUser').value.trim() || '@yourusername';
-  const wa = document.getElementById('waNumber').value.trim() || '0707 282 428';
-  if(!document.getElementById('tiktokUser').value.trim()){
-    alert('Please enter your TikTok @username first');
-    document.getElementById('tiktokUser').focus();
-    return;
-  }
-  const msg = `Hi! I want to buy TikTok Coins\n\n🪙 Pack: ${selectedCoins} Coins\n💰 Price: ${selectedPrice.toLocaleString()} UGX\n👤 TikTok: ${user}\n📱 My WhatsApp: ${wa}\n\nI have sent MoMo to 0707 282 428. Here is my screenshot:`;
-  window.open('https://wa.me/256707282428?text=' + encodeURIComponent(msg), '_blank');
-  document.getElementById('orderMsg').textContent = '✅ WhatsApp opened with your order. Send your MoMo screenshot there.';
+function addHistory(t,a){ history.push({text:t,amount:a,date:new Date().toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}); if(history.length>50) history=history.slice(-50); }
+function showTab(t){ ['buy','tiktok','gift','wallet'].forEach(x=>{ document.getElementById('section-'+x).style.display=x===t?'block':'none'; document.getElementById('tab-'+x).classList.toggle('active',x===t); }); }
+function selectPack(c,p,el){ selectedPackCoins=c; selectedPackPrice=p; document.querySelectorAll('#section-buy .card').forEach(x=>x.classList.remove('active')); if(el) el.classList.add('active'); document.getElementById('payAmt').textContent=p.toLocaleString()+' UGX'; document.getElementById('buyBtnLabel').textContent=c.toLocaleString(); }
+function selectTikTok(coins,cost,el){ selectedTikTokCoins=coins; selectedTikTokCost=cost; document.querySelectorAll('#section-tiktok .card').forEach(x=>x.classList.remove('active')); if(el) el.classList.add('active'); document.getElementById('redeemLabel').textContent=coins.toLocaleString(); }
+function selectGift(name,emoji,coins,kc,desc,el){
+  selectedGift={name,emoji,coins,kc,desc};
+  document.querySelectorAll('#giftGrid .card').forEach(x=>x.classList.remove('active')); if(el) el.classList.add('active');
+  document.getElementById('previewEmoji').textContent=emoji;
+  document.getElementById('previewName').textContent=name;
+  document.getElementById('previewCost').textContent=coins.toLocaleString()+' TikTok Coin'+(coins>1?'s':'')+' = '+kc.toLocaleString()+' KC';
+  document.getElementById('previewDesc').textContent=desc;
+  updateGiftTotal();
 }
-function copyOrder(e){
-  e.preventDefault();
-  const user = document.getElementById('tiktokUser').value.trim() || '@yourusername';
-  const text = `TikTok Coins Order: ${selectedCoins} Coins - ${selectedPrice.toLocaleString()} UGX - TikTok: ${user} - Pay MoMo to 0707 282 428`;
-  navigator.clipboard.writeText(text).then(()=>{ document.getElementById('orderMsg').textContent = '✅ Order copied! Paste it on WhatsApp.'; });
+function updateGiftTotal(){
+  giftQty = parseInt(document.getElementById('giftQty').value||'1');
+  if(giftQty<1) giftQty=1;
+  const creator = document.getElementById('creatorName').value.trim() || '@creator';
+  const totalCoins = selectedGift.coins * giftQty;
+  const totalKC = Math.ceil(selectedGift.kc * giftQty);
+  document.getElementById('giftSummary').textContent = giftQty+'x '+selectedGift.emoji+' '+selectedGift.name+' to '+creator;
+  document.getElementById('giftTotalCoins').textContent = totalCoins.toLocaleString();
+  document.getElementById('giftTotalKC').textContent = totalKC.toLocaleString();
+  document.getElementById('giftAfter').textContent = Math.max(0, balance-totalKC).toLocaleString()+' KC';
 }
-</script>
-</body>
-</html>
+function sendGift(){
+  const creator = document.getElementById('creatorName').value.trim();
+  if(!creator){ alert('Enter creator @username first - who is Live?'); document.getElementById('creatorName').focus(); return; }
+  updateGiftTotal();
+  const totalKC = Math.ceil(selectedGift.kc * giftQty);
+  const totalCoins = selectedGift.coins * giftQty;
+  if(balance < totalKC){ alert('Not enough KC! You have '+balance+' KC, need '+totalKC+' KC. Buy KC first.'); showTab('buy'); return; }
+  if(!confirm('Gift '+giftQty+'x '+selectedGift.emoji+' '+selectedGift.name+' ('+totalCoins+' TikTok Coins) to '+creator+' for '+totalKC+' KC?')) return;
+  balance -= totalKC; giftCount += giftQty;
+  addHistory('🎁 Gifted '+giftQty+'x '+selectedGift.emoji+' '+selectedGift.name+' to '+creator, -totalKC);
+  save(); updateUI();
+  document.getElementById('giftMsg').textContent = '✅ Gift sent! '+giftQty+'x '+selectedGift.name+' to '+creator+'. Opening TikTok Live...';
+  const msg = `Hi! I gifted on TikTok\n\n🎁 Gift: ${giftQty}x ${selectedGift.emoji} ${selectedGift.name}\n👤 To Creator: ${creator}\n👤 From: ${userName}\n🪙 TikTok Coins: ${totalCoins}\n🪙 Used KC: ${totalKC}\n💰 Remaining KC: ${balance}\n\nPlease confirm my TikTok top-up so I can send it on Live.`;
+  setTimeout(()=>{ window.open('https://wa.me/256707282428?text='+encodeURIComponent(msg),'_blank'); },600);
+  setTimeout(()=>{ openTikTok(); },900);
+}
+function openTikTok(){
+  const creator = document.getElementById('creatorName').value.trim().replace('@','') || 'tiktok';
+  // Try to open TikTok app, fallback to web
+  window.location.href = 'https://www.tiktok.com/@'+creator+'/live';
+  setTimeout(()=>{ window.open('https://www.tiktok.com/@'+creator+'/live','_blank'); },800);
+}
+function buyCoins(){ balance+=selectedPackCoins; addHistory('Bought '+selectedPackCoins+' KC - '+selectedPackPrice.toLocaleString()+' UGX MoMo',selectedPackCoins); save(); updateUI(); document.getElementById('buyMsg').textContent='✅ +'+selectedPackCoins+' KC added! Now go to Gift tab.'; showTab('gift'); }
+function orderOnWhatsApp(){ const msg=`Hi! I want Kampala Coins\n\n🪙 Pack: ${selectedPackCoins} KC\n💰 Price: ${selectedPackPrice.toLocaleString()} UGX\n👤 TikTok: ${userName}\n\nI sent MoMo to 0707 282 428. Screenshot:`; window.open('https://wa.me/256707282428?text='+encodeURIComponent(msg),'_blank'); }
+function redeemTikTok(){
+  const user=document.getElementById('tiktokUser').value
