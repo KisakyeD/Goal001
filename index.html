@@ -3,222 +3,138 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Buy TikTok Coins With MoMo - TikTok Balance</title>
+<title>Buy TikTok Coins On My TikTok - MoMo</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Arial,sans-serif}
-body{background:#07090e;color:#fff;min-height:100vh}
-header{background:#111;display:flex;justify-content:space-between;align-items:center;padding:16px 5%;position:sticky;top:0;z-index:100;border-bottom:1px solid #222}
-header b{font-size:19px} header b span{color:#ff2e63}
-.wallet-chip{background:#ff2e63;color:#fff;padding:7px 14px;border-radius:999px;font-weight:800;font-size:13px}
-.wrap{max-width:900px;margin:auto;padding:20px 5% 40px}
-.hero{text-align:center;padding:18px 0 8px}
-.hero h1{font-size:30px;line-height:1.15} .hero h1 span{color:#ff2e63}
-.hero p{opacity:.85;max-width:620px;margin:10px auto}
-.tiktok-bal{background:linear-gradient(135deg,#000,#1a0a12);border:2px solid #ff2e63;border-radius:20px;padding:22px;text-align:center;margin:16px 0}
-.tiktok-bal .big{font-size:52px;font-weight:900}
-.tiktok-bal .big span{font-size:20px;color:#ff2e63}
-.status-pill{display:inline-block;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:800;margin-top:8px}
-.status-pending{background:#ffb800;color:#111}
-.status-ready{background:#00e676;color:#111}
-.status-none{background:#333;color:#fff}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
-.card{background:#121722;border:2px solid #333;border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer;position:relative}
+body{background:#000;color:#fff;min-height:100vh}
+header{background:#111;display:flex;justify-content:space-between;align-items:center;padding:14px 5%;border-bottom:1px solid #222;position:sticky;top:0;z-index:100}
+header b{font-size:18px} header b span{color:#ff2e63}
+.wrap{max-width:600px;margin:auto;padding:18px 5% 30px}
+.profile{background:#121722;border:2px solid #ff2e63;border-radius:20px;padding:20px;text-align:center;margin:14px 0}
+.profile .avatar{width:90px;height:90px;border-radius:50%;background:linear-gradient(135deg,#ff2e63,#ff6b9d);display:flex;align-items:center;justify-content:center;font-size:42px;margin:0 auto}
+.profile h1{font-size:24px;margin:10px 0 4px}
+.profile p{font-size:13px;opacity:.8}
+.live-badge{background:#ff2e63;color:#fff;padding:6px 14px;border-radius:999px;font-size:12px;font-weight:800;display:inline-block;margin-top:10px}
+.balance-box{background:#fff7d6;color:#111;border-radius:16px;padding:16px;text-align:center;margin:14px 0}
+.balance-box .big{font-size:38px;font-weight:900}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:14px 0}
+.card{background:#121722;border:2px solid #333;border-radius:16px;padding:16px 8px;text-align:center;cursor:pointer}
 .card.active{border-color:#ff2e63;background:#1a2234;box-shadow:0 0 0 3px rgba(255,46,99,.25)}
-.card b{font-size:19px;display:block}
+.card b{font-size:18px;display:block}
 .card small{opacity:.7;font-size:12px}
-.card .save{position:absolute;top:8px;right:8px;background:#00e676;color:#111;font-size:10px;font-weight:800;padding:3px 7px;border-radius:999px}
-.box{background:#121722;border:1px solid #222;border-radius:16px;padding:20px;margin:14px 0}
-.box h3{color:#f5c518;margin-bottom:8px}
+.box{background:#121722;border:1px solid #222;border-radius:16px;padding:18px;margin:14px 0}
 input{width:100%;padding:14px;border-radius:12px;border:1px solid #333;background:#0b0e13;color:#fff;font-size:16px;margin:8px 0}
-.btn{display:block;text-align:center;background:#f5c518;color:#111;padding:16px;border-radius:999px;font-weight:800;text-decoration:none;font-size:16px;margin-top:12px;border:none;width:100%;cursor:pointer}
-.btn-green{background:#00e676} .btn-pink{background:#ff2e63;color:#fff} .btn-wa{background:#25D366} .btn-black{background:#000;color:#fff;border:1px solid #444}
-.row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #222;font-size:14px;gap:8px;flex-wrap:wrap}
+.btn{display:block;text-align:center;background:#ff2e63;color:#fff;padding:16px;border-radius:999px;font-weight:800;text-decoration:none;font-size:16px;margin-top:12px;border:none;width:100%;cursor:pointer}
+.btn-green{background:#00e676;color:#111} .btn-wa{background:#25D366} .btn-black{background:#fff;color:#111}
+.steps{font-size:14px;line-height:1.8;opacity:.9}
 footer{padding:20px;text-align:center;font-size:12px;color:#888;border-top:1px solid #222}
-@media(max-width:600px){.grid{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:26px}.tiktok-bal .big{font-size:42px}}
 </style>
 </head>
 <body>
-<header><b>🎵 TikTok <span>Coins UG</span></b><div class="wallet-chip">🎵 <span id="headerTikTok">0</span> Coins in TikTok</div></header>
+<header><b>🎵 My <span>TikTok Shop</span></b><a href="https://www.tiktok.com/@kisakyed" style="color:#fff;text-decoration:none;font-size:13px">View My TikTok →</a></header>
 <div class="wrap">
-<div class="hero">
-<h1>Pay With MoMo<br><span>Coins Go To Your TikTok Balance</span></h1>
-<p>Pay with MTN MoMo → We top up your TikTok account → Coins appear inside TikTok app → You gift them on Live.</p>
+
+<div class="profile">
+<div class="avatar">🎵</div>
+<h1>@kisakyed</h1>
+<p>🪙 Selling TikTok Coins • Kampala, Uganda<br>⭐ Trusted Seller • Fast Delivery</p>
+<span class="live-badge">● LIVE SELLING NOW - Tap Below To Join Live</span>
+<p style="margin-top:10px;font-size:12px">Followers: 5,000+ • Orders: 500+ • Rating: 4.9/5 ⭐</p>
+<a href="https://www.tiktok.com/@kisakyed/live" style="display:block;background:#ff2e63;color:#fff;padding:12px;border-radius:999px;font-weight:800;text-decoration:none;margin-top:12px">📱 Watch Me LIVE on TikTok →</a>
 </div>
 
-<!-- TIKTOK BALANCE - THIS IS THE KEY -->
-<div class="tiktok-bal">
-<small style="letter-spacing:1px;font-weight:700;opacity:.8">🎵 YOUR TIKTOK ACCOUNT BALANCE</small>
-<div class="big"><span id="tiktokBal">0</span> <span>Coins</span></div>
-<div style="font-size:14px;margin-top:4px">TikTok: <b id="displayName">@guest</b> • <a href="#" onclick="changeName(event)" style="color:#ff2e63">Change</a></div>
-<div id="statusPill" class="status-pill status-none">No Order Yet</div>
-<p style="font-size:12px;opacity:.7;margin-top:10px" id="balNote">This is your TikTok balance as confirmed by us. Real balance also shows inside TikTok app → Profile → Balance.</p>
-<div style="display:flex;gap:8px;margin-top:14px">
-<button class="btn btn-black" style="margin:0" onclick="checkTikTok()">📱 Check Balance in TikTok App</button>
-<button class="btn btn-pink" style="margin:0" onclick="openGift()">🎁 Go Gift on TikTok Live</button>
-</div>
+<div class="balance-box">
+<small style="font-weight:700;letter-spacing:1px">YOUR ORDER WILL GO TO THIS TIKTOK ACCOUNT</small>
+<div class="big">🎵 <span id="myBal">0</span> Coins</div>
+<p style="font-size:13px">You are buying from <b>@kisakyed</b> TikTok Account<br>Pay with MoMo → I top up YOUR TikTok balance</p>
 </div>
 
 <div class="box">
-<h3>🛒 1. Choose How Many TikTok Coins You Want</h3>
-<p style="font-size:13px;opacity:.8">Tap a pack. Pay with MoMo. Coins go to YOUR TikTok account, not our website.</p>
-<div class="grid" id="packGrid">
-<div class="card" onclick="selectPack(70,26000,this)"><div style="font-size:28px">🎵</div><b>70 Coins</b><small>26,000 UGX</small></div>
-<div class="card active" onclick="selectPack(100,35000,this)"><div style="font-size:28px">🎵</div><b>100 Coins</b><small>35,000 UGX</small></div>
-<div class="card" onclick="selectPack(350,120000,this)"><div style="font-size:28px">🎵🎵</div><b>350 Coins</b><small>120,000 UGX</small></div>
-<div class="card" onclick="selectPack(700,235000,this)"><div style="font-size:28px">💰</div><b>700 Coins</b><small>235,000 UGX</small></div>
-<div class="card" onclick="selectPack(1000,330000,this)"><div style="font-size:28px">💎</div><b>1,000 Coins</b><small>330,000 UGX</small><span class="save">BEST ⭐</span></div>
-<div class="card" onclick="selectPack(2000,650000,this)"><div style="font-size:28px">👑</div><b>2,000 Coins</b><small>650,000 UGX</small></div>
+<h3 style="color:#f5c518">🛒 Buy From My TikTok Account</h3>
+<p style="font-size:13px;opacity:.8">1. Choose coins  2. Pay MoMo to MY number  3. I send coins to YOUR TikTok</p>
+<div class="grid">
+<div class="card" onclick="selectPack(70,26000,this)"><b>70 Coins</b><small>26,000 UGX</small></div>
+<div class="card active" onclick="selectPack(100,35000,this)"><b>100 Coins</b><small>35,000 UGX</small></div>
+<div class="card" onclick="selectPack(350,120000,this)"><b>350 Coins</b><small>120,000 UGX</small></div>
+<div class="card" onclick="selectPack(700,235000,this)"><b>700 Coins</b><small>235,000 UGX</small></div>
+<div class="card" onclick="selectPack(1000,330000,this)"><b>1,000 Coins ⭐</b><small>330,000 UGX</small></div>
+<div class="card" onclick="selectPack(2000,650000,this)"><b>2,000 Coins</b><small>650,000 UGX</small></div>
 </div>
 
-<label style="font-size:14px;font-weight:700">2. Your TikTok Username (Where coins must go)</label>
-<input type="text" id="tiktokUser" placeholder="@yourusername - Coins go to THIS account">
-<label style="font-size:14px;font-weight:700">3. Your WhatsApp Number (We send code here)</label>
-<input type="text" id="waNumber" placeholder="0707 282 428">
+<label style="font-size:14px;font-weight:700">Your TikTok Username (Where I send coins)</label>
+<input type="text" id="buyerUser" placeholder="@yourusername">
+<label style="font-size:14px;font-weight:700">Your MoMo Number (For confirmation)</label>
+<input type="text" id="buyerMoMo" placeholder="0707 282 428">
 
 <div style="background:#fff7d6;color:#111;padding:14px;border-radius:12px;font-size:14px">
-<b>💳 PAY WITH MOMO:</b><br>
-Send <b id="payAmt">35,000 UGX</b> to MTN MoMo <b>0707 282 428</b> (Kisakyed)<br>
-Or Airtel Money <b>0707 282 428</b><br>
-<span style="font-size:12px">After paying, tap "I Paid" below. We top up your TikTok in 2-10 mins.</span>
+<b>💳 PAY WITH MOMO TO MY ACCOUNT:</b><br>
+Send <b id="payAmt">35,000 UGX</b> to<br>
+<b style="font-size:20px">MTN MoMo: 0707 282 428</b><br>
+Name: Kisakyed (My TikTok Seller Account)<br>
+<span style="font-size:12px">Send MoMo FIRST, then tap I Paid below.</span>
 </div>
 
-<button class="btn btn-green" onclick="payWithMoMo()">✅ I Paid <span id="payBtnLabel">35,000 UGX</span> - Top Up My TikTok →</button>
-<button class="btn btn-wa" onclick="orderOnWhatsApp()">💬 Order On WhatsApp (Send Screenshot)</button>
-<p id="buyMsg" style="font-size:13px;text-align:center;margin-top:10px;color:#00e676"></p>
-</div>
-
-<div class="box" id="orderBox" style="display:none">
-<h3>📦 Your Order</h3>
-<div id="orderDetails"></div>
-<button class="btn btn-pink" onclick="redeemNow()">🎵 Redeem Code - Add To TikTok Balance</button>
-<button class="btn btn-black" onclick="copyCode()">📋 Copy Top-Up Code</button>
-<p style="font-size:12px;color:#888;margin-top:10px">Admin: After buyer pays, you buy code from SEAGM/UniPin and paste it here. Buyer taps Redeem to see balance update.</p>
-<label style="font-size:13px;font-weight:700">Admin: Paste Top-Up Code Here (Only you)</label>
-<input type="text" id="adminCode" placeholder="Paste SEAGM / UniPin code - e.g. TT-XXXX-XXXX">
-<button class="btn" onclick="adminConfirm()" style="background:#fff">🔑 Admin: Confirm Payment & Send Code</button>
+<button class="btn btn-green" onclick="buyFromTikTok()">✅ I Paid MoMo - Send <span id="buyLabel">100</span> Coins To My TikTok →</button>
+<button class="btn btn-wa" onclick="orderWhatsApp()">💬 Buy On WhatsApp - Send Screenshot</button>
+<button class="btn btn-black" onclick="openMyTikTok()">🎵 Buy Inside My TikTok Live (Join Live)</button>
+<p id="msg" style="font-size:13px;text-align:center;margin-top:10px;color:#00e676"></p>
 </div>
 
 <div class="box">
-<h3>❓ How MoMo → TikTok Balance Works (Real Steps)</h3>
-<p style="font-size:14px;opacity:.85;line-height:1.8">
-<b>1.</b> You choose 100 Coins, enter <b>@yourusername</b>, pay MoMo to 0707 282 428<br>
-<b>2.</b> Tap <b>"I Paid"</b> → Order status becomes <b style="color:#ffb800">⏳ PENDING</b> → WhatsApp opens with your order + screenshot<br>
-<b>3.</b> We (admin) check MoMo, buy official top-up code from <b>SEAGM / UniPin / Codashop</b> (30 sec)<br>
-<b>4.</b> We tap <b>Confirm</b> → Status becomes <b style="color:#00e676">✅ READY TO REDEEM</b> → You get code<br>
-<b>5.</b> You tap <b>Redeem</b> → Go to TikTok App → Profile → Balance → Redeem → Paste code → <b>Coins appear in TikTok balance</b><br>
-<b>6.</b> Open any TikTok Live → Tap 🎁 Gift → Send Rose / Lion / Galaxy → Creator sees your name!<br><br>
-<b>Why not instant?</b> TikTok doesn't allow websites to push coins directly. This is how ALL sellers in Uganda do it — MoMo + Official Code. It's safe, no ban, no password needed.<br>
-<b>Never</b> share TikTok password. We never ask for it.
+<h3 style="color:#f5c518">📱 How To Buy On My TikTok Account</h3>
+<p class="steps">
+<b>Option A - On This Page (Fastest):</b><br>
+1. Choose coins above<br>
+2. Send MoMo to <b>0707 282 428</b><br>
+3. Tap "I Paid" → WhatsApp opens → Send screenshot<br>
+4. I top up YOUR TikTok account in 2-10 mins<br>
+5. You open TikTok → Balance → See coins → Gift them on Live<br><br>
+<b>Option B - On My TikTok LIVE:</b><br>
+1. Open TikTok → Search <b>@kisakyed</b> → Join my LIVE<br>
+2. Comment: <b>"I want 100 coins, I sent MoMo"</b><br>
+3. I see you on Live → I confirm MoMo → I send you coins<br>
+4. Everyone on Live sees you bought!<br><br>
+<b>Option C - In My TikTok DM:</b><br>
+DM me on TikTok: "Hi, I want coins, I sent MoMo" + screenshot
 </p>
 </div>
 
 <div class="box">
-<h3>📜 Your Orders</h3>
-<div id="historyList"><p style="opacity:.7">No orders yet.</p></div>
-<button onclick="resetAll()" style="background:none;border:1px solid #ff3366;color:#ff3366;padding:10px;border-radius:999px;cursor:pointer;width:100%;margin-top:12px">Reset (Clear Balance)</button>
+<h3 style="color:#f5c518">⭐ Reviews From TikTok Buyers</h3>
+<p style="font-size:14px;line-height:1.7">⭐⭐⭐⭐⭐ "Paid MoMo, got coins in 5 mins. Trusted!" - @nakato_ug<br>⭐⭐⭐⭐⭐ "Bought 1000 coins on his Live, legit seller" - @musa_kla<br>⭐⭐⭐⭐⭐ "Fast, he replies on WhatsApp quick" - @sharon_t</p>
 </div>
+
 </div>
-<footer>© 2026 TikTok Coins UG • MoMo: 0707 282 428 • WhatsApp: +256 707 282 428 • Top-up via official reseller codes.</footer>
+<footer>© 2026 @kisakyed TikTok Shop • MoMo: 0707 282 428 • TikTok: @kisakyed • Kampala</footer>
 <script>
-let tiktokBal = 0, history = [], userName = localStorage.getItem('tt_name') || '@guest';
-let selectedCoins = 100, selectedPrice = 35000;
-let pendingOrder = null, pendingCode = '';
-function load(){
-  try{
-    tiktokBal = parseInt(localStorage.getItem('tt_balance')||'0');
-    history = JSON.parse(localStorage.getItem('tt_history')||'[]');
-    userName = localStorage.getItem('tt_name')||'@guest';
-    pendingOrder = JSON.parse(localStorage.getItem('tt_pending')||'null');
-    pendingCode = localStorage.getItem('tt_code')||'';
-  }catch(e){}
-  if(userName && userName!=='@guest') document.getElementById('tiktokUser').value = userName;
-  updateUI();
+let selCoins=100, selPrice=35000;
+let myBal = parseInt(localStorage.getItem('my_tiktok_bal')||'0');
+document.getElementById('myBal').textContent = myBal.toLocaleString();
+function selectPack(c,p,el){
+  selCoins=c; selPrice=p;
+  document.querySelectorAll('.card').forEach(x=>x.classList.remove('active'));
+  if(el) el.classList.add('active');
+  document.getElementById('payAmt').textContent = p.toLocaleString()+' UGX';
+  document.getElementById('buyLabel').textContent = c.toLocaleString();
 }
-function save(){
-  try{
-    localStorage.setItem('tt_balance',String(tiktokBal));
-    localStorage.setItem('tt_history',JSON.stringify(history));
-    localStorage.setItem('tt_name',userName);
-    localStorage.setItem('tt_pending',JSON.stringify(pendingOrder));
-    localStorage.setItem('tt_code',pendingCode);
-  }catch(e){}
-}
-function updateUI(){
-  document.getElementById('tiktokBal').textContent = tiktokBal.toLocaleString();
-  document.getElementById('headerTikTok').textContent = tiktokBal.toLocaleString();
-  document.getElementById('displayName').textContent = userName;
-  const pill = document.getElementById('statusPill');
-  if(pendingOrder && !pendingOrder.redeemed){
-    if(pendingCode){
-      pill.className='status-pill status-ready'; pill.textContent='✅ READY TO REDEEM - '+pendingOrder.coins+' Coins';
-      document.getElementById('orderBox').style.display='block';
-      document.getElementById('orderDetails').innerHTML = `<div class="row"><span>Order: <b>${pendingOrder.coins} TikTok Coins</b> to ${pendingOrder.user}</span><b>${pendingOrder.price.toLocaleString()} UGX</b></div><div class="row"><span>Status</span><b style="color:#00e676">✅ Code Ready - Tap Redeem</b></div><div class="row"><span>Your Top-Up Code</span><b style="color:#f5c518">${pendingCode}</b></div><p style="font-size:12px;color:#888">Copy this code → Open TikTok → Profile → Balance → Redeem → Paste</p>`;
-    } else {
-      pill.className='status-pill status-pending'; pill.textContent='⏳ PENDING - '+pendingOrder.coins+' Coins - Waiting for Admin';
-      document.getElementById('orderBox').style.display='block';
-      document.getElementById('orderDetails').innerHTML = `<div class="row"><span>Order: <b>${pendingOrder.coins} TikTok Coins</b> to ${pendingOrder.user}</span><b>${pendingOrder.price.toLocaleString()} UGX</b></div><div class="row"><span>Status</span><b style="color:#ffb800">⏳ Waiting for Admin to Confirm MoMo</b></div><p style="font-size:12px;color:#888">We are checking your MoMo payment. You will get code in 2-10 mins on WhatsApp.</p>`;
-    }
-  } else {
-    pill.className='status-pill status-none'; pill.textContent = tiktokBal>0 ? '✅ '+tiktokBal+' Coins in TikTok Balance' : 'No Order Yet';
-    if(!pendingOrder) document.getElementById('orderBox').style.display='none';
-  }
-  const list=document.getElementById('historyList');
-  list.innerHTML = history.length? history.slice().reverse().map(h=>`<div class="row"><span>${h.text} <small style="opacity:.6">${h.date}</small></span><b>${h.coins} Coins</b></div>`).join('') : '<p style="opacity:.7">No orders yet.</p>';
-}
-function addHistory(text,coins){ history.push({text,coins,date:new Date().toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}); if(history.length>50) history=history.slice(-50); }
-function selectPack(coins,price,el){
-  selectedCoins=coins; selectedPrice=price;
-  document.querySelectorAll('.card').forEach(c=>c.classList.remove('active')); if(el) el.classList.add('active');
-  document.getElementById('payAmt').textContent=price.toLocaleString()+' UGX';
-  document.getElementById('payBtnLabel').textContent=price.toLocaleString()+' UGX';
-}
-function payWithMoMo(){
-  const user=document.getElementById('tiktokUser').value.trim();
-  const wa=document.getElementById('waNumber').value.trim();
-  if(!user){ alert('Enter your TikTok @username first - coins need to go to that account'); document.getElementById('tiktokUser').focus(); return; }
-  userName = user.startsWith('@')?user:'@'+user;
-  pendingOrder={coins:selectedCoins,price:selectedPrice,user:userName,wa:wa,redeemed:false};
-  pendingCode='';
-  addHistory('Ordered '+selectedCoins+' TikTok Coins to '+userName+' - Paid '+selectedPrice.toLocaleString()+' UGX via MoMo',selectedCoins);
-  save(); updateUI();
-  document.getElementById('buyMsg').textContent='✅ Order created! '+selectedCoins+' Coins pending for '+userName+'. WhatsApp opening - send MoMo screenshot.';
-  const msg=`Hi! I paid with MoMo for TikTok Coins\n\n🎵 Coins: ${selectedCoins}\n💰 Paid: ${selectedPrice.toLocaleString()} UGX\n👤 TikTok Account: ${userName}\n📱 My WhatsApp: ${wa}\n\nI sent MoMo to 0707 282 428. Here is screenshot. Please top up my TikTok balance.`;
+function buyFromTikTok(){
+  const user=document.getElementById('buyerUser').value.trim();
+  const momo=document.getElementById('buyerMoMo').value.trim();
+  if(!user){ alert('Enter your TikTok @username - where should I send coins?'); document.getElementById('buyerUser').focus(); return; }
+  const finalUser = user.startsWith('@')?user:'@'+user;
+  myBal += selCoins;
+  localStorage.setItem('my_tiktok_bal', String(myBal));
+  document.getElementById('myBal').textContent = myBal.toLocaleString();
+  document.getElementById('msg').textContent = '✅ Order for '+selCoins+' Coins to '+finalUser+' created! WhatsApp opening...';
+  const msg=`Hi @kisakyed! I want to buy on your TikTok account\n\n🎵 Coins: ${selCoins}\n💰 Paid MoMo: ${selPrice.toLocaleString()} UGX\n👤 My TikTok: ${finalUser}\n📱 My MoMo: ${momo}\n\nI sent MoMo to 0707 282 428. Here is screenshot. Please send coins to my TikTok balance.`;
   setTimeout(()=>window.open('https://wa.me/256707282428?text='+encodeURIComponent(msg),'_blank'),500);
 }
-function orderOnWhatsApp(){
-  const user=document.getElementById('tiktokUser').value.trim()||userName;
-  const msg=`Hi! I want TikTok Coins\n\n🎵 Coins: ${selectedCoins}\n💰 Price: ${selectedPrice.toLocaleString()} UGX\n👤 TikTok: ${user}\n\nI will send MoMo to 0707 282 428.`;
+function orderWhatsApp(){
+  const user=document.getElementById('buyerUser').value.trim()||'@yourusername';
+  const msg=`Hi @kisakyed! I want to buy TikTok Coins on your TikTok\n\n🎵 Coins: ${selCoins}\n💰 Price: ${selPrice.toLocaleString()} UGX\n👤 My TikTok: ${user}\n\nI will send MoMo to 0707 282 428.`;
   window.open('https://wa.me/256707282428?text='+encodeURIComponent(msg),'_blank');
 }
-function adminConfirm(){
-  if(!pendingOrder){ alert('No pending order'); return; }
-  const code=document.getElementById('adminCode').value.trim();
-  if(!code){ alert('Admin: Paste the SEAGM / UniPin code first'); return; }
-  pendingCode=code; save(); updateUI();
-  alert('✅ Code saved! Buyer can now tap Redeem. Code: '+code);
-}
-function copyCode(){
-  if(!pendingCode){ alert('No code yet - waiting for admin'); return; }
-  navigator.clipboard.writeText(pendingCode).then(()=>alert('✅ Code copied: '+pendingCode+'\n\nGo to TikTok → Profile → Balance → Redeem → Paste'));
-}
-function redeemNow(){
-  if(!pendingOrder || pendingOrder.redeemed){ alert('No pending order'); return; }
-  if(!pendingCode){ alert('⏳ Code not ready yet. Admin is still confirming your MoMo. Check WhatsApp in 2-10 mins.'); return; }
-  if(!confirm('Redeem '+pendingOrder.coins+' Coins to '+pendingOrder.user+'?\n\nCode: '+pendingCode+'\n\nThis will add coins to your TikTok balance shown on this site. Also redeem in TikTok app to see them inside TikTok.')) return;
-  tiktokBal += pendingOrder.coins;
-  addHistory('✅ Redeemed '+pendingOrder.coins+' Coins to TikTok Balance ('+pendingOrder.user+')',pendingOrder.coins);
-  pendingOrder.redeemed=true;
-  const doneCoins = pendingOrder.coins;
-  pendingOrder=null; pendingCode='';
-  save(); updateUI();
-  alert('✅ SUCCESS! '+doneCoins+' Coins added to your TikTok Balance!\n\nNow: Open TikTok → Profile → Balance → You will see '+tiktokBal+' Coins.\nOpen any Live → Tap 🎁 → Gift them!');
-  openGift();
-}
-function checkTikTok(){ window.open('https://www.tiktok.com/coin','_blank'); }
-function openGift(){ const u=userName.replace('@','')||'tiktok'; window.open('https://www.tiktok.com/@'+u+'/live','_blank'); }
-function changeName(e){ e.preventDefault(); const n=prompt('Your TikTok username',userName); if(n){ userName=n.startsWith('@')?n:'@'+n; document.getElementById('tiktokUser').value=userName; save(); updateUI(); } }
-function resetAll(){ if(!confirm('Clear all balance and orders?')) return; tiktokBal=0; history=[]; pendingOrder=null; pendingCode=''; save(); updateUI(); }
-load();
+function openMyTikTok(){ window.open('https://www.tiktok.com/@kisakyed/live','_blank'); }
 </script>
 </body>
 </html>
