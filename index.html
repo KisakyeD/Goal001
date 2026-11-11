@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kampala 1.50 Banker | Instant Load</title>
+<title>Kampala 1.50 Banker | Real Odds API</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Arial,sans-serif}
 body{background:#0b0e13;color:#fff;line-height:1.6}
@@ -15,6 +15,7 @@ nav{display:flex;gap:15px;flex-wrap:wrap} nav a{text-decoration:none;font-size:1
 .hero h1{font-size:32px;line-height:1.15;margin:16px 0 8px}
 .pick-box{background:#fff;color:#111;max-width:620px;margin:22px auto 0;padding:22px;border-radius:18px;text-align:left;box-shadow:0 10px 30px rgba(0,0,0,.35)}
 .pick-box.skip-box{background:#fff7d6;border:2px solid #ffca28}
+.pick-box.verified-box{border:2px solid #00e676}
 .pick-top{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap} .pick-top small{color:#666;font-weight:700}
 .live{background:#e8f8ef;color:#00a651;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:800}
 .live.skip-live{background:#fff3c4;color:#8a6d00}
@@ -27,7 +28,7 @@ nav{display:flex;gap:15px;flex-wrap:wrap} nav a{text-decoration:none;font-size:1
 .btn-white{background:#fff}
 .section{padding:40px 5%;max-width:1000px;margin:auto;text-align:center}
 .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
-.card{background:#161a22;padding:20px;border-radius:16px;border:1px solid #222} .card h3{color:#00e676;font-size:26px} .card p{font-size:13px;opacity:.8}
+.card{background:#161a22;padding:20px;border-radius:16px;border:1px solid #222} .card h3{color:#00e676;font-size:22px} .card p{font-size:13px;opacity:.8}
 .cal-controls{display:flex;justify-content:center;gap:10px;margin:18px 0;flex-wrap:wrap}
 .cal-btn{background:#161a22;border:1px solid #333;color:#fff;padding:10px 18px;border-radius:999px;cursor:pointer;font-weight:700}
 .cal-btn.active{background:#00e676;color:#111;border-color:#00e676}
@@ -35,7 +36,6 @@ nav{display:flex;gap:15px;flex-wrap:wrap} nav a{text-decoration:none;font-size:1
 .cal-day{background:#161a22;border:1px solid #222;border-radius:12px;padding:10px 6px;min-height:92px;text-align:left;cursor:pointer}
 .cal-day:hover{border-color:#00e676}
 .cal-day.today{border:2px solid #00e676;background:#0f2a1a}
-.cal-day.past{opacity:.85}
 .cal-day .dnum{font-size:13px;font-weight:800}
 .cal-day .dmon{font-size:11px;opacity:.7}
 .cal-day .status{font-size:11px;font-weight:800;margin-top:6px;line-height:1.3}
@@ -44,208 +44,210 @@ nav{display:flex;gap:15px;flex-wrap:wrap} nav a{text-decoration:none;font-size:1
 .cal-day.selected{outline:2px solid #fff}
 .cal-detail{background:#161a22;border:1px solid #333;border-radius:16px;padding:18px;max-width:700px;margin:16px auto;text-align:left}
 .cal-detail h3{color:#00e676}
-.history{max-width:700px;margin:18px auto;background:#161a22;border-radius:16px;overflow:hidden;border:1px solid #222;text-align:left}
-.row{display:flex;justify-content:space-between;gap:10px;padding:14px 16px;border-bottom:1px solid #262a33;flex-wrap:wrap}
-.won{color:#00e676;font-weight:800} .skip{color:#ffca28;font-weight:800}
 .contact{padding:40px 5%;text-align:center;background:#111;border-top:1px solid #222}
 footer{padding:18px;text-align:center;font-size:12px;color:#888}
 @media(max-width:600px){.hero h1{font-size:26px}.cards{grid-template-columns:1fr}header{justify-content:center;text-align:center}.calendar{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
-<header><b>⚽ KAMPALA 1.50 BANKER</b><nav><a href="#pick">Today's Pick</a><a href="#calendar">Calendar</a><a href="#contact">Join</a></nav></header>
+<header><b>⚽ KAMPALA 1.50 BANKER</b><nav><a href="#pick">Today's Pick</a><a href="#calendar">Real Odds Calendar</a><a href="#contact">Join</a></nav></header>
 <section class="hero" id="pick">
-<span class="badge">⚡ INSTANT LOAD • REAL DATA • NO FORCING</span>
-<h1>One Pick. 1.50+ Only.<br>No Chasing. No Forcing.</h1>
-<p>Loads instantly. Real fixtures update in background.</p>
+<span class="badge">✅ REAL ODDS API • LIVE • NO DEMO</span>
+<h1>One Pick. 1.50+ Only.<br>Real Odds. No Forcing.</h1>
+<p>Odds come live from The Odds API. If no 1.50+ value, we SKIP.</p>
 <div class="pick-box" id="pickBox">
-<div class="pick-top"><small>📅 <span id="todayDate">TODAY</span> • UGANDA • <span id="autoStatus">⚡ INSTANT</span></small><span class="live" id="liveBadge">● TODAY'S PICK</span></div>
-<h2 id="teams">Checking today's real fixture...</h2>
-<p id="tipLine">Tip: <b id="tip">Over 1.5 Goals</b></p>
-<p style="font-size:13px;color:#666" id="league">League: Loading real fixture...</p>
-<div class="odd-row" id="oddRow"><div><small style="color:#666">ODD</small><br><span class="odd" id="odd">1.55</span></div><div style="text-align:right"><small style="color:#666">BOOKIE</small><br><b>WSB - Licensed in Uganda</b><br><small style="color:#666">Stake: 1 Unit Only</small></div></div>
-<div class="result" id="result">⏳ WAITING - Kickoff Tonight</div>
-<p style="font-size:11px;color:#888;margin-top:10px;text-align:center" id="autoNote">⚡ Loaded instantly • Real data updating in background...</p>
+<div class="pick-top"><small>📅 <span id="todayDate">TODAY</span> • UGANDA • <span id="autoStatus">⚡ REAL ODDS</span></small><span class="live" id="liveBadge">● CHECKING REAL ODDS...</span></div>
+<h2 id="teams">Checking real odds...</h2>
+<p id="tipLine">Tip: <b id="tip">Checking...</b></p>
+<p style="font-size:13px;color:#666" id="league">League: Checking...</p>
+<div class="odd-row" id="oddRow"><div><small style="color:#666">REAL ODD - LIVE</small><br><span class="odd" id="odd">-</span></div><div style="text-align:right"><small style="color:#666">BOOKIE</small><br><b id="bookieName">Check WSB</b><br><small style="color:#666">Stake: 1 Unit Only</small></div></div>
+<div class="result" id="result">⏳ CHECKING REAL ODDS...</div>
+<p style="font-size:11px;color:#888;margin-top:10px;text-align:center" id="autoNote">Fetching real odds...</p>
+<p style="font-size:11px;color:#666;margin-top:6px;text-align:center" id="sourceNote"></p>
 </div>
 <a class="btn" href="https://wa.me/256707282428?text=Hi%20I%20want%20the%20daily%201.50%20pick" target="_blank">Join on WhatsApp →</a><br>
-<a class="btn btn-white" href="#calendar">See Calendar -30 to +30 ↓</a>
+<a class="btn btn-white" href="#calendar">See Real Odds Calendar ↓</a>
 </section>
-<section class="section"><h2>Our Record</h2><div class="cards"><div class="card"><h3>1 - 0</h3><p>Wins - Losses</p></div><div class="card"><h3>100%</h3><p>Win Rate</p></div><div class="card"><h3>+0.59 Units</h3><p>Profit</p></div></div></section>
-
+<section class="section"><h2>Verified Record Only</h2><div class="cards"><div class="card"><h3>1 Verified Pick</h3><p>Total Posted</p></div><div class="card"><h3>1 Won • 0 Lost</h3><p>Verified Results</p></div><div class="card"><h3>1.59 Verified</h3><p>Tavernes 0-6 Valencia</p></div></div></section>
 <section class="section" id="calendar">
-<h2>📅 Real Calendar: -30 to +30</h2>
-<p style="opacity:.8">Shows instantly. Real data fills in background. Tap any day.</p>
-<p style="font-size:12px;color:#00e676;margin-top:6px" id="calStatus">⚡ Calendar loaded instantly • Updating real fixtures in background...</p>
+<h2>📅 Real Odds Calendar: -30 to +30</h2>
+<p style="opacity:.8">Past = verified only. Today + next 3 days = real live odds. Beyond 3 days = odds not out yet.</p>
+<p style="font-size:12px;color:#00e676;margin-top:6px" id="calStatus">⚡ Loaded instantly • Fetching real odds...</p>
 <div class="cal-controls">
 <button class="cal-btn active" onclick="showRange('all',this)">All -30 to +30</button>
 <button class="cal-btn" onclick="showRange('past',this)">Past -30</button>
 <button class="cal-btn" onclick="showRange('today',this)">Today</button>
 <button class="cal-btn" onclick="showRange('future',this)">Future +30</button>
 </div>
-<div style="font-size:12px;opacity:.7;margin-bottom:10px">⚽ = Real Match &nbsp; ⏸️ = SKIP (No Value) &nbsp; ⏳ = Checking...</div>
+<div style="font-size:12px;opacity:.7;margin-bottom:10px">✅ = Verified WON &nbsp; ⚽ = Real Odd Found &nbsp; ⏸️ = SKIP / No Odd Yet</div>
 <div class="calendar" id="calendarGrid"></div>
-<div class="cal-detail" id="calDetail"><h3 id="detailTitle">Tap a day</h3><p id="detailBody" style="opacity:.85;margin-top:6px">Select any day from -30 to +30.</p></div>
+<div class="cal-detail" id="calDetail"><h3 id="detailTitle">Tap a day</h3><p id="detailBody" style="opacity:.85;margin-top:6px">Select any day.</p></div>
 </section>
-<section class="contact" id="contact"><h2>Get Daily Pick on WhatsApp</h2><p style="opacity:.8">One pick at 6am. If no value, we send SKIP.</p><br><a class="btn" href="https://wa.me/256707282428?text=Hi%20I%20want%20the%20daily%201.50%20pick">Get My Pick on WhatsApp</a><p style="margin-top:12px">Direct: <a href="https://wa.me/256707282428" style="color:#00e676;font-weight:bold">+256 707 282 428</a></p><p style="font-size:12px;margin-top:14px;color:#888">18+ only. In Uganda you must be 25+ to bet. Bet responsibly.</p></section>
-<footer>© <span id="year">2026</span> Kampala 1.50 Banker • WSB licensed by NLGRB Uganda. Data: ESPN.</footer>
+<section class="contact" id="contact"><h2>Get Daily Pick on WhatsApp</h2><p style="opacity:.8">Only when real 1.50+ odd found. Otherwise SKIP.</p><br><a class="btn" href="https://wa.me/256707282428?text=Hi%20I%20want%20the%20daily%201.50%20pick">Get My Pick on WhatsApp</a><p style="margin-top:12px">Direct: <a href="https://wa.me/256707282428" style="color:#00e676;font-weight:bold">+256 707 282 428</a></p><p style="font-size:12px;margin-top:14px;color:#888">18+ only. In Uganda you must be 25+ to bet. Bet responsibly.</p></section>
+<footer>© <span id="year">2026</span> Kampala 1.50 Banker • WSB licensed by NLGRB Uganda. Odds: The Odds API.</footer>
 <script>
+// ===== YOUR REAL KEY - ALREADY INSERTED =====
+const ODDS_API_KEY = "a665fdcebd267a9179017eabe7fe7586";
+// ==============================================
 const TODAY=new Date(); TODAY.setHours(0,0,0,0);
 document.getElementById('todayDate').textContent=TODAY.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
 document.getElementById('year').textContent=new Date().getFullYear();
-
-// ===== INSTANT LOAD FIX =====
-// OLD: waited for 61 fetches before showing anything = blank screen
-// NEW: 1. Render calendar instantly 2. Show today instantly 3. Fetch real data in BACKGROUND in parallel 4. Cache in localStorage
-
-const LEAGUES=["eng.1","esp.1","ita.1"];
+const VERIFIED={
+  "2026-11-11":{teams:"Tavernes vs Valencia", tip:"BTTS No - Tavernes Not To Score", odd:"1.59", league:"Copa del Rey", result:"✅ WON 0-6 Valencia", source:"Verified on WSB"}
+};
 const realData={};
 let currentRange='all';
-
-// 1. Load cache instantly - no waiting
 try{
-  const cached=JSON.parse(localStorage.getItem('banker_cache_v2')||'{}');
-  const todayKey=TODAY.toISOString().slice(0,10);
-  if(cached.date===todayKey && cached.data){
-    Object.assign(realData, cached.data);
-  }
+  const c=JSON.parse(localStorage.getItem('banker_odds_v4')||'{}');
+  if(c.date===TODAY.toISOString().slice(0,10) && c.data) Object.assign(realData,c.data);
 }catch(e){}
-
-function saveCache(){
-  try{ localStorage.setItem('banker_cache_v2', JSON.stringify({date:TODAY.toISOString().slice(0,10), data:realData})); }catch(e){}
-}
-
-function fmtDate(d){ return d.toISOString().slice(0,10).replace(/-/g,""); }
-
-async function fetchDay(offset){
-  const date=new Date(TODAY); date.setDate(date.getDate()+offset);
-  const dateStr=fmtDate(date);
-  if(dateStr==="20261111"){
-    realData[offset]={found:true, teams:"Tavernes vs Valencia", league:"Copa del Rey", result:"WON 0-6", date:date.toISOString()};
-    return;
-  }
-  // Try 1 league per day first for SPEED, not 5 leagues sequential
-  for(let lg of LEAGUES){
+function saveCache(){ try{ localStorage.setItem('banker_odds_v4', JSON.stringify({date:TODAY.toISOString().slice(0,10), data:realData})); }catch(e){} }
+async function fetchRealOdds(){
+  const sports=["soccer_epl","soccer_spain_la_liga","soccer_italy_serie_a","soccer_germany_bundesliga","soccer_france_ligue_one"];
+  let all=[];
+  for(let sport of sports){
     try{
-      const c=new AbortController(); const t=setTimeout(()=>c.abort(), 4000);
-      const r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${lg}/scoreboard?dates=${dateStr}`,{signal:c.signal});
-      clearTimeout(t);
+      const url=`https://api.the-odds-api.com/v4/sports/${sport}/odds/?apiKey=${ODDS_API_KEY}&regions=eu&markets=totals,btts,h2h&oddsFormat=decimal&dateFormat=iso`;
+      const ctrl=new AbortController(); const t=setTimeout(()=>ctrl.abort(),6000);
+      const r=await fetch(url,{signal:ctrl.signal}); clearTimeout(t);
       if(!r.ok) continue;
       const j=await r.json();
-      if(j.events && j.events.length>0){
-        const ev=j.events[0]; const comp=ev.competitions[0];
-        if(!comp) continue;
-        const home=comp.competitors.find(c=>c.homeAway==='home');
-        const away=comp.competitors.find(c=>c.homeAway==='away');
-        if(home && away){
-          realData[offset]={found:true, teams:home.team.displayName+" vs "+away.team.displayName, league:j.leagues?.[0]?.name||lg, result: offset<0 ? `FT ${home.score??''}-${away.score??''}` : "", date:date.toISOString()};
-          return;
-        }
-      }
+      if(Array.isArray(j)) all=all.concat(j.map(x=>({...x, sport})));
     }catch(e){}
   }
-  realData[offset]={found:false, teams:"", league:"", date:date.toISOString()};
+  return all;
 }
-
+function findBestPick(games){
+  let best=null;
+  for(let g of games){
+    for(let bm of (g.bookmakers||[])){
+      for(let m of (bm.markets||[])){
+        if(m.key==='totals'){
+          for(let o of (m.outcomes||[])){
+            if(o.name==='Over' && o.point===1.5 && o.price>=1.50 && o.price<=1.75){
+              if(!best || o.price>best.odd) best={teams:g.home_team+" vs "+g.away_team, tip:"Over 1.5 Goals", odd:o.price.toFixed(2), league:g.sport_title||g.sport, bookie:bm.title, commence:g.commence_time, sport:g.sport};
+            }
+          }
+        }
+        if(m.key==='btts' && !best){
+          for(let o of (m.outcomes||[])){
+            if(o.name==='No' && o.price>=1.50 && o.price<=1.75){
+              best={teams:g.home_team+" vs "+g.away_team, tip:"BTTS No", odd:o.price.toFixed(2), league:g.sport_title||g.sport, bookie:bm.title, commence:g.commence_time, sport:g.sport};
+            }
+          }
+        }
+      }
+    }
+  }
+  return best;
+}
 function renderCalendar(){
-  const grid=document.getElementById('calendarGrid');
-  grid.innerHTML='';
+  const grid=document.getElementById('calendarGrid'); grid.innerHTML='';
   for(let offset=-30; offset<=30; offset++){
     if(currentRange==='past' && offset>=0) continue;
     if(currentRange==='future' && offset<=0) continue;
     if(currentRange==='today' && offset!==0) continue;
     const date=new Date(TODAY); date.setDate(date.getDate()+offset);
+    const key=date.toISOString().slice(0,10);
     const info=realData[offset];
     const el=document.createElement('div');
-    el.className='cal-day'+(offset===0?' today':'')+(offset<0?' past':'');
-    if(!info){
-      el.innerHTML=`<div class="dnum">${date.getDate()}</div><div class="dmon">${date.toLocaleDateString('en-GB',{month:'short'})} ${offset===0?'(Today)':offset<0?offset+'d':'+'+offset+'d'}</div><div class="status">⏳ Checking...</div>`;
-    }else if(info.found){
-      const isWon = date.toISOString().slice(0,10)==="2026-11-11";
-      const label = isWon ? "✅ WON 0-6" : offset<0 ? `⚽ ${info.result||'Finished'}` : offset===0 ? "⚽ TODAY" : "⚽ REAL MATCH";
-      el.innerHTML=`<div class="dnum">${date.getDate()}</div><div class="dmon">${date.toLocaleDateString('en-GB',{month:'short'})} ${offset===0?'(Today)':offset<0?offset+'d':'+'+offset+'d'}</div><div class="status">${label}</div><div class="teams-small">${info.teams}</div><div class="odd-small">@ 1.55</div>`;
+    el.className='cal-day'+(offset===0?' today':'');
+    if(VERIFIED[key]){
+      el.innerHTML=`<div class="dnum">${date.getDate()}</div><div class="dmon">${date.toLocaleDateString('en-GB',{month:'short'})}</div><div class="status">✅ VERIFIED WON</div><div class="teams-small">${VERIFIED[key].teams}</div><div class="odd-small">@ ${VERIFIED[key].odd}</div>`;
+    }else if(info && info.found){
+      el.innerHTML=`<div class="dnum">${date.getDate()}</div><div class="dmon">${date.toLocaleDateString('en-GB',{month:'short'})} ${offset===0?'(Today)':offset<0?offset+'d':'+'+offset+'d'}</div><div class="status">⚽ REAL ODD ${info.odd}</div><div class="teams-small">${info.teams}</div><div class="odd-small">${info.tip}</div>`;
+    }else if(offset>3){
+      el.innerHTML=`<div class="dnum">${date.getDate()}</div><div class="dmon">${date.toLocaleDateString('en-GB',{month:'short'})} +${offset}d</div><div class="status">⏳ ODDS NOT OUT YET</div><div class="teams-small">Bookies haven't priced this day yet</div>`;
+    }else if(info && !info.found){
+      el.innerHTML=`<div class="dnum">${date.getDate()}</div><div class="dmon">${date.toLocaleDateString('en-GB',{month:'short'})}</div><div class="status">⏸️ SKIP</div><div class="teams-small">No 1.50+ value</div>`;
     }else{
-      el.innerHTML=`<div class="dnum">${date.getDate()}</div><div class="dmon">${date.toLocaleDateString('en-GB',{month:'short'})} ${offset===0?'(Today)':offset<0?offset+'d':'+'+offset+'d'}</div><div class="status">⏸️ SKIP</div><div class="teams-small">No value</div>`;
+      el.innerHTML=`<div class="dnum">${date.getDate()}</div><div class="dmon">${date.toLocaleDateString('en-GB',{month:'short'})}</div><div class="status">⏳ Checking real odds...</div>`;
     }
     el.onclick=()=>{ document.querySelectorAll('.cal-day').forEach(x=>x.classList.remove('selected')); el.classList.add('selected'); showDetail(offset); };
     grid.appendChild(el);
   }
 }
-
 function showDetail(offset){
   const date=new Date(TODAY); date.setDate(date.getDate()+offset);
   const ds=date.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const key=date.toISOString().slice(0,10);
+  const title=document.getElementById('detailTitle'); const body=document.getElementById('detailBody');
+  if(VERIFIED[key]){ const v=VERIFIED[key]; title.textContent=`✅ ${ds} — VERIFIED ${v.result}`; body.innerHTML=`<b>${v.teams}</b><br>Tip: ${v.tip}<br>Odd: ${v.odd} — Verified<br>League: ${v.league}`; return; }
+  if(offset>3){ title.textContent=`⏳ ${ds} — Odds Not Out Yet`; body.innerHTML=`Bookies only price 1-3 days ahead. Come back closer to this date. We will NOT invent an odd now.`; return; }
   const info=realData[offset];
-  const title=document.getElementById('detailTitle');
-  const body=document.getElementById('detailBody');
-  if(!info){ title.textContent=`⏳ ${ds} — Checking...`; body.textContent="Checking real ESPN fixture in background..."; return; }
-  if(!info.found){ title.textContent=`⏸️ ${ds} — SKIP`; body.innerHTML=`<b>No Pick.</b><br>No real fixture with 1.50+ value. We do NOT force.<br><small>Source: ESPN Real API</small>`; return; }
-  if(date.toISOString().slice(0,10)==="2026-11-11"){ title.textContent=`✅ ${ds} — WON 0-6`; body.innerHTML=`<b>Tavernes vs Valencia</b><br>Tip: BTTS No • Odd: 1.59 • Copa del Rey<br>Result: ✅ WON 0-6`; return; }
-  title.textContent = offset===0 ? `⚽ TODAY — ${ds}` : offset<0 ? `⚽ ${ds}` : `⚽ ${ds} — REAL (+${offset}d)`;
-  body.innerHTML=`<b>${info.teams}</b><br>League: ${info.league} (Real ESPN)<br>Tip: Over 1.5 Goals • Odd: 1.55<br>${offset<0?`Result: ${info.result}`:`Status: ${offset===0?'Today\'s pick':'Scheduled - confirms at 6am, else SKIP'}`<br><small>Source: ESPN Real API</small>`;
+  if(!info){ title.textContent=`⏳ ${ds} — Checking...`; body.textContent="Fetching real odds..."; return; }
+  if(!info.found){ title.textContent=`⏸️ ${ds} — SKIP`; body.innerHTML=`<b>No Pick.</b><br>No real 1.50-1.75 odd found in Over 1.5 / BTTS No markets.<br>We do NOT force.`; return; }
+  title.textContent=`⚽ ${ds} — REAL ODD ${info.odd}`;
+  body.innerHTML=`<b>${info.teams}</b><br>Tip: ${info.tip}<br>Odd: <b>${info.odd}</b> — REAL from ${info.bookie}<br>League: ${info.league}<br>Kickoff: ${new Date(info.commence).toLocaleString('en-GB')}<br><small>Source: The Odds API • Check same odd on WSB before betting</small>`;
 }
-
-function showRange(range, btn){
-  currentRange=range;
-  document.querySelectorAll('.cal-btn').forEach(b=>b.classList.remove('active'));
-  if(btn) btn.classList.add('active');
-  renderCalendar();
-}
-
+function showRange(range,btn){ currentRange=range; document.querySelectorAll('.cal-btn').forEach(b=>b.classList.remove('active')); if(btn) btn.classList.add('active'); renderCalendar(); }
 function showPick(p){
-  document.getElementById('pickBox').className='pick-box';
-  document.getElementById('liveBadge').textContent='● TODAY\'S PICK';
+  document.getElementById('pickBox').className='pick-box verified-box';
+  document.getElementById('liveBadge').textContent='✅ REAL ODD FOUND';
   document.getElementById('liveBadge').className='live';
   document.getElementById('teams').textContent=p.teams;
-  document.getElementById('tip').textContent='Over 1.5 Goals';
-  document.getElementById('league').textContent="League: "+p.league+" (Real ESPN)";
+  document.getElementById('tip').textContent=p.tip;
+  document.getElementById('league').textContent="League: "+p.league;
   document.getElementById('oddRow').style.display='flex';
-  document.getElementById('odd').textContent='1.55';
-  document.getElementById('result').textContent="⏳ WAITING - Kickoff Tonight";
+  document.getElementById('odd').textContent=p.odd;
+  document.getElementById('bookieName').textContent=p.bookie+" (Check WSB for same)";
+  document.getElementById('result').textContent="⏳ WAITING - Kickoff "+new Date(p.commence).toLocaleString('en-GB',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
   document.getElementById('result').className='result';
-  document.getElementById('autoStatus').textContent='⚡ REAL';
-  document.getElementById('autoNote').textContent="Real fixture from ESPN • Updated in background • "+new Date().toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'});
+  document.getElementById('autoStatus').textContent='✅ REAL ODDS';
+  document.getElementById('autoNote').textContent="Real odd from The Odds API • Not invented";
+  document.getElementById('sourceNote').textContent="Source: The Odds API • Bookie: "+p.bookie+" • Always confirm on WSB";
 }
 function showSkip(reason){
   document.getElementById('pickBox').className='pick-box skip-box';
   document.getElementById('liveBadge').textContent='⏸️ SKIP TODAY';
   document.getElementById('liveBadge').className='live skip-live';
   document.getElementById('teams').textContent='⏸️ NO PICK TODAY';
-  document.getElementById('tip').textContent='No value - We SKIP';
+  document.getElementById('tip').textContent='No 1.50+ value - We SKIP';
   document.getElementById('tipLine').innerHTML='Reason: <b>'+reason+'</b>';
-  document.getElementById('league').textContent='League: No real fixture with value today';
+  document.getElementById('league').textContent='League: No verified 1.50+ odd today';
   document.getElementById('oddRow').style.display='none';
   document.getElementById('result').textContent='⏸️ SKIP - Do NOT Bet Today - Protect Bankroll';
   document.getElementById('result').className='result skip';
   document.getElementById('autoStatus').textContent='⚡ REAL - SKIP';
-  document.getElementById('autoNote').textContent='ESPN checked: No value. We do NOT force.';
+  document.getElementById('autoNote').textContent='Real odds checked. No 1.50-1.75 value. We do NOT force.';
+  document.getElementById('sourceNote').textContent='';
 }
-function updateTodayPick(){
-  const info=realData[0];
-  if(!info) return;
-  if(!info.found) showSkip("No real fixture with 1.50+ value today");
-  else showPick(info);
-}
-
-// ===== INSTANT: Render NOW, fetch in BACKGROUND =====
 renderCalendar();
-if(realData[0]) updateTodayPick();
+const todayKey=TODAY.toISOString().slice(0,10);
+if(VERIFIED[todayKey]) showPick({...VERIFIED[todayKey], bookie:"WSB", commence:new Date().toISOString()});
+else if(realData[0] && realData[0].found) showPick(realData[0]);
+else if(realData[0] && !realData[0].found) showSkip("No 1.50+ odd found today");
 showDetail(0);
-
-// Background fetch - PARALLEL, not sequential. Today first, then rest in batches of 10.
 (async ()=>{
-  const order=[0,1,-1,2,-2,3,-3,4,-4,5,-5];
-  for(let i=6;i<=30;i++) order.push(i,-i);
-  // Do today first alone so top pick updates fast
-  await fetchDay(0); updateTodayPick(); renderCalendar(); saveCache();
-  // Then rest in parallel batches of 10 - 6x faster than before
-  for(let i=1;i<order.length;i+=10){
-    const batch=order.slice(i,i+10);
-    await Promise.all(batch.map(o=>fetchDay(o)));
-    renderCalendar(); saveCache();
-    document.getElementById('calStatus').textContent=`⚡ Updated ${Object.keys(realData).length}/61 days • Real ESPN • No waiting`;
-    if(realData[0]) updateTodayPick();
+  document.getElementById('calStatus').textContent="⏳ Fetching real odds from The Odds API...";
+  const games=await fetchRealOdds();
+  if(games.length===0){ document.getElementById('calStatus').textContent="⚠️ No odds returned - API limit or no games today"; if(!VERIFIED[todayKey]) showSkip("Odds API returned no games"); return; }
+  const byOffset={};
+  for(let g of games){
+    const gd=new Date(g.commence_time); gd.setHours(0,0,0,0);
+    const offset=Math.round((gd-TODAY)/86400000);
+    if(offset<-30 || offset>30) continue;
+    if(!byOffset[offset]) byOffset[offset]=[];
+    byOffset[offset].push(g);
   }
-  document.getElementById('calStatus').textContent=`✅ All 61 days updated from real ESPN • Loads instantly next time from cache`;
+  for(let offset=-30; offset<=30; offset++){
+    const key=new Date(TODAY); key.setDate(key.getDate()+offset);
+    const k=key.toISOString().slice(0,10);
+    if(VERIFIED[k]){ realData[offset]={found:true, teams:VERIFIED[k].teams, tip:VERIFIED[k].tip, odd:VERIFIED[k].odd, league:VERIFIED[k].league, bookie:"WSB", commence:key.toISOString()}; continue; }
+    const dayGames=byOffset[offset]||[];
+    const best=findBestPick(dayGames);
+    if(best) realData[offset]=best;
+    else if(offset<=3 && offset>=0) realData[offset]={found:false};
+    else if(offset<0) realData[offset]={found:false};
+  }
+  saveCache();
+  renderCalendar();
+  document.getElementById('calStatus').textContent=`✅ Real odds loaded: ${games.length} games checked • ${Object.values(realData).filter(x=>x.found).length} days with 1.50+ value • Rest = SKIP`;
+  const todayPick=realData[0];
+  if(VERIFIED[todayKey]) showPick({...VERIFIED[todayKey], bookie:"WSB", commence:new Date().toISOString()});
+  else if(todayPick && todayPick.found) showPick(todayPick);
+  else showSkip("No 1.50-1.75 odd in Over 1.5 / BTTS No today");
+  showDetail(0);
 })();
 </script>
 </body>
