@@ -35,9 +35,9 @@
     <aside id="drawerMenu" class="fixed top-0 left-0 bottom-0 w-80 bg-gray-900 border-r border-gray-800 z-50 transform -translate-x-full transition-transform duration-300 flex flex-col justify-between p-4 overflow-y-auto no-scrollbar">
         <div class="space-y-5">
             <div class="flex items-center justify-between pb-3 border-b border-gray-800">
-                <div class="flex items-center space-x-3">
-                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center font-black text-gray-950 text-base shadow-lg shadow-amber-500/10">W1</div>
-                    <span class="font-extrabold text-base text-white">WINS1 <span class="text-amber-400">VIP</span></span>
+                <div onclick="goToHomepage()" class="flex items-center space-x-3 cursor-pointer group">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center font-black text-gray-950 text-base shadow-lg shadow-amber-500/10 group-hover:scale-105 transition">W1</div>
+                    <span class="font-extrabold text-base text-white group-hover:text-amber-400 transition">WINS1 <span class="text-amber-400">VIP</span></span>
                 </div>
                 <button id="closeDrawerBtn" class="p-2 rounded-lg bg-gray-800 text-gray-400 hover:text-white">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -88,13 +88,15 @@
                 <button id="openDrawerBtn" class="p-2 rounded-lg bg-gray-800 border border-gray-700 text-gray-300 hover:text-white">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center font-black text-gray-950 text-lg">W1</div>
-                <div>
-                    <div class="flex items-center space-x-2">
-                        <h1 class="font-extrabold text-lg text-white">WINS1 <span class="text-amber-400">VIP</span></h1>
-                        <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-live"></span> <span id="headerCategoryBadge">99.9% PURE HOME WIN (1)</span>
-                        </span>
+                <div onclick="goToHomepage()" class="flex items-center space-x-3 cursor-pointer group">
+                    <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-amber-500 to-yellow-300 flex items-center justify-center font-black text-gray-950 text-lg group-hover:scale-105 transition shadow-lg">W1</div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <h1 class="font-extrabold text-lg text-white group-hover:text-amber-400 transition">WINS1 <span class="text-amber-400">VIP</span></h1>
+                            <span class="bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 pulse-live"></span> <span id="headerCategoryBadge">99.9% PURE HOME WIN (1)</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -172,6 +174,13 @@
         let currentCategory = 'single_home';
 
         const categories = ['single_home', 'single_away', 'single_over15', 'single_over', 'single_btts'];
+
+        function goToHomepage() {
+            toggleDrawer(false);
+            selectedDateObj = new Date(); // Reset to today's date
+            switchCategory('single_home'); // Reset to default category
+            initRibbon();
+        }
 
         function switchCategory(cat) {
             currentCategory = cat;
