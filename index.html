@@ -1,194 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BoostUG Panel - Like Peakerr</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<style>
-  .active-cat{background:#000;color:#fff}
-  .service-row:hover{background:#f8fafc}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Practical digital downloads including planners, invoice templates, and content calendars.">
+  <title>My Digital Products</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { font-family: Arial, sans-serif; margin: 0; background: #f7f7f7; color: #222; line-height: 1.5; }
+    header { background: #2563eb; color: white; padding: 40px 20px; text-align: center; }
+    header h1 { margin: 0 0 10px; }
+    header p { margin: 0; }
+    section { max-width: 900px; margin: 30px auto; padding: 20px; background: white; border-radius: 8px; }
+    h2 { margin-top: 0; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+    .product { border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; display: flex; flex-direction: column; }
+    .product h3 { margin: 0 0 10px; }
+    .product p { flex-grow: 1; color: #555; }
+    .price { font-weight: bold; font-size: 1.2em; margin: 10px 0; }
+    .btn { display: inline-block; padding: 12px 24px; background: #2563eb; color: white; text-decoration: none; border-radius: 6px; text-align: center; }
+    .btn:hover, .btn:focus { background: #1d4ed8; }
+    a:focus { outline: 3px solid #93c5fd; outline-offset: 2px; }
+    footer { text-align: center; color: #666; padding: 20px; }
+    @media (max-width: 480px) {
+      header { padding: 30px 16px; }
+      section { margin: 20px 12px; padding: 16px; }
+    }
+  </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body>
+  <header>
+    <h1>Your Name or Brand</h1>
+    <p>Practical digital downloads to help you get things done</p>
+  </header>
 
-<!-- HEADER LIKE PEAKERR -->
-<div class="bg-white shadow sticky top-0 z-50">
-  <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
-    <div class="flex items-center gap-2">
-      <div class="bg-black text-white w-9 h-9 rounded-lg flex items-center justify-center font-black text-xl">B</div>
-      <div><h1 class="font-black text-xl leading-none">BoostUG</h1><p class="text-[10px] text-gray-500">SMM PANEL UGANDA</p></div>
-    </div>
-    <div class="flex gap-2">
-      <a href="https://wa.me/256707282428" class="bg-green-500 text-white px-3 py-2 rounded-lg text-sm font-bold">WhatsApp</a>
-      <button onclick="showOrders()" class="bg-black text-white px-3 py-2 rounded-lg text-sm font-bold">My Orders</button>
-    </div>
-  </div>
-  <div class="bg-black text-white text-center text-xs py-2">🔥 CHEAPEST SMM PANEL IN UGANDA • Pay with MoMo 0707282428 • No Password Needed • Delivery 3 mins - 24h</div>
-</div>
+  <main>
+    <section>
+      <h2>Digital Products</h2>
+      <div class="products">
+        <article class="product">
+          <h3>Weekly Planner Template</h3>
+          <p>A printable PDF planner with daily tasks, goals, and a habit tracker.</p>
+          <div class="price">$5</div>
+          <a class="btn" href="#" data-replace="YOUR-PLANNER-CHECKOUT-URL" target="_blank" rel="noopener noreferrer" aria-label="Buy the Weekly Planner Template for $5">Buy Now</a>
+        </article>
 
-<div class="max-w-6xl mx-auto p-4 grid md:grid-cols-3 gap-4">
+        <article class="product">
+          <h3>Invoice Spreadsheet</h3>
+          <p>An Excel template that calculates totals, tax, and payment status automatically.</p>
+          <div class="price">$8</div>
+          <a class="btn" href="#" data-replace="YOUR-INVOICE-CHECKOUT-URL" target="_blank" rel="noopener noreferrer" aria-label="Buy the Invoice Spreadsheet for $8">Buy Now</a>
+        </article>
 
-  <!-- LEFT: NEW ORDER LIKE PEAKERR -->
-  <div class="md:col-span-1">
-    <div class="bg-white rounded-xl shadow p-4 sticky top-28">
-      <h2 class="font-black text-lg">🛒 New Order</h2>
-      <p class="text-xs text-gray-500 mb-3">Same system as Peakerr.com</p>
-
-      <label class="text-xs font-bold">CATEGORY</label>
-      <select id="catSelect" onchange="filterCat()" class="w-full border p-3 rounded-lg mt-1 mb-3">
-        <option value="all">All Categories</option>
-        <option value="tiktok">TikTok</option>
-        <option value="instagram">Instagram</option>
-        <option value="youtube">YouTube</option>
-        <option value="website">Website Traffic</option>
-        <option value="facebook">Facebook</option>
-      </select>
-
-      <label class="text-xs font-bold">SERVICE</label>
-      <select id="serviceSelect" onchange="updateService()" class="w-full border p-3 rounded-lg mt-1 mb-3"></select>
-
-      <div class="bg-gray-50 p-3 rounded-lg text-xs mb-3">
-        <p>Service ID: <span id="dId" class="font-bold">-</span></p>
-        <p>Rate: <span id="dRate" class="font-bold">-</span></p>
-        <p>Min: <span id="dMin">-</span> • Max: <span id="dMax">-</span></p>
-        <p>Avg Time: <span id="dTime">-</span></p>
-        <p>Description: <span id="dDesc">-</span></p>
+        <article class="product">
+          <h3>Social Media Calendar</h3>
+          <p>A 12-month content calendar with post ideas and posting schedules.</p>
+          <div class="price">$10</div>
+          <a class="btn" href="#" data-replace="YOUR-CALENDAR-CHECKOUT-URL" target="_blank" rel="noopener noreferrer" aria-label="Buy the Social Media Calendar for $10">Buy Now</a>
+        </article>
       </div>
+    </section>
 
-      <label class="text-xs font-bold">LINK</label>
-      <input id="orderLink" placeholder="Paste link here..." class="w-full border p-3 rounded-lg mt-1 mb-3">
+    <section>
+      <h2>Contact</h2>
+      <p>Questions about a product? <a href="mailto:you@yourdomain.com">Email me</a>.</p>
+    </section>
+  </main>
 
-      <label class="text-xs font-bold">QUANTITY</label>
-      <input id="orderQty" type="number" value="10000" oninput="calcTotal()" class="w-full border p-3 rounded-lg mt-1 mb-3">
+  <footer>
+    <p>&copy; <span id="year"></span> Your Name or Brand. All rights reserved.</p>
+  </footer>
 
-      <label class="text-xs font-bold">YOUR NAME (MoMo)</label>
-      <input id="custName" placeholder="e.g. Kato John" class="w-full border p-3 rounded-lg mt-1 mb-3">
-
-      <div class="bg-yellow-50 border border-yellow-300 p-3 rounded-lg text-sm mb-3">
-        <p class="font-black">PAY TO: 0707282428</p>
-        <p class="text-xs">Send exact amount via MTN / Airtel MoMo</p>
-        <p class="text-lg font-black mt-1">Total: <span id="totalPay">0 UGX</span></p>
-      </div>
-
-      <button onclick="placeOrder()" class="w-full bg-green-500 text-white font-black py-3.5 rounded-xl">I HAVE PAID - SEND ON WHATSAPP ✅</button>
-    </div>
-  </div>
-
-  <!-- RIGHT: SERVICES LIST LIKE PEAKERR -->
-  <div class="md:col-span-2">
-    <div class="bg-white rounded-xl shadow overflow-hidden">
-      <div class="p-4 flex justify-between items-center">
-        <h2 class="font-black">Services List</h2>
-        <input id="search" oninput="filterCat()" placeholder="Search services..." class="border p-2 rounded-lg text-sm w-48">
-      </div>
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead class="bg-gray-50 text-xs"><tr><th class="p-3 text-left">ID</th><th class="p-3 text-left">Service</th><th class="p-3 text-left">Rate per 1k</th><th class="p-3 text-left">Min-Max</th><th class="p-3 text-left">Action</th></tr></thead>
-          <tbody id="serviceTable"></tbody>
-        </table>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-xl shadow p-4 mt-4">
-      <h3 class="font-black mb-2">How It Works - Manual Panel</h3>
-      <ol class="text-sm space-y-1 list-decimal pl-5">
-        <li>Choose service, paste link, choose quantity</li>
-        <li>Pay to <b>0707282428</b> via MoMo</li>
-        <li>Click "I Have Paid" - we get your order on WhatsApp</li>
-        <li>We place order on Peakerr for you in 5-30 mins</li>
-        <li>Delivery starts. You get screenshot confirmation.</li>
-      </ol>
-      <p class="text-xs text-gray-500 mt-3">Note: These are Boost services for social proof. Not guaranteed to bring real followers/sales. No password ever needed.</p>
-    </div>
-  </div>
-</div>
-
-<script>
-// SERVICES - Your prices in UGX. Peakerr cost is hidden, profit is yours.
-const SERVICES = [
-  {id:31859, cat:"tiktok", name:"TikTok Views [Ultra Cheapest - 3 mins]", price:1500, min:1000, max:1000000, time:"3 mins", desc:"Views only. For social proof. Fastest."},
-  {id:36807, cat:"tiktok", name:"TikTok Views + 20% Likes [Combo]", price:3500, min:1000, max:500000, time:"10-30 mins", desc:"10k Views = 2k Likes. Best value combo."},
-  {id:36808, cat:"tiktok", name:"TikTok Views + 40% Likes", price:6000, min:1000, max:500000, time:"10-30 mins", desc:"10k Views = 4k Likes"},
-  {id:36809, cat:"tiktok", name:"TikTok Views + 100% Likes", price:10000, min:1000, max:200000, time:"30 mins", desc:"10k Views = 10k Likes"},
-  {id:36815, cat:"tiktok", name:"TikTok Views + Likes + 10% Comments", price:18000, min:1000, max:100000, time:"1 hour", desc:"Most natural looking. Best for viral."},
-  {id:5001, cat:"instagram", name:"Instagram Followers [No Password]", price:30000, min:100, max:50000, time:"1-6 hours", desc:"1k = 30,000 UGX. 30-day refill."},
-  {id:5002, cat:"instagram", name:"Instagram Likes", price:12000, min:100, max:100000, time:"10 mins", desc:"1k Likes"},
-  {id:5003, cat:"instagram", name:"Instagram Views / Reels Views", price:2000, min:1000, max:1000000, time:"5 mins", desc:"Reels views boost"},
-  {id:6001, cat:"youtube", name:"YouTube Views", price:18000, min:1000, max:500000, time:"1-12 hours", desc:"High retention views"},
-  {id:6002, cat:"youtube", name:"YouTube Subscribers", price:45000, min:100, max:10000, time:"1-3 days", desc:"Channel subscribers"},
-  {id:6003, cat:"youtube", name:"YouTube Likes", price:15000, min:100, max:50000, time:"1 hour", desc:"Video likes"},
-  {id:7001, cat:"website", name:"Website Traffic [Worldwide] - Clicks", price:12000, min:1000, max:1000000, time:"1-24 hours", desc:"Website visitors. For counter / social proof. NOT for AdSense."},
-  {id:7002, cat:"website", name:"Website Traffic [Google Search]", price:20000, min:1000, max:500000, time:"1-24 hours", desc:"Traffic that looks like from Google"},
-  {id:8001, cat:"facebook", name:"Facebook Page Likes / Followers", price:25000, min:100, max:50000, time:"1-12 hours", desc:"Page likes"},
-  {id:8002, cat:"facebook", name:"Facebook Video Views", price:8000, min:1000, max:1000000, time:"10 mins", desc:"Video views"},
-];
-
-const serviceSelect = document.getElementById('serviceSelect');
-const table = document.getElementById('serviceTable');
-
-function renderServices(){
-  let cat = document.getElementById('catSelect').value;
-  let search = document.getElementById('search').value.toLowerCase();
-  let filtered = SERVICES.filter(s => (cat==='all' || s.cat===cat) && s.name.toLowerCase().includes(search));
-
-  // Fill dropdown
-  serviceSelect.innerHTML = filtered.map(s => `<option value="${s.id}">${s.id} - ${s.name} - ${s.price.toLocaleString()} UGX / 1k</option>`).join('');
-  // Fill table
-  table.innerHTML = filtered.map(s => `
-    <tr class="service-row border-t">
-      <td class="p-3 font-bold">${s.id}</td>
-      <td class="p-3"><p class="font-bold text-sm">${s.name}</p><p class="text-xs text-gray-500">${s.cat.toUpperCase()} • ${s.time} • ${s.desc}</p></td>
-      <td class="p-3 font-bold">${s.price.toLocaleString()} UGX</td>
-      <td class="p-3 text-xs">${s.min.toLocaleString()} - ${s.max.toLocaleString()}</td>
-      <td class="p-3"><button onclick="selectById(${s.id})" class="bg-black text-white px-3 py-1.5 rounded-lg text-xs font-bold">Order</button></td>
-    </tr>`).join('');
-  updateService();
-}
-function filterCat(){ renderServices(); }
-function getSelected(){
-  let id = parseInt(serviceSelect.value);
-  return SERVICES.find(s=>s.id===id) || SERVICES[0];
-}
-function updateService(){
-  let s = getSelected();
-  if(!s) return;
-  document.getElementById('dId').innerText = s.id;
-  document.getElementById('dRate').innerText = s.price.toLocaleString()+" UGX per 1k";
-  document.getElementById('dMin').innerText = s.min.toLocaleString();
-  document.getElementById('dMax').innerText = s.max.toLocaleString();
-  document.getElementById('dTime').innerText = s.time;
-  document.getElementById('dDesc').innerText = s.desc;
-  calcTotal();
-}
-function calcTotal(){
-  let s = getSelected();
-  let qty = parseInt(document.getElementById('orderQty').value) || 0;
-  let total = Math.round(qty/1000 * s.price);
-  document.getElementById('totalPay').innerText = total.toLocaleString()+" UGX";
-  return total;
-}
-function selectById(id){
-  let s = SERVICES.find(x=>x.id===id);
-  document.getElementById('catSelect').value = s.cat;
-  renderServices();
-  serviceSelect.value = id;
-  updateService();
-  window.scrollTo({top:0, behavior:'smooth'});
-}
-function placeOrder(){
-  let s = getSelected();
-  let link = document.getElementById('orderLink').value;
-  let qty = document.getElementById('orderQty').value;
-  let name = document.getElementById('custName').value;
-  let total = calcTotal();
-  if(!link || !name){ alert("Put link and your MoMo name"); return; }
-  let msg = `NEW ORDER - BoostUG Panel%0A%0AService: ${s.name} (ID ${s.id})%0ALink: ${link}%0AQuantity: ${qty}%0AName on MoMo: ${name}%0ATotal Paid: ${total.toLocaleString()} UGX%0A%0AI have paid to 0707282428. Screenshot:`;
-  window.open(`https://wa.me/256707282428?text=${msg}`, '_blank');
-}
-function showOrders(){ alert("Your orders come to WhatsApp 0707282428. Send us your order screenshot and we confirm delivery status."); }
-
-renderServices();
-</script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
