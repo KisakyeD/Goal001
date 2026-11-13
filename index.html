@@ -239,7 +239,9 @@
         }
 
         function evaluatePick(homeName, awayName, seed, index, category, statusState, homeScore, awayScore) {
-            const hashVal = (stringHash(homeName) + stringHash(awayName) + seed + index + (category.length * 7)) % 100;
+            // Incorporate category index into hash to guarantee unique match mapping per category
+            const catMultiplier = categories.indexOf(category) + 1;
+            const hashVal = (stringHash(homeName) + stringHash(awayName) + seed + (index * catMultiplier) * 17) % 100;
             
             const homeWins = 5;
             const homeScoredAvg = (2.6 + ((hashVal % 8) / 10)).toFixed(1);
@@ -331,7 +333,7 @@
                 analysis: detailedAnalysis,
                 isWon,
                 isFinished: statusState === 'post',
-                scoreRank: hashVal
+                scoreRank: (hashVal + catMultiplier * 13) % 100
             };
         }
 
