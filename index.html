@@ -177,9 +177,9 @@
 
         function goToHomepage() {
             toggleDrawer(false);
-            selectedDateObj = new Date(); // Reset to today's date
+            selectedDateObj = new Date(); // Reset to today
             switchCategory('single_home'); // Reset to default category
-            initRibbon();
+            initRibbon(); // Re-render and scroll ribbon to today
         }
 
         function switchCategory(cat) {
@@ -478,22 +478,35 @@
 
             let html = "";
             const today = new Date();
+            today.setHours(0,0,0,0);
+
+            let selectedBtnEl = null;
 
             for (let i = -60; i <= 30; i++) {
-                const d = new Date();
+                const d = new Date(today);
                 d.setDate(today.getDate() + i);
+                
                 const isSelected = d.toDateString() === selectedDateObj.toDateString();
                 const dayName = i === 0 ? 'TODAY' : d.toLocaleDateString('en-US', { weekday: 'short' });
                 const monthDay = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
 
                 html += `
-                    <button onclick="selectRibbonDate(${d.getTime()})" class="flex-shrink-0 px-3 py-2 rounded-xl text-center transition ${isSelected ? 'bg-amber-500 text-gray-950 font-bold shadow-lg shadow-amber-500/20' : 'bg-gray-800/60 text-gray-300 hover:bg-gray-800'}">
+                    <button id="ribbon_btn_${i + 60}" onclick="selectRibbonDate(${d.getTime()})" class="flex-shrink-0 px-3 py-2 rounded-xl text-center transition ${isSelected ? 'bg-amber-500 text-gray-950 font-bold shadow-lg shadow-amber-500/20' : 'bg-gray-800/60 text-gray-300 hover:bg-gray-800'}">
                         <div class="text-[10px] uppercase font-mono">${dayName}</div>
                         <div class="text-xs font-bold">${monthDay}</div>
                     </button>
                 `;
             }
             ribbon.innerHTML = html;
+
+            // Automatically scroll ribbon to center the selected date button
+            setTimeout(() => {
+                const diffDays = Math.round((selectedDateObj.setHours(0,0,0,0) - today.getTime()) / (1000 * 60 * 60 * 24));
+                const targetBtn = document.getElementById(`ribbon_btn_${diffDays + 60}`);
+                if (targetBtn) {
+                    ribbon.scrollTo({ left: targetBtn.offsetLeft - ribbon.offsetWidth / 2 + targetBtn.offsetWidth / 2, behavior: 'smooth' });
+                }
+            }, 50);
         }
 
         function selectRibbonDate(timestamp) {
