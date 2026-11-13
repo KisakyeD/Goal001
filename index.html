@@ -56,14 +56,6 @@
                     <span class="flex items-center gap-1.5">🚀 Pure Away Win (2)</span>
                     <span class="text-[10px] font-mono bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-bold">99.9%</span>
                 </button>
-                <button onclick="switchCategory('single_ht')" id="nav_single_ht" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-gray-800 font-medium text-xs transition">
-                    <span class="flex items-center gap-1.5">⏱️ Half-Time Result (HT)</span>
-                    <span class="text-[10px] font-mono bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-bold">99.9%</span>
-                </button>
-                <button onclick="switchCategory('vip_ticket5')" id="nav_vip_ticket5" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-gray-800 font-medium text-xs transition">
-                    <span class="flex items-center gap-1.5">🔥 Daily VIP Ticket (5+ Odds)</span>
-                    <span class="text-[10px] font-mono bg-purple-500/20 text-purple-400 px-1.5 py-0.5 rounded font-bold">5+ Odds</span>
-                </button>
                 <button onclick="switchCategory('single_over15')" id="nav_single_over15" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-gray-800 font-medium text-xs transition">
                     <span class="flex items-center gap-1.5">⚽ Pure Over 1.5 Goals</span>
                     <span class="text-[10px] font-mono bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded font-bold">99.9%</span>
@@ -179,7 +171,7 @@
         let selectedDateObj = new Date();
         let currentCategory = 'single_home';
 
-        const categories = ['single_home', 'single_away', 'single_ht', 'vip_ticket5', 'single_over15', 'single_over', 'single_btts'];
+        const categories = ['single_home', 'single_away', 'single_over15', 'single_over', 'single_btts'];
 
         function switchCategory(cat) {
             currentCategory = cat;
@@ -199,8 +191,6 @@
             const badgeText = {
                 'single_home': "99.9% PURE HOME WIN (1)",
                 'single_away': "99.9% PURE AWAY WIN (2)",
-                'single_ht': "99.9% HALF-TIME RESULT (HT)",
-                'vip_ticket5': "DAILY VIP TICKET (5+ ODDS)",
                 'single_over15': "99.9% PURE OVER 1.5 GOALS",
                 'single_over': "99.9% PURE OVER 2.5 GOALS",
                 'single_btts': "99.9% PURE BTTS YES"
@@ -239,7 +229,6 @@
         }
 
         function evaluatePick(homeName, awayName, seed, index, category, statusState, homeScore, awayScore) {
-            // Incorporate category index into hash to guarantee unique match mapping per category
             const catMultiplier = categories.indexOf(category) + 1;
             const hashVal = (stringHash(homeName) + stringHash(awayName) + seed + (index * catMultiplier) * 17) % 100;
             
@@ -281,12 +270,6 @@
                 odd = parseFloat((1.85 + ((hashVal * 4) % 35) / 100).toFixed(2));
                 if (statusState === 'post') {
                     isWon = awayScore > homeScore;
-                }
-            } else if (category === 'single_ht') {
-                label = "Half-Time Result (HT): Home Win";
-                odd = parseFloat((2.10 + ((hashVal * 3) % 40) / 100).toFixed(2));
-                if (statusState === 'post') {
-                    isWon = homeScore > awayScore;
                 }
             } else if (category === 'single_over15') {
                 label = "Total Goals: Over 1.5 Goals";
@@ -416,48 +399,6 @@
             }
 
             const dateSeed = parseInt(getYYYYMMDD(dateObj), 10);
-
-            if (currentCategory === 'vip_ticket5') {
-                let ticketOdds = 1.0;
-                let htmlCards = "";
-                const ticketMatches = matches.slice(0, 3);
-
-                ticketMatches.forEach((m, idx) => {
-                    const ev = evaluatePick(m.home, m.away, dateSeed, idx, 'single_home', m.statusState, m.homeScore, m.awayScore);
-                    ticketOdds *= ev.odd;
-
-                    htmlCards += `
-                        <div class="bg-gray-950 border border-gray-800 rounded-xl p-3.5 space-y-2 mb-2">
-                            <div class="flex items-center justify-between text-xs text-amber-400 font-mono">
-                                <span>🏆 ${m.league}</span>
-                                <span>⏰ ${m.time}</span>
-                            </div>
-                            <div class="flex items-center justify-between font-bold text-white text-sm">
-                                <span>${m.home} vs ${m.away}</span>
-                                <span class="bg-amber-500/10 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded text-xs font-mono">@ ${ev.odd.toFixed(2)}</span>
-                            </div>
-                            <div class="text-[11px] text-gray-400">Pick: Home Win (1) | 99.9% Confidence</div>
-                        </div>
-                    `;
-                });
-
-                container.innerHTML = `
-                    <div class="bg-gradient-to-br from-gray-900 to-gray-900/90 border-2 border-purple-500/50 rounded-2xl p-5 space-y-4 shadow-xl">
-                        <div class="flex items-center justify-between text-xs text-purple-400 font-mono font-bold">
-                            <span>🔥 DAILY VIP ACCUMULATOR</span>
-                            <span>Target: 5.00+ Odds</span>
-                        </div>
-                        <div class="space-y-2">
-                            ${htmlCards}
-                        </div>
-                        <button onclick="alert('VIP Ticket Copied Successfully!');" class="w-full bg-purple-500 hover:bg-purple-400 text-gray-950 font-extrabold py-3 rounded-xl text-xs transition shadow-lg shadow-purple-500/10">
-                            📋 Copy 5+ Odds VIP Ticket Slip
-                        </button>
-                    </div>
-                `;
-                document.getElementById('totalOddsBadge').textContent = `ODDS: ${ticketOdds.toFixed(2)}`;
-                return;
-            }
 
             const evaluatedList = matches.map((m, idx) => ({
                 match: m,
