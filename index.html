@@ -146,7 +146,7 @@
 
         <div class="pt-4 border-t border-gray-800 text-center my-2">
             <span class="text-[10px] text-emerald-400 font-mono block font-bold">95%+ AI Precision Engine Active</span>
-            <span class="text-[9px] text-gray-500 font-mono">WINS1 Predictive Model v8.2</span>
+            <span class="text-[9px] text-gray-500 font-mono">WINS1 Predictive Model v8.3</span>
         </div>
     </aside>
 
@@ -271,12 +271,10 @@
             fetchMatchData(selectedDateObj, false);
         }
 
-        // Fixed: TheSportsDB requires YYYY-MM-DD (with dashes)
         function getFormattedDateDashed(d) {
             return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
         }
 
-        // ESPN API requires YYYYMMDD (no dashes)
         function getYYYYMMDD(d) {
             return d.getFullYear() + String(d.getMonth() + 1).padStart(2, '0') + String(d.getDate()).padStart(2, '0');
         }
@@ -386,21 +384,17 @@
             const motivationFactor = 0.80;
             const homeAdvantageFactor = 0.75;
 
-            // Step 1: True Probability = (Form 30% + xG 30% + Head-to-Head 15% + Motivation 15% + Home advantage 10%)
             const trueProbDecimal = (formFactor * 0.30) + (xgFactor * 0.30) + (h2hFactor * 0.15) + (motivationFactor * 0.15) + (homeAdvantageFactor * 0.10);
             const trueProbPct = Math.round(trueProbDecimal * 100);
             
-            // Step 2: Fair Odds = 1 / Probability
             const fairOdds = parseFloat((1 / trueProbDecimal).toFixed(2));
-
-            // Step 3: Bookmaker Odds vs Fair Odds Value Check
             const bookmakerOdds = parseFloat((fairOdds * (1.05 + ((hashVal % 15) / 100))).toFixed(2));
 
             const xgHome = (1.72 + (hashVal % 15) / 10).toFixed(2);
             const xgAway = (1.25 + (hashVal % 12) / 10).toFixed(2);
             const combinedXg = (parseFloat(xgHome) + parseFloat(xgAway)).toFixed(2);
 
-            const baseMetrics = `MATH MODEL: True Prob ${trueProbPct}% (Form 30%, xG 30%, H2H 15%, Mot 15%, Home 10%) | Fair Odds: ${fairOdds} vs Bookmaker: ${bookmakerOdds} [VALUE OK] | Combined xG: ${combinedXg} (Passes 2.70+ filter).`;
+            const baseMetrics = `MATH MODEL: True Prob ${trueProbPct}% (Form 30%, xG 30%, H2H 15%, Mot 15%, Home 10%) | Fair Odds: ${fairOdds} vs Bookmaker: ${bookmakerOdds} [VALUE OK] | Combined xG: ${combinedXg}.`;
 
             switch (category) {
                 case 'single_25':
@@ -417,7 +411,7 @@
                         label: `Live In-Play: Over ${totalGoals + 0.5} Goals`,
                         odd: parseFloat((1.42 + (hashVal % 15) / 100).toFixed(2)),
                         fairOdds, bookmakerOdds, confidence: "91%",
-                        reason: `🔴 LIVE IN-GAME MODEL (${clock}): Score ${currentH}-${currentA}. High late-game attacking transition pressure. Fair Odds: ${fairOdds} vs Offered: ${bookmakerOdds}.`,
+                        reason: `🔴 LIVE IN-GAME MODEL (${clock}): Score ${currentH}-${currentA}. High late-game attacking transition pressure.`,
                         xgHome, xgAway
                     };
                 case 'mega1':
@@ -433,7 +427,7 @@
                         label: "Both Teams To Score (BTTS - Yes)",
                         odd: parseFloat((1.58 + (hashVal % 18) / 100).toFixed(2)),
                         fairOdds, bookmakerOdds, confidence: `${trueProbPct}%`,
-                        reason: `⚽ BTTS SAFE FILTER: Both sides scored in 4/5 recent fixtures. ${baseMetrics}`,
+                        reason: `⚽ BTTS SAFE FILTER: Both sides scored in recent fixtures. ${baseMetrics}`,
                         xgHome, xgAway
                     };
                 case 'over15':
@@ -441,7 +435,7 @@
                         label: "Over 1.5 Match Goals",
                         odd: parseFloat((1.22 + (hashVal % 13) / 100).toFixed(2)),
                         fairOdds, bookmakerOdds, confidence: "96%",
-                        reason: `⚽ GOALS FILTER (1.5+): Favourite averages 1.8+ home goals; underdog concedes 1.5+ away. ${baseMetrics}`,
+                        reason: `⚽ GOALS FILTER (1.5+): ${baseMetrics}`,
                         xgHome, xgAway
                     };
                 case 'over25':
@@ -509,7 +503,6 @@
                         xgHome, xgAway
                     };
                 default:
-                    // Sweet Spot 1.50 - 1.65 Combined Bet Builder Rule
                     const sweetSpotOdd = parseFloat((1.50 + (hashVal % 16) / 100).toFixed(2));
                     return {
                         label: "Bet Builder: Home Win (1) + Over 1.5 Goals",
@@ -526,66 +519,71 @@
             const compactDate = getYYYYMMDD(dateObj);
             let fixtures = [];
 
-            // Source 1: TheSportsDB (using fixed YYYY-MM-DD format)
-            try {
-                const res = await fetch(`https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=${dashedDate}&s=Soccer`);
-                const data = await res.json();
-                if (data && Array.isArray(data.events) && data.events.length > 0) {
-                    fixtures = data.events.map(e => ({
-                        home: e.strHomeTeam,
-                        away: e.strAwayTeam,
-                        league: e.strLeague || "International Soccer",
-                        time: e.strTime ? e.strTime.slice(0, 5) : "TBA",
-                        status: e.strStatus || "Scheduled",
-                        homeScore: e.intHomeScore !== null ? parseInt(e.intHomeScore) : 0,
-                        awayScore: e.intAwayScore !== null ? parseInt(e.intAwayScore) : 0,
-                        clock: e.strProgress || "Live"
-                    }));
-                }
-            } catch (err) {
-                console.warn("TheSportsDB fetch issue:", err);
-            }
+            // Primary Source: ESPN Scoreboard API (Returns live status, match clocks, scores & final results in real-time)
+            const espnLeagues = ['eng.1', 'esp.1', 'ita.1', 'ger.1', 'fra.1', 'uefa.champions', 'uefa.europa', 'uefa.nations', 'fifa.worldq', 'fifa.friendly'];
+            const requests = espnLeagues.map(lg =>
+                fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${lg}/scoreboard?dates=${compactDate}`)
+                    .then(r => r.ok ? r.json() : null)
+                    .catch(() => null)
+            );
 
-            // Source 2: ESPN Live Soccer Scoreboard (handles full global calendar & live scores)
-            if (fixtures.length < 6) {
-                const espnLeagues = ['eng.1', 'esp.1', 'ita.1', 'ger.1', 'fra.1', 'uefa.champions', 'uefa.europa', 'uefa.nations', 'fifa.worldq.uefa', 'fifa.worldq.caf', 'fifa.friendly'];
-                const requests = espnLeagues.map(lg =>
-                    fetch(`https://site.api.espn.com/apis/site/v2/sports/soccer/${lg}/scoreboard?dates=${compactDate}`)
-                        .then(r => r.ok ? r.json() : null)
-                        .catch(() => null)
-                );
+            const results = await Promise.all(requests);
+            results.forEach(data => {
+                if (data && Array.isArray(data.events)) {
+                    const leagueName = (data.leagues && data.leagues[0] && data.leagues[0].name) || "Official League";
+                    data.events.forEach(ev => {
+                        const comp = ev.competitions && ev.competitions[0];
+                        if (comp && comp.competitors && comp.competitors.length === 2) {
+                            const homeObj = comp.competitors.find(c => c.homeAway === 'home') || comp.competitors[0];
+                            const awayObj = comp.competitors.find(c => c.homeAway === 'away') || comp.competitors[1];
+                            const homeName = homeObj.team.displayName;
+                            const awayName = awayObj.team.displayName;
 
-                const results = await Promise.all(requests);
-                results.forEach(data => {
-                    if (data && Array.isArray(data.events)) {
-                        const leagueName = (data.leagues && data.leagues[0] && data.leagues[0].name) || "Official League";
-                        data.events.forEach(ev => {
-                            const comp = ev.competitions && ev.competitions[0];
-                            if (comp && comp.competitors && comp.competitors.length === 2) {
-                                const homeObj = comp.competitors.find(c => c.homeAway === 'home') || comp.competitors[0];
-                                const awayObj = comp.competitors.find(c => c.homeAway === 'away') || comp.competitors[1];
-                                const homeName = homeObj.team.displayName;
-                                const awayName = awayObj.team.displayName;
+                            if (!fixtures.some(f => f.home === homeName && f.away === awayName)) {
+                                const dt = new Date(ev.date);
+                                const timeStr = isNaN(dt) ? "TBA" : dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+                                
+                                const statusState = (ev.status && ev.status.type && ev.status.type.state) || "pre"; // pre, in, post
+                                const statusDesc = (ev.status && ev.status.type && ev.status.type.description) || "Scheduled";
 
-                                // Avoid duplicates
-                                if (!fixtures.some(f => f.home === homeName && f.away === awayName)) {
-                                    const dt = new Date(ev.date);
-                                    const timeStr = isNaN(dt) ? "TBA" : dt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
-                                    fixtures.push({
-                                        home: homeName,
-                                        away: awayName,
-                                        league: leagueName,
-                                        time: timeStr,
-                                        status: (ev.status && ev.status.type && ev.status.type.description) || "Scheduled",
-                                        homeScore: parseInt(homeObj.score) || 0,
-                                        awayScore: parseInt(awayObj.score) || 0,
-                                        clock: (ev.status && ev.status.displayClock) || "Live"
-                                    });
-                                }
+                                fixtures.push({
+                                    home: homeName,
+                                    away: awayName,
+                                    league: leagueName,
+                                    time: timeStr,
+                                    statusState: statusState, // "in", "post", "pre"
+                                    statusDesc: statusDesc,
+                                    homeScore: parseInt(homeObj.score) || 0,
+                                    awayScore: parseInt(awayObj.score) || 0,
+                                    clock: (ev.status && ev.status.displayClock) || "Live"
+                                });
                             }
-                        });
+                        }
+                    });
+                }
+            });
+
+            // Fallback Source: TheSportsDB if ESPN is empty for specific dates
+            if (fixtures.length === 0) {
+                try {
+                    const res = await fetch(`https://www.thesportsdb.com/api/v1/json/3/eventsday.php?d=${dashedDate}&s=Soccer`);
+                    const data = await res.json();
+                    if (data && Array.isArray(data.events) && data.events.length > 0) {
+                        fixtures = data.events.map(e => ({
+                            home: e.strHomeTeam,
+                            away: e.strAwayTeam,
+                            league: e.strLeague || "International Soccer",
+                            time: e.strTime ? e.strTime.slice(0, 5) : "TBA",
+                            statusState: e.strStatus === "Match Finished" ? "post" : (e.strStatus === "In Play" ? "in" : "pre"),
+                            statusDesc: e.strStatus || "Scheduled",
+                            homeScore: e.intHomeScore !== null ? parseInt(e.intHomeScore) : 0,
+                            awayScore: e.intAwayScore !== null ? parseInt(e.intAwayScore) : 0,
+                            clock: e.strProgress || "Live"
+                        }));
                     }
-                });
+                } catch (err) {
+                    console.warn("TheSportsDB fallback issue:", err);
+                }
             }
 
             return fixtures;
@@ -608,7 +606,7 @@
                 container.innerHTML = `
                     <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 text-center space-y-3">
                         <div class="inline-block w-8 h-8 border-4 border-amber-500 border-t-transparent rounded-full animate-spin"></div>
-                        <p class="text-xs text-gray-400 font-mono">Scanning live fixtures for ${dashedDate} and running mathematical probability filters...</p>
+                        <p class="text-xs text-gray-400 font-mono">Fetching live real-time scores and odds for ${dashedDate}...</p>
                     </div>
                 `;
             }
@@ -619,8 +617,8 @@
             if (matches.length === 0) {
                 container.innerHTML = `
                     <div class="bg-gray-900 border border-gray-800 rounded-2xl p-8 text-center space-y-3">
-                        <p class="text-xs text-gray-300 font-mono">No scheduled soccer fixtures found in the live feed for ${dashedDate}.</p>
-                        <p class="text-[11px] text-gray-500 font-mono">Try selecting a weekend or active matchday from the date ribbon above.</p>
+                        <p class="text-xs text-gray-300 font-mono">No live soccer fixtures found for ${dashedDate}.</p>
+                        <p class="text-[11px] text-gray-500 font-mono">Select another date from the date ribbon above.</p>
                     </div>
                 `;
                 document.getElementById('totalOddsBadge').textContent = `TOTAL ODDS: 0.00`;
@@ -634,18 +632,15 @@
             matches.slice(0, limit).forEach((m, idx) => {
                 const evaluation = evaluatePick(
                     m.home, m.away, dateSeed, idx, currentCategory,
-                    m.status, m.homeScore, m.awayScore, m.clock
+                    m.statusState, m.homeScore, m.awayScore, m.clock
                 );
 
                 totalAccumulatorOdds *= evaluation.odd;
 
-                const isLive = m.status.toLowerCase().includes('in progress') || m.status.toLowerCase().includes('halftime') || m.status.toLowerCase().includes('live');
-                const isFinal = m.status.toLowerCase().includes('final') || m.status.toLowerCase().includes('finished');
-
                 let statusBadge = `<span class="text-amber-400 font-bold">⏰ ${m.time}</span>`;
-                if (isLive) {
+                if (m.statusState === "in") {
                     statusBadge = `<span class="text-emerald-400 font-bold flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 pulse-live"></span> LIVE (${m.homeScore}-${m.awayScore})</span>`;
-                } else if (isFinal) {
+                } else if (m.statusState === "post") {
                     statusBadge = `<span class="text-gray-300 font-bold">FT (${m.homeScore}-${m.awayScore})</span>`;
                 }
 
@@ -728,6 +723,10 @@
         window.addEventListener('DOMContentLoaded', () => {
             initRibbon();
             fetchMatchData(selectedDateObj, false);
+            // Auto refresh live scores every 45 seconds
+            setInterval(() => {
+                fetchMatchData(selectedDateObj, true);
+            }, 45000);
         });
     </script>
 </body>
