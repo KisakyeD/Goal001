@@ -52,6 +52,10 @@
                     <span class="flex items-center gap-1.5">🏆 Pure Home Win (1)</span>
                     <span class="text-[10px] font-mono bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded">Single</span>
                 </button>
+                <button onclick="switchCategory('single_over15')" id="nav_single_over15" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-gray-800 font-medium text-xs transition">
+                    <span class="flex items-center gap-1.5">⚽ Pure Over 1.5 Goals</span>
+                    <span class="text-[10px] font-mono bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded">Single</span>
+                </button>
                 <button onclick="switchCategory('single_over')" id="nav_single_over" class="w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-gray-400 hover:text-white hover:bg-gray-800 font-medium text-xs transition">
                     <span class="flex items-center gap-1.5">⚽ Pure Over 2.5 Goals</span>
                     <span class="text-[10px] font-mono bg-emerald-500/20 text-emerald-400 px-1.5 py-0.5 rounded">Single</span>
@@ -161,7 +165,7 @@
         let selectedDateObj = new Date();
         let currentCategory = 'single_home';
 
-        const categories = ['single_home', 'single_over', 'single_btts'];
+        const categories = ['single_home', 'single_over15', 'single_over', 'single_btts'];
 
         function switchCategory(cat) {
             currentCategory = cat;
@@ -180,6 +184,7 @@
 
             const badgeText = {
                 'single_home': "PURE HOME WIN (1)",
+                'single_over15': "PURE OVER 1.5 GOALS",
                 'single_over': "PURE OVER 2.5 GOALS",
                 'single_btts': "PURE BTTS YES"
             };
@@ -232,7 +237,13 @@
             let odd = parseFloat((1.65 + ((hashVal * 3) % 35) / 100).toFixed(2));
             let isWon = true;
 
-            if (category === 'single_over') {
+            if (category === 'single_over15') {
+                label = "Total Goals: Over 1.5 Goals";
+                odd = parseFloat((1.32 + ((hashVal * 2) % 20) / 100).toFixed(2));
+                if (statusState === 'post') {
+                    isWon = (homeScore + awayScore) >= 2;
+                }
+            } else if (category === 'single_over') {
                 label = "Total Goals: Over 2.5 Goals";
                 odd = parseFloat((1.82 + ((hashVal * 2) % 30) / 100).toFixed(2));
                 if (statusState === 'post') {
