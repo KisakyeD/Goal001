@@ -239,7 +239,7 @@
         }
 
         function evaluatePick(homeName, awayName, seed, index, category, statusState, homeScore, awayScore) {
-            const hashVal = (stringHash(homeName) + stringHash(awayName) + seed + index) % 100;
+            const hashVal = (stringHash(homeName) + stringHash(awayName) + seed + index + (category.length * 7)) % 100;
             
             const homeWins = 5;
             const homeScoredAvg = (2.6 + ((hashVal % 8) / 10)).toFixed(1);
