@@ -42,21 +42,21 @@
           <h3>Weekly Planner Template</h3>
           <p>A printable PDF planner with daily tasks, goals, and a habit tracker.</p>
           <div class="price">$5</div>
-          <a class="btn" href="#" data-replace="YOUR-PLANNER-CHECKOUT-URL" target="_blank" rel="noopener noreferrer" aria-label="Buy the Weekly Planner Template for $5">Buy Now</a>
+          <a class="btn" href="#" data-checkout aria-label="Buy the Weekly Planner Template for $5">Buy Now</a>
         </article>
 
         <article class="product">
           <h3>Invoice Spreadsheet</h3>
           <p>An Excel template that calculates totals, tax, and payment status automatically.</p>
           <div class="price">$8</div>
-          <a class="btn" href="#" data-replace="YOUR-INVOICE-CHECKOUT-URL" target="_blank" rel="noopener noreferrer" aria-label="Buy the Invoice Spreadsheet for $8">Buy Now</a>
+          <a class="btn" href="#" data-checkout aria-label="Buy the Invoice Spreadsheet for $8">Buy Now</a>
         </article>
 
         <article class="product">
           <h3>Social Media Calendar</h3>
           <p>A 12-month content calendar with post ideas and posting schedules.</p>
           <div class="price">$10</div>
-          <a class="btn" href="#" data-replace="YOUR-CALENDAR-CHECKOUT-URL" target="_blank" rel="noopener noreferrer" aria-label="Buy the Social Media Calendar for $10">Buy Now</a>
+          <a class="btn" href="#" data-checkout aria-label="Buy the Social Media Calendar for $10">Buy Now</a>
         </article>
       </div>
     </section>
@@ -73,6 +73,20 @@
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Buy buttons stay inactive until you replace "#" with a real checkout URL.
+    // When you add a real URL, the link opens in a new tab safely.
+    document.querySelectorAll("a[data-checkout]").forEach(function (btn) {
+      btn.addEventListener("click", function (event) {
+        if (btn.getAttribute("href") === "#") {
+          event.preventDefault();
+          alert("This product is not available yet. Please check back soon.");
+        } else {
+          btn.setAttribute("target", "_blank");
+          btn.setAttribute("rel", "noopener noreferrer");
+        }
+      });
+    });
   </script>
 </body>
 </html>
